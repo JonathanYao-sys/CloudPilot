@@ -21,6 +21,7 @@ mkdir -p "${APP_BUNDLE}/Contents/Resources"
 echo "1. Compiling native SwiftUI macOS binary (${APP_NAME}) for arm64-apple-macosx14.0..."
 swiftc \
   -O \
+  -parse-as-library \
   -target arm64-apple-macosx14.0 \
   -sdk "$(xcrun --show-sdk-path --sdk macosx)" \
   "${ROOT_DIR}/app/frontend/CloudPilotApp.swift" \

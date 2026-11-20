@@ -81,7 +81,9 @@ class LocalExecutorAgent:
                 if tool_name == step.action and self._args_match_step(step.action, tool_args, step.args):
                     raw_model_valid = True
                     tool_call = {"tool": tool_name, "args": tool_args, "step_id": step.step_id}
-                elif tool_name in ("abstain", "report_error"):
+                elif tool_name in ("abstain", "report_error") and self._should_abstain_or_error(
+                    step, workspace_files, allow_overwrite
+                ):
                     raw_model_valid = True
                     tool_call = {"tool": tool_name, "args": tool_args, "step_id": step.step_id}
 
@@ -134,4 +136,21 @@ class LocalExecutorAgent:
             return candidate.get("destination") == expected.get("destination")
         if action == "list_files":
             return True
+        return False
+
+    @staticmethod
+    def _should_abstain_or_error(
+        step: PlanStep,
+        workspace_files: List[str],
+        allow_overwrite: bool,
+    ) -> bool:
+        raw_vals = [str(v) for v in step.args.values()]
+        if any("*" in v or ".." in v or v.startswith("/") or v.startswith("~") for v in raw_vals):
+            return True
+        if step.action == "copy_file":
+            if step.args.get("on_conflict") == "overwrite" and not allow_overwrite:
+                return True
+            src = step.args.get("source")
+            if isinstance(src, str) and workspace_files and src not in workspace_files:
+                return True
         return False

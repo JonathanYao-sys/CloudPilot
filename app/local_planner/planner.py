@@ -36,7 +36,10 @@ def _infer_target_folder_for_file(filename: str, user_request: str) -> Optional[
     )
     if explicit_match:
         cand = explicit_match.group(1)
-        if cand.lower() not in {"folder", "directory", "workspace", "files", "all", "the", "a"}:
+        if cand.lower() not in {
+            "folder", "folders", "directory", "directories", "workspace",
+            "files", "all", "the", "a", "category", "categories", "subfolders", "subfolder",
+        }:
             # If user asked for specific file type or all files into this folder
             if "pdf" in req_lower and ext != ".pdf":
                 return None

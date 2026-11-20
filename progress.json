@@ -4,9 +4,9 @@
   "spec_version": "4.0 — LOCAL-ONLY",
   "workflow_architecture": "agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints",
   "workflow_status": "IN_PROGRESS",
-  "current_milestone": "M5",
+  "current_milestone": "M6",
   "max_retries_per_milestone": 3,
-  "updated_at": "2026-11-20T06:09:12Z",
+  "updated_at": "2026-11-20T06:11:02Z",
   "milestones": [
     {
       "id": "M0",
@@ -150,7 +150,7 @@
       ],
       "evidence": "On-Mac MLX LoRA fine-tuning (160 iters, val_loss 3.728 -> 0.348) produced adapters.safetensors (5.61 MB) and fused model.safetensors (265.18 MB); verified in App loader (3/3 pytest passed).",
       "git_checkpoint": {
-        "commit": "16f3174ffe8176f8ee2f5dfcd5880fbc353dbd46",
+        "commit": "5e9aa8abe4664dd72b9687689b7263c330b039d1",
         "tag": "checkpoint-M4",
         "timestamp": "2026-11-20T06:09:12Z"
       },
@@ -165,10 +165,12 @@
         "M2",
         "M4"
       ],
-      "status": "NOT_STARTED",
-      "attempts": 0,
+      "status": "PASSED",
+      "attempts": 2,
       "max_attempts": 3,
-      "failure_reasons": [],
+      "failure_reasons": [
+        "Command `.venv/bin/pytest tests/test_m5_macos_app_and_dmg.py -v` exited 1:              output=stdout, stderr=stderr) | E               subprocess.CalledProcessError: Command '['/Users/yao/CloudPilot/release/artifacts/CloudPilot.app/Contents/MacOS/CloudPilot', '--headless-self-test']' returned non-zero exit status 1. |  | ../.local/share/uv/python/cpython-3.13.18-macos-aarch64-none/lib/python3.13/subprocess.py:578: CalledProcessError | =========================== short test summary info ============================ | FAILED tests/test_m5_macos_app_and_dmg.py::test_m5_app_headless_offline_self_test | ========================= 1 failed, 2 passed in 3.84s =========================="
+      ],
       "verification_command": ".venv/bin/pytest tests/test_m5_macos_app_and_dmg.py -v",
       "deliverables": [
         "app/frontend/CloudPilotApp.swift",
@@ -176,13 +178,13 @@
         "release/artifacts/CloudPilot.app",
         "release/artifacts/CloudPilot-v1.0-macOS.dmg"
       ],
-      "evidence": null,
+      "evidence": "Native SwiftUI CloudPilot.app and CloudPilot-v1.0-macOS.dmg built locally, ad-hoc signed, hdiutil-verified, and tested offline with Model B (3/3 pytest passed).",
       "git_checkpoint": {
-        "commit": null,
-        "tag": null,
-        "timestamp": null
+        "commit": "1feaf8203f5d7848e417f90e2e34d8b94c55ea5f",
+        "tag": "checkpoint-M5",
+        "timestamp": "2026-11-20T06:11:02Z"
       },
-      "next_step": "Compile native SwiftUI macOS app bundling/connecting to local runtime & Model B, package into installable DMG, and test offline execution."
+      "next_step": "Proceed to M6: Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts"
     },
     {
       "id": "M6",
@@ -390,6 +392,30 @@
       "event": "GIT_CHECKPOINT_CREATED",
       "milestone": "M4",
       "detail": "Created git tag checkpoint-M4 at commit 16f3174"
+    },
+    {
+      "timestamp": "2026-11-20T06:09:12Z",
+      "event": "MILESTONE_STARTED",
+      "milestone": "M5",
+      "detail": "Orchestrator assigned M5 (Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B) to Coding Agent."
+    },
+    {
+      "timestamp": "2026-11-20T06:10:07Z",
+      "event": "VERIFICATION_FAILED",
+      "milestone": "M5",
+      "detail": "Attempt 1/3 failed: Command `.venv/bin/pytest tests/test_m5_macos_app_and_dmg.py -v` exited 1:              output=stdout, stderr=stderr) | E               subprocess.CalledProcessError: Command '['/Users/yao/CloudPilot/release/artifacts/CloudPilot.app/Content"
+    },
+    {
+      "timestamp": "2026-11-20T06:11:02Z",
+      "event": "MILESTONE_PASSED",
+      "milestone": "M5",
+      "detail": "Attempt 2 passed gate verification. Evidence: Native SwiftUI CloudPilot.app and CloudPilot-v1.0-macOS.dmg built locally, ad-hoc signed, hdiutil-verified, and tested offline with Model B (3/3 pytest passed)."
+    },
+    {
+      "timestamp": "2026-11-20T06:11:02Z",
+      "event": "GIT_CHECKPOINT_CREATED",
+      "milestone": "M5",
+      "detail": "Created git tag checkpoint-M5 at commit 1feaf82"
     }
   ]
 }
