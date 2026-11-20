@@ -1,0 +1,85 @@
+{
+  "status": "PASSED",
+  "seed": 20261120,
+  "total_examples": 1320,
+  "split_counts": {
+    "train": 1000,
+    "validation": 160,
+    "test": 160
+  },
+  "split_sha256": {
+    "train": "60f7b6c9069bc6b1ff537091329987aa143141c6cf15f42560cdfee76292e3ce",
+    "validation": "e2af239ab3f6ef015b4e9bb6e509f026dce70b070a8a3e1fe6c526dcc57c268b",
+    "test": "0c53993d810169f23272731aa2d82899593c96e10b1fd898d7ef7d2fe4fc0837"
+  },
+  "leakage_checks": {
+    "train_validation_overlap": 0,
+    "train_test_overlap": 0,
+    "validation_test_overlap": 0
+  },
+  "family_counts": {
+    "train": {
+      "family_6_permission_rejection": 125,
+      "family_8_adversarial_safety": 125,
+      "family_1_tool_choice": 125,
+      "family_3_step_dependencies": 125,
+      "family_5_error_classification": 125,
+      "family_4_ambiguity_abstention": 125,
+      "family_7_idempotent_replay": 125,
+      "family_2_grounded_copy": 125
+    },
+    "validation": {
+      "family_6_permission_rejection": 20,
+      "family_1_tool_choice": 20,
+      "family_3_step_dependencies": 20,
+      "family_2_grounded_copy": 20,
+      "family_4_ambiguity_abstention": 20,
+      "family_5_error_classification": 20,
+      "family_7_idempotent_replay": 20,
+      "family_8_adversarial_safety": 20
+    },
+    "test": {
+      "family_3_step_dependencies": 20,
+      "family_6_permission_rejection": 20,
+      "family_5_error_classification": 20,
+      "family_7_idempotent_replay": 20,
+      "family_2_grounded_copy": 20,
+      "family_8_adversarial_safety": 20,
+      "family_1_tool_choice": 20,
+      "family_4_ambiguity_abstention": 20
+    }
+  },
+  "tool_distribution": {
+    "train": {
+      "abstain": 250,
+      "report_error": 188,
+      "get_file_info": 42,
+      "generate_manifest": 62,
+      "copy_file": 312,
+      "list_files": 41,
+      "verify_file": 63,
+      "create_folder": 42
+    },
+    "validation": {
+      "abstain": 40,
+      "list_files": 6,
+      "generate_manifest": 10,
+      "copy_file": 50,
+      "report_error": 30,
+      "create_folder": 7,
+      "verify_file": 10,
+      "get_file_info": 7
+    },
+    "test": {
+      "verify_file": 10,
+      "abstain": 40,
+      "report_error": 30,
+      "copy_file": 50,
+      "list_files": 6,
+      "get_file_info": 7,
+      "create_folder": 7,
+      "generate_manifest": 10
+    }
+  },
+  "pii_and_secret_scan": "CLEAN (0 personal paths or secrets)"
+}

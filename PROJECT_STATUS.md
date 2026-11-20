@@ -3,8 +3,8 @@
 > **Source Specification:** `agent.md` (4.0 — LOCAL-ONLY)  
 > **Workflow Pattern:** `agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints`  
 > **Overall Workflow Status:** `IN_PROGRESS`  
-> **Current Active Milestone:** `M3`  
-> **Last Updated (UTC):** `2026-11-20T06:00:18Z`
+> **Current Active Milestone:** `M4`  
+> **Last Updated (UTC):** `2026-11-20T06:02:07Z`
 
 ## 1. Milestone & Gate Summary
 
@@ -12,8 +12,8 @@
 | --- | --- | --- | --- | --- | --- |
 | **M0** | Phase 0 & Phase 1 (Gate 0 & Gate 1) | Local hardware/agent audit, MLX environment setup, inference & tiny train smoke test, A/B/C/P baseline freeze | `PASSED` | 1/3 | `checkpoint-M0` (`4e43417`) |
 | **M1** | Phase 2 (Gate 2) | Versioned local task protocol, JSON schemas, Policy Validator, and deterministic safe Tool Runtime | `PASSED` | 2/3 | `checkpoint-M1` (`d6132d2`) |
-| **M2** | Phase 3 (Gate 3) | Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice | `PASSED` | 2/3 | `checkpoint-M2` (`0fc71c5`) |
-| **M3** | Phase 4 (Gate 4) | Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline | `NOT_STARTED` | 0/3 | — |
+| **M2** | Phase 3 (Gate 3) | Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice | `PASSED` | 2/3 | `checkpoint-M2` (`1b0b81e`) |
+| **M3** | Phase 4 (Gate 4) | Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline | `PASSED` | 1/3 | `checkpoint-M3` (`2915e8e`) |
 | **M4** | Phase 5 (Gate 5) | On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card | `NOT_STARTED` | 0/3 | — |
 | **M5** | Phase 6 (Gate 6) | Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B | `NOT_STARTED` | 0/3 | — |
 | **M6** | Phase 7 (Gate 7) | Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts | `NOT_STARTED` | 0/3 | — |
@@ -50,15 +50,17 @@
 - **Recorded Failure Reasons (Auto-Repair Loop):**
   1. `Command `.venv/bin/pytest tests/test_m2_offline_loop.py -v` exited 1: " / "KeepMe.pdf").exists() | E       AssertionError: assert False | E        +  where False = exists() | E        +    where exists = ((PosixPath('/private/var/folders/l7/2_dj5q8x14j9h07fp07hfg000000gn/T/pytest-of-yao/pytest-1/test_offline_error_replan_and_0/recovery_ws') / 'Archive_PDFs') / 'KeepMe.pdf').exists |  | tests/test_m2_offline_loop.py:96: AssertionError | =========================== short test summary info ============================ | FAILED tests/test_m2_offline_loop.py::test_offline_error_replan_and_cancellation | ========================= 1 failed, 1 passed in 5.34s ==========================`
 - **Gate Verification Evidence:** Network-disabled socket-blocked end-to-end planning-execution loop, local MLX model traces, SHA-256 verification, FILE_NOT_FOUND replan recovery, and cancellation verified (2/2 pytest passed).
-- **Git Checkpoint:** commit `0fc71c5d13e16f834fa8bdc1a0c90d039b823cf2`, tag `checkpoint-M2` at `2026-11-20T06:00:18Z`
+- **Git Checkpoint:** commit `1b0b81e80304b6fbd3219eb41c05777128ce30c0`, tag `checkpoint-M2` at `2026-11-20T06:00:18Z`
 - **Next Step:** Proceed to M3: Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline
 
 ### M3: Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline
-- **Status:** `NOT_STARTED`
+- **Status:** `PASSED`
 - **Dependencies:** M1, M2
 - **Verification Command:** `.venv/bin/pytest tests/test_m3_dataset_quality.py -v`
-- **Attempts:** 0 / 3
-- **Next Step:** Generate and validate >=1,200 synthetic cases across 8 families with zero train/test leakage.
+- **Attempts:** 1 / 3
+- **Gate Verification Evidence:** Generated and rule-validated 1,320 synthetic cases (1000 train, 160 val, 160 frozen test) across 8 families with 0 cross-split leakage and 0 PII (2/2 pytest passed).
+- **Git Checkpoint:** commit `2915e8e5611ebe018ec1ee1bdad1607fb24aa932`, tag `checkpoint-M3` at `2026-11-20T06:02:07Z`
+- **Next Step:** Proceed to M4: On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card
 
 ### M4: On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card
 - **Status:** `NOT_STARTED`
@@ -109,3 +111,6 @@
 - `2026-11-20T05:59:52Z` **[VERIFICATION_FAILED]** (`M2`): Attempt 1/3 failed: Command `.venv/bin/pytest tests/test_m2_offline_loop.py -v` exited 1: " / "KeepMe.pdf").exists() | E       AssertionError: assert False | E        +  where False = exists() | E        +    where exists = ((PosixPath('/private/var/folders/l7
 - `2026-11-20T06:00:18Z` **[MILESTONE_PASSED]** (`M2`): Attempt 2 passed gate verification. Evidence: Network-disabled socket-blocked end-to-end planning-execution loop, local MLX model traces, SHA-256 verification, FILE_NOT_FOUND replan recovery, and cancellation verified (2/2 pytest passed).
 - `2026-11-20T06:00:18Z` **[GIT_CHECKPOINT_CREATED]** (`M2`): Created git tag checkpoint-M2 at commit 0fc71c5
+- `2026-11-20T06:00:33Z` **[MILESTONE_STARTED]** (`M3`): Orchestrator assigned M3 (Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline) to Coding Agent.
+- `2026-11-20T06:02:07Z` **[MILESTONE_PASSED]** (`M3`): Attempt 1 passed gate verification. Evidence: Generated and rule-validated 1,320 synthetic cases (1000 train, 160 val, 160 frozen test) across 8 families with 0 cross-split leakage and 0 PII (2/2 pytest passed).
+- `2026-11-20T06:02:07Z` **[GIT_CHECKPOINT_CREATED]** (`M3`): Created git tag checkpoint-M3 at commit 2915e8e

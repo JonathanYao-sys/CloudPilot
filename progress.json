@@ -4,9 +4,9 @@
   "spec_version": "4.0 — LOCAL-ONLY",
   "workflow_architecture": "agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints",
   "workflow_status": "IN_PROGRESS",
-  "current_milestone": "M3",
+  "current_milestone": "M4",
   "max_retries_per_milestone": 3,
-  "updated_at": "2026-11-20T06:00:18Z",
+  "updated_at": "2026-11-20T06:02:07Z",
   "milestones": [
     {
       "id": "M0",
@@ -89,7 +89,7 @@
       ],
       "evidence": "Network-disabled socket-blocked end-to-end planning-execution loop, local MLX model traces, SHA-256 verification, FILE_NOT_FOUND replan recovery, and cancellation verified (2/2 pytest passed).",
       "git_checkpoint": {
-        "commit": "0fc71c5d13e16f834fa8bdc1a0c90d039b823cf2",
+        "commit": "1b0b81e80304b6fbd3219eb41c05777128ce30c0",
         "tag": "checkpoint-M2",
         "timestamp": "2026-11-20T06:00:18Z"
       },
@@ -104,8 +104,8 @@
         "M1",
         "M2"
       ],
-      "status": "NOT_STARTED",
-      "attempts": 0,
+      "status": "PASSED",
+      "attempts": 1,
       "max_attempts": 3,
       "failure_reasons": [],
       "verification_command": ".venv/bin/pytest tests/test_m3_dataset_quality.py -v",
@@ -118,13 +118,13 @@
         "training/datasets/DATASET_CARD.md",
         "training/reports/data_quality.md"
       ],
-      "evidence": null,
+      "evidence": "Generated and rule-validated 1,320 synthetic cases (1000 train, 160 val, 160 frozen test) across 8 families with 0 cross-split leakage and 0 PII (2/2 pytest passed).",
       "git_checkpoint": {
-        "commit": null,
-        "tag": null,
-        "timestamp": null
+        "commit": "2915e8e5611ebe018ec1ee1bdad1607fb24aa932",
+        "tag": "checkpoint-M3",
+        "timestamp": "2026-11-20T06:02:07Z"
       },
-      "next_step": "Generate and validate >=1,200 synthetic cases across 8 families with zero train/test leakage."
+      "next_step": "Proceed to M4: On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card"
     },
     {
       "id": "M4",
@@ -354,6 +354,24 @@
       "event": "GIT_CHECKPOINT_CREATED",
       "milestone": "M2",
       "detail": "Created git tag checkpoint-M2 at commit 0fc71c5"
+    },
+    {
+      "timestamp": "2026-11-20T06:00:33Z",
+      "event": "MILESTONE_STARTED",
+      "milestone": "M3",
+      "detail": "Orchestrator assigned M3 (Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline) to Coding Agent."
+    },
+    {
+      "timestamp": "2026-11-20T06:02:07Z",
+      "event": "MILESTONE_PASSED",
+      "milestone": "M3",
+      "detail": "Attempt 1 passed gate verification. Evidence: Generated and rule-validated 1,320 synthetic cases (1000 train, 160 val, 160 frozen test) across 8 families with 0 cross-split leakage and 0 PII (2/2 pytest passed)."
+    },
+    {
+      "timestamp": "2026-11-20T06:02:07Z",
+      "event": "GIT_CHECKPOINT_CREATED",
+      "milestone": "M3",
+      "detail": "Created git tag checkpoint-M3 at commit 2915e8e"
     }
   ]
 }
