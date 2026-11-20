@@ -4,7 +4,7 @@
 > **Workflow Pattern:** `agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints`  
 > **Overall Workflow Status:** `COMPLETED`  
 > **Current Active Milestone:** `M8`  
-> **Last Updated (UTC):** `2026-11-20T06:43:22Z`
+> **Last Updated (UTC):** `2026-11-20T06:43:24Z`
 
 ## 1. Milestone & Gate Summary
 
@@ -16,8 +16,8 @@
 | **M3** | Phase 4 (Gate 4) | Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline | `PASSED` | 2/3 | `checkpoint-M3` (`2dd1279`) |
 | **M4** | Phase 5 (Gate 5) | On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card | `PASSED` | 1/3 | `checkpoint-M4` (`5e9aa8a`) |
 | **M5** | Phase 6 (Gate 6) | Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B | `PASSED` | 3/3 | `checkpoint-M5` (`6ce10a9`) |
-| **M6** | Phase 7 (Gate 7) | Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts | `PASSED` | 2/3 | `checkpoint-M6` (`4777d54`) |
-| **M7** | Phase 8, Phase 9 & Phase 10 (Local Build) (Gate 8 (Local), Gate 9 (Local), Gate 10) | Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest | `PASSED` | 1/3 | `checkpoint-M7` (`8c894f1`) |
+| **M6** | Phase 7 (Gate 7) | Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts | `PASSED` | 2/3 | `checkpoint-M6` (`a133cef`) |
+| **M7** | Phase 8, Phase 9 & Phase 10 (Local Build) (Gate 8 (Local), Gate 9 (Local), Gate 10) | Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest | `PASSED` | 2/3 | `checkpoint-M7` (`906051a`) |
 | **M8** | Phase 8 & Phase 9 (Public Internet Publication) (Gate 8 (Public) & Gate 9 (Public)) | Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication | `BLOCKED` | 0/3 | `checkpoint-M8-blocked` (`d060dbc`) |
 
 ## 2. Detailed Milestone Evidence, Failure Reasons & Next Steps
@@ -88,17 +88,17 @@
 - **Verification Command:** `.venv/bin/pytest tests/test_m6_benchmarks.py -v`
 - **Attempts:** 2 / 3
 - **Gate Verification Evidence:** A/B/C benchmark with Model-Only safety refusal isolation (Model B 92.86% vs Base A 0.0% & Small C 0.0%, exact grounding 95.31% vs 56.25% & 0.0%) + Layer 2 PolicyValidator defense-in-depth verified (3/3 pytest passed).
-- **Git Checkpoint:** commit `4777d5469ec853846ca0870d226dd428e4956ba8`, tag `checkpoint-M6` at `2026-11-20T06:43:22Z`
+- **Git Checkpoint:** commit `a133cef7edbe0910d32dfc487fbbf240893049a5`, tag `checkpoint-M6` at `2026-11-20T06:43:22Z`
 - **Next Step:** All milestones completed.
 
 ### M7: Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest
 - **Status:** `PASSED`
 - **Dependencies:** M5, M6
 - **Verification Command:** `.venv/bin/pytest tests/test_m7_release_and_media.py -v`
-- **Attempts:** 1 / 3
-- **Gate Verification Evidence:** Complete CN/EN docs, offline_compliance.md, zero-CDN static launch website with real screenshots/charts, playable 1080p H.264 MP4 promo video (31.97s), SHA-256 checksums, and DELIVERY_MANIFEST.md verified (4/4 pytest passed).
-- **Git Checkpoint:** commit `8c894f17718ca1bf3b2a3b33b56f8f8b30e39368`, tag `checkpoint-M7` at `2026-11-20T06:15:54Z`
-- **Next Step:** Proceed to M8: Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication
+- **Attempts:** 2 / 3
+- **Gate Verification Evidence:** Complete CN/EN docs, offline_compliance.md, static website with 6 unique SHA-256 screenshots & 0 CDN links, 1080p MP4 promo video (1.28 MB), and checksums verified (4/4 pytest passed).
+- **Git Checkpoint:** commit `906051a177aae1dd1feff9e21701ea538488ba3e`, tag `checkpoint-M7` at `2026-11-20T06:43:24Z`
+- **Next Step:** All milestones completed.
 
 ### M8: Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication
 - **Status:** `BLOCKED`
@@ -112,8 +112,6 @@
 
 ## 3. Orchestrator Execution Log (Recent Events)
 
-- `2026-11-20T06:02:15Z` **[MILESTONE_STARTED]** (`M4`): Orchestrator assigned M4 (On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card) to Coding Agent.
-- `2026-11-20T06:09:11Z` **[MILESTONE_PASSED]** (`M4`): Attempt 1 passed gate verification. Evidence: On-Mac MLX LoRA fine-tuning (160 iters, val_loss 3.728 -> 0.348) produced adapters.safetensors (5.61 MB) and fused model.safetensors (265.18 MB); verified in App loader (3/3 pytest passed).
 - `2026-11-20T06:09:12Z` **[GIT_CHECKPOINT_CREATED]** (`M4`): Created git tag checkpoint-M4 at commit 16f3174
 - `2026-11-20T06:09:12Z` **[MILESTONE_STARTED]** (`M5`): Orchestrator assigned M5 (Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B) to Coding Agent.
 - `2026-11-20T06:10:07Z` **[VERIFICATION_FAILED]** (`M5`): Attempt 1/3 failed: Command `.venv/bin/pytest tests/test_m5_macos_app_and_dmg.py -v` exited 1:              output=stdout, stderr=stderr) | E               subprocess.CalledProcessError: Command '['/Users/yao/CloudPilot/release/artifacts/CloudPilot.app/Content
@@ -132,3 +130,5 @@
 - `2026-11-20T06:43:22Z` **[GIT_CHECKPOINT_CREATED]** (`M5`): Created git tag checkpoint-M5 at commit 5c67ab4
 - `2026-11-20T06:43:22Z` **[MILESTONE_PASSED]** (`M6`): Attempt 2 passed gate verification. Evidence: A/B/C benchmark with Model-Only safety refusal isolation (Model B 92.86% vs Base A 0.0% & Small C 0.0%, exact grounding 95.31% vs 56.25% & 0.0%) + Layer 2 PolicyValidator defense-in-depth verified (3/3 pytest passed).
 - `2026-11-20T06:43:22Z` **[GIT_CHECKPOINT_CREATED]** (`M6`): Created git tag checkpoint-M6 at commit 4777d54
+- `2026-11-20T06:43:24Z` **[MILESTONE_PASSED]** (`M7`): Attempt 2 passed gate verification. Evidence: Complete CN/EN docs, offline_compliance.md, static website with 6 unique SHA-256 screenshots & 0 CDN links, 1080p MP4 promo video (1.28 MB), and checksums verified (4/4 pytest passed).
+- `2026-11-20T06:43:24Z` **[GIT_CHECKPOINT_CREATED]** (`M7`): Created git tag checkpoint-M7 at commit 906051a

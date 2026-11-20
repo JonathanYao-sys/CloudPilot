@@ -6,7 +6,7 @@
   "workflow_status": "COMPLETED",
   "current_milestone": "M8",
   "max_retries_per_milestone": 3,
-  "updated_at": "2026-11-20T06:43:22Z",
+  "updated_at": "2026-11-20T06:43:24Z",
   "milestones": [
     {
       "id": "M0",
@@ -216,7 +216,7 @@
       ],
       "evidence": "A/B/C benchmark with Model-Only safety refusal isolation (Model B 92.86% vs Base A 0.0% & Small C 0.0%, exact grounding 95.31% vs 56.25% & 0.0%) + Layer 2 PolicyValidator defense-in-depth verified (3/3 pytest passed).",
       "git_checkpoint": {
-        "commit": "4777d5469ec853846ca0870d226dd428e4956ba8",
+        "commit": "a133cef7edbe0910d32dfc487fbbf240893049a5",
         "tag": "checkpoint-M6",
         "timestamp": "2026-11-20T06:43:22Z"
       },
@@ -232,7 +232,7 @@
         "M6"
       ],
       "status": "PASSED",
-      "attempts": 1,
+      "attempts": 2,
       "max_attempts": 3,
       "failure_reasons": [],
       "verification_command": ".venv/bin/pytest tests/test_m7_release_and_media.py -v",
@@ -253,13 +253,13 @@
         "release/checksums.sha256",
         "release/DELIVERY_MANIFEST.md"
       ],
-      "evidence": "Complete CN/EN docs, offline_compliance.md, zero-CDN static launch website with real screenshots/charts, playable 1080p H.264 MP4 promo video (31.97s), SHA-256 checksums, and DELIVERY_MANIFEST.md verified (4/4 pytest passed).",
+      "evidence": "Complete CN/EN docs, offline_compliance.md, static website with 6 unique SHA-256 screenshots & 0 CDN links, 1080p MP4 promo video (1.28 MB), and checksums verified (4/4 pytest passed).",
       "git_checkpoint": {
-        "commit": "8c894f17718ca1bf3b2a3b33b56f8f8b30e39368",
+        "commit": "906051a177aae1dd1feff9e21701ea538488ba3e",
         "tag": "checkpoint-M7",
-        "timestamp": "2026-11-20T06:15:54Z"
+        "timestamp": "2026-11-20T06:43:24Z"
       },
-      "next_step": "Proceed to M8: Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication"
+      "next_step": "All milestones completed."
     },
     {
       "id": "M8",
@@ -498,6 +498,18 @@
       "event": "GIT_CHECKPOINT_CREATED",
       "milestone": "M6",
       "detail": "Created git tag checkpoint-M6 at commit 4777d54"
+    },
+    {
+      "timestamp": "2026-11-20T06:43:24Z",
+      "event": "MILESTONE_PASSED",
+      "milestone": "M7",
+      "detail": "Attempt 2 passed gate verification. Evidence: Complete CN/EN docs, offline_compliance.md, static website with 6 unique SHA-256 screenshots & 0 CDN links, 1080p MP4 promo video (1.28 MB), and checksums verified (4/4 pytest passed)."
+    },
+    {
+      "timestamp": "2026-11-20T06:43:24Z",
+      "event": "GIT_CHECKPOINT_CREATED",
+      "milestone": "M7",
+      "detail": "Created git tag checkpoint-M7 at commit 906051a"
     }
   ]
 }
