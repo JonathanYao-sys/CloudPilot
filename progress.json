@@ -4,9 +4,9 @@
   "spec_version": "4.0 — LOCAL-ONLY",
   "workflow_architecture": "agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints",
   "workflow_status": "IN_PROGRESS",
-  "current_milestone": "M4",
+  "current_milestone": "M5",
   "max_retries_per_milestone": 3,
-  "updated_at": "2026-11-20T06:02:07Z",
+  "updated_at": "2026-11-20T06:09:12Z",
   "milestones": [
     {
       "id": "M0",
@@ -120,7 +120,7 @@
       ],
       "evidence": "Generated and rule-validated 1,320 synthetic cases (1000 train, 160 val, 160 frozen test) across 8 families with 0 cross-split leakage and 0 PII (2/2 pytest passed).",
       "git_checkpoint": {
-        "commit": "2915e8e5611ebe018ec1ee1bdad1607fb24aa932",
+        "commit": "42ac98ec106930a41c542279771424ee09caf66e",
         "tag": "checkpoint-M3",
         "timestamp": "2026-11-20T06:02:07Z"
       },
@@ -134,8 +134,8 @@
       "depends_on": [
         "M3"
       ],
-      "status": "NOT_STARTED",
-      "attempts": 0,
+      "status": "PASSED",
+      "attempts": 1,
       "max_attempts": 3,
       "failure_reasons": [],
       "verification_command": ".venv/bin/pytest tests/test_m4_finetuned_model.py -v",
@@ -148,13 +148,13 @@
         "model/deployment/model.safetensors",
         "model/MODEL_CARD.md"
       ],
-      "evidence": null,
+      "evidence": "On-Mac MLX LoRA fine-tuning (160 iters, val_loss 3.728 -> 0.348) produced adapters.safetensors (5.61 MB) and fused model.safetensors (265.18 MB); verified in App loader (3/3 pytest passed).",
       "git_checkpoint": {
-        "commit": null,
-        "tag": null,
-        "timestamp": null
+        "commit": "16f3174ffe8176f8ee2f5dfcd5880fbc353dbd46",
+        "tag": "checkpoint-M4",
+        "timestamp": "2026-11-20T06:09:12Z"
       },
-      "next_step": "Fine-tune Model A on this Apple M4 Mac using MLX LoRA to produce Model B (.safetensors), fuse deployment weights, and verify in app loader."
+      "next_step": "Proceed to M5: Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B"
     },
     {
       "id": "M5",
@@ -372,6 +372,24 @@
       "event": "GIT_CHECKPOINT_CREATED",
       "milestone": "M3",
       "detail": "Created git tag checkpoint-M3 at commit 2915e8e"
+    },
+    {
+      "timestamp": "2026-11-20T06:02:15Z",
+      "event": "MILESTONE_STARTED",
+      "milestone": "M4",
+      "detail": "Orchestrator assigned M4 (On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card) to Coding Agent."
+    },
+    {
+      "timestamp": "2026-11-20T06:09:11Z",
+      "event": "MILESTONE_PASSED",
+      "milestone": "M4",
+      "detail": "Attempt 1 passed gate verification. Evidence: On-Mac MLX LoRA fine-tuning (160 iters, val_loss 3.728 -> 0.348) produced adapters.safetensors (5.61 MB) and fused model.safetensors (265.18 MB); verified in App loader (3/3 pytest passed)."
+    },
+    {
+      "timestamp": "2026-11-20T06:09:12Z",
+      "event": "GIT_CHECKPOINT_CREATED",
+      "milestone": "M4",
+      "detail": "Created git tag checkpoint-M4 at commit 16f3174"
     }
   ]
 }

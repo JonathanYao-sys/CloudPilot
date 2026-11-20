@@ -1,0 +1,19 @@
+model: ".hf_cache/models/Qwen2.5-0.5B-Instruct-4bit"
+train: true
+data: "training/datasets"
+seed: 42
+num_layers: 8
+batch_size: 4
+iters: 160
+val_batches: 10
+learning_rate: 1.0e-4
+steps_per_report: 10
+steps_per_eval: 40
+save_every: 80
+adapter_path: "model/adapters"
+max_seq_length: 512
+grad_checkpoint: false
+lora_parameters:
+  rank: 8
+  dropout: 0.0
+  scale: 20.0

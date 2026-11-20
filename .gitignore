@@ -7,6 +7,9 @@ __pycache__/
 
 # Heavy local model cache / uncompressed builds (keep adapters & configs & checksums)
 .hf_cache/
+model/deployment/*.safetensors
+release/artifacts/*.dmg
+release/artifacts/*.app/Contents/Resources/deployment/*.safetensors
 build/
 dist/
 *.dmg.tmp

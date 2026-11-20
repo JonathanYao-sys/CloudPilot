@@ -1,0 +1,39 @@
+Loading configuration file /Users/yao/CloudPilot/training/configs/lora_config.yaml
+Loading pretrained model
+Loading datasets
+Training
+╭─ mlx_lm.lora ────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│    model           .hf_cache/models/Qwen2.5-0.5B-Instruct-4bit                                                       │
+│    type            lora · 8 layers · rank 8                                                                          │
+│    dataset         training/datasets                                                                                 │
+│    optimizer       adam · lr 1.0e-04                                                                                 │
+│    batch · iters   4 · 160                                                                                           │
+│    max seq         512                                                                                               │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+Trainable parameters: 0.297% (1.466M/494.033M)
+  iter   train_loss     tok/s     tokens
+     1    val 3.728    5.04s
+    10    0.962 ▼      902     10.1k
+    20    0.211 ▼    1,104     20.1k
+    30    0.152 ▼    1,090     30.1k
+    40    val 0.369    5.31s
+    40    0.137 ▼    1,092     40.0k
+    50    0.120 ▼    1,031     49.8k
+    60    0.101 ▼    1,077     60.1k
+    70    0.107 ▲    1,082     70.2k
+    80    val 0.377    5.18s
+    80    0.103 ▼    1,076     80.2k
+  save  0000080_adapters.safetensors
+    90    0.095 ▼    1,070     90.3k
+   100    0.093 ▼      987    100.1k
+   110    0.082 ▼      835    110.5k
+   120    val 0.348    6.39s
+   120    0.084 ▲      864    120.4k
+   130    0.080 ▼      719    130.3k
+   140    0.079 ▼      604    140.5k
+   150    0.077 ▼      639    150.5k
+   160    val 0.366    7.31s
+   160    0.070 ▼      720    160.3k
+  save  0000160_adapters.safetensors
+train ██████████████████████████████ 100% ·   160/160
+

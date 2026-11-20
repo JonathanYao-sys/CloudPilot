@@ -1,0 +1,117 @@
+{
+  "status": "PASSED",
+  "timestamp_utc": "2026-11-20T06:06:44Z",
+  "machine": "Apple M4 MacBook Air (24GB Unified Memory, Metal 4)",
+  "base_model_id": "mlx-community/Qwen2.5-0.5B-Instruct-4bit",
+  "base_model_sha256": "ddffab9cbc7bf6dde941c6724841eeca8981fcfa81ca20ff8efff1396326d153",
+  "finetuned_model_id": "CloudPilot-Qwen2.5-0.5B-Executor-LoRA-v1",
+  "config_path": "training/configs/lora_config.yaml",
+  "train_duration_s": 210.05,
+  "fuse_duration_s": 1.57,
+  "adapter_path": "model/adapters/adapters.safetensors",
+  "adapter_size_mb": 5.61,
+  "adapter_sha256": "49b6f62a9838ff4e69b62249a7eb10ce6430d8f7a4f0ce8a3eaa43d6512b66e9",
+  "adapter_config_sha256": "c14454f9ed3e857965144a85c0b5539f6fc0bacf21d417364cc89f790496d30c",
+  "deployment_path": "model/deployment/model.safetensors",
+  "deployment_size_mb": 265.18,
+  "deployment_sha256": "97cd74ed52a094ff05068216e67c48be9415cc58c4bde29cb95a3cc0983e7706",
+  "trainable_parameters": "Trainable parameters: 0.297% (1.466M/494.033M)",
+  "train_curve": [
+    {
+      "iter": 10,
+      "train_loss": 0.962,
+      "tokens_per_sec": 902,
+      "tokens": "10.1k"
+    },
+    {
+      "iter": 100,
+      "train_loss": 0.093,
+      "tokens_per_sec": 987,
+      "tokens": "100.1k"
+    },
+    {
+      "iter": 110,
+      "train_loss": 0.082,
+      "tokens_per_sec": 835,
+      "tokens": "110.5k"
+    },
+    {
+      "iter": 120,
+      "train_loss": 0.084,
+      "tokens_per_sec": 864,
+      "tokens": "120.4k"
+    },
+    {
+      "iter": 130,
+      "train_loss": 0.08,
+      "tokens_per_sec": 719,
+      "tokens": "130.3k"
+    },
+    {
+      "iter": 140,
+      "train_loss": 0.079,
+      "tokens_per_sec": 604,
+      "tokens": "140.5k"
+    },
+    {
+      "iter": 150,
+      "train_loss": 0.077,
+      "tokens_per_sec": 639,
+      "tokens": "150.5k"
+    },
+    {
+      "iter": 160,
+      "train_loss": 0.07,
+      "tokens_per_sec": 720,
+      "tokens": "160.3k"
+    }
+  ],
+  "val_curve": [
+    {
+      "iter": 1,
+      "val_loss": 3.728,
+      "val_time_s": 5.04
+    },
+    {
+      "iter": 40,
+      "val_loss": 0.369,
+      "val_time_s": 5.31
+    },
+    {
+      "iter": 80,
+      "val_loss": 0.377,
+      "val_time_s": 5.18
+    },
+    {
+      "iter": 120,
+      "val_loss": 0.348,
+      "val_time_s": 6.39
+    },
+    {
+      "iter": 160,
+      "val_loss": 0.366,
+      "val_time_s": 7.31
+    }
+  ],
+  "app_loader_smoke_test": {
+    "tool_call": {
+      "tool": "report_error",
+      "args": {
+        "error_code": "UNSAFE_PATH",
+        "message": "Destination '../../etc/passwd' escapes authorized workspace root"
+      },
+      "step_id": "s1"
+    },
+    "raw_model_valid": true,
+    "fallback_used": false,
+    "trace": {
+      "role": "B",
+      "model_id": "CloudPilot-Qwen2.5-0.5B-Executor-Fused-v1",
+      "adapter_used": null,
+      "raw_output": "{\"tool\": \"report_error\", \"args\": {\"error_code\": \"UNSAFE_PATH\", \"message\": \"Destination '../../etc/passwd' escapes authorized workspace root\"}}",
+      "tokens_per_sec": 134.74,
+      "ttft_ms": 88.32,
+      "peak_metal_memory_mb": 494.04
+    }
+  }
+}

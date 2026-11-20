@@ -3,8 +3,8 @@
 > **Source Specification:** `agent.md` (4.0 — LOCAL-ONLY)  
 > **Workflow Pattern:** `agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints`  
 > **Overall Workflow Status:** `IN_PROGRESS`  
-> **Current Active Milestone:** `M4`  
-> **Last Updated (UTC):** `2026-11-20T06:02:07Z`
+> **Current Active Milestone:** `M5`  
+> **Last Updated (UTC):** `2026-11-20T06:09:12Z`
 
 ## 1. Milestone & Gate Summary
 
@@ -13,8 +13,8 @@
 | **M0** | Phase 0 & Phase 1 (Gate 0 & Gate 1) | Local hardware/agent audit, MLX environment setup, inference & tiny train smoke test, A/B/C/P baseline freeze | `PASSED` | 1/3 | `checkpoint-M0` (`4e43417`) |
 | **M1** | Phase 2 (Gate 2) | Versioned local task protocol, JSON schemas, Policy Validator, and deterministic safe Tool Runtime | `PASSED` | 2/3 | `checkpoint-M1` (`d6132d2`) |
 | **M2** | Phase 3 (Gate 3) | Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice | `PASSED` | 2/3 | `checkpoint-M2` (`1b0b81e`) |
-| **M3** | Phase 4 (Gate 4) | Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline | `PASSED` | 1/3 | `checkpoint-M3` (`2915e8e`) |
-| **M4** | Phase 5 (Gate 5) | On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card | `NOT_STARTED` | 0/3 | — |
+| **M3** | Phase 4 (Gate 4) | Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline | `PASSED` | 1/3 | `checkpoint-M3` (`42ac98e`) |
+| **M4** | Phase 5 (Gate 5) | On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card | `PASSED` | 1/3 | `checkpoint-M4` (`16f3174`) |
 | **M5** | Phase 6 (Gate 6) | Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B | `NOT_STARTED` | 0/3 | — |
 | **M6** | Phase 7 (Gate 7) | Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts | `NOT_STARTED` | 0/3 | — |
 | **M7** | Phase 8, Phase 9 & Phase 10 (Local Build) (Gate 8 (Local), Gate 9 (Local), Gate 10) | Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest | `NOT_STARTED` | 0/3 | — |
@@ -59,15 +59,17 @@
 - **Verification Command:** `.venv/bin/pytest tests/test_m3_dataset_quality.py -v`
 - **Attempts:** 1 / 3
 - **Gate Verification Evidence:** Generated and rule-validated 1,320 synthetic cases (1000 train, 160 val, 160 frozen test) across 8 families with 0 cross-split leakage and 0 PII (2/2 pytest passed).
-- **Git Checkpoint:** commit `2915e8e5611ebe018ec1ee1bdad1607fb24aa932`, tag `checkpoint-M3` at `2026-11-20T06:02:07Z`
+- **Git Checkpoint:** commit `42ac98ec106930a41c542279771424ee09caf66e`, tag `checkpoint-M3` at `2026-11-20T06:02:07Z`
 - **Next Step:** Proceed to M4: On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card
 
 ### M4: On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card
-- **Status:** `NOT_STARTED`
+- **Status:** `PASSED`
 - **Dependencies:** M3
 - **Verification Command:** `.venv/bin/pytest tests/test_m4_finetuned_model.py -v`
-- **Attempts:** 0 / 3
-- **Next Step:** Fine-tune Model A on this Apple M4 Mac using MLX LoRA to produce Model B (.safetensors), fuse deployment weights, and verify in app loader.
+- **Attempts:** 1 / 3
+- **Gate Verification Evidence:** On-Mac MLX LoRA fine-tuning (160 iters, val_loss 3.728 -> 0.348) produced adapters.safetensors (5.61 MB) and fused model.safetensors (265.18 MB); verified in App loader (3/3 pytest passed).
+- **Git Checkpoint:** commit `16f3174ffe8176f8ee2f5dfcd5880fbc353dbd46`, tag `checkpoint-M4` at `2026-11-20T06:09:12Z`
+- **Next Step:** Proceed to M5: Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B
 
 ### M5: Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B
 - **Status:** `NOT_STARTED`
@@ -114,3 +116,6 @@
 - `2026-11-20T06:00:33Z` **[MILESTONE_STARTED]** (`M3`): Orchestrator assigned M3 (Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline) to Coding Agent.
 - `2026-11-20T06:02:07Z` **[MILESTONE_PASSED]** (`M3`): Attempt 1 passed gate verification. Evidence: Generated and rule-validated 1,320 synthetic cases (1000 train, 160 val, 160 frozen test) across 8 families with 0 cross-split leakage and 0 PII (2/2 pytest passed).
 - `2026-11-20T06:02:07Z` **[GIT_CHECKPOINT_CREATED]** (`M3`): Created git tag checkpoint-M3 at commit 2915e8e
+- `2026-11-20T06:02:15Z` **[MILESTONE_STARTED]** (`M4`): Orchestrator assigned M4 (On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card) to Coding Agent.
+- `2026-11-20T06:09:11Z` **[MILESTONE_PASSED]** (`M4`): Attempt 1 passed gate verification. Evidence: On-Mac MLX LoRA fine-tuning (160 iters, val_loss 3.728 -> 0.348) produced adapters.safetensors (5.61 MB) and fused model.safetensors (265.18 MB); verified in App loader (3/3 pytest passed).
+- `2026-11-20T06:09:12Z` **[GIT_CHECKPOINT_CREATED]** (`M4`): Created git tag checkpoint-M4 at commit 16f3174

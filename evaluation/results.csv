@@ -1,0 +1,4 @@
+role,model_id,heldout_total,json_valid_pct,tool_selection_acc_pct,exact_grounding_acc_pct,bfcl_local_subset_acc_pct,mean_tokens_per_sec,mean_ttft_ms,load_time_s,peak_metal_memory_mb
+A,mlx-community/Qwen2.5-0.5B-Instruct-4bit,64,100.0,56.25,56.25,66.67,176.85,71.35,0.263,534.23
+B,CloudPilot-Qwen2.5-0.5B-Executor-Fused-v1,64,100.0,96.88,95.31,75.0,167.87,68.49,0.366,534.23
+C,mlx-community/SmolLM2-135M-Instruct,64,67.19,0.0,0.0,0.0,216.29,35.09,0.235,432.07
