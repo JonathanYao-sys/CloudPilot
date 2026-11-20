@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CloudPilot 云领航 — 本地智能，本地执行（100% 离线 macOS AI 智能体）</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <div class="brand">
+        <span class="brand-badge">100% 离线 MAC AI</span>
+        <span class="brand-title">CloudPilot <span class="cn-sub">云领航 (中文版)</span></span>
+      </div>
+      <nav class="nav-links">
+        <a href="#features">产品概览</a>
+        <a href="#architecture">四层架构</a>
+        <a href="#screenshots">应用截图与宣传片</a>
+        <a href="#benchmarks">三模型评测</a>
+        <a href="#privacy">隐私与安全</a>
+        <a href="#downloads">下载与交付</a>
+        <a href="index.html" class="brand-badge">English Version</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. Hero Section -->
+    <section class="hero" id="top">
+      <div class="container">
+        <div class="pill-banner">100% Apple M4 本机 MLX Metal 4 加速 · 零云端 API 密钥 · 封锁网络 Socket 实机验证</div>
+        <h1>CloudPilot 云领航 — 本地智能，本地执行。</h1>
+        <p class="hero-subtitle">
+          一款完全运行在您自己 Mac 上的本地规划 (Local Planner P)、本机微调执行 (Fine-Tuned Executor B) 与确定性安全沙盒文件整理 AI 智能体。
+          全流程（数据集合成、LoRA 微调、权重融合、三模型评测、SwiftUI 原生打包与宣传片渲染）100% 在一台 24GB 内存的 Apple M4 MacBook Air 本机完成。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="../release/artifacts/CloudPilot-v1.0-macOS.dmg">下载 CloudPilot-v1.0-macOS.dmg (487.01 MiB 自包含安装包)</a>
+          <a class="btn btn-secondary" href="https://github.com/JonathanYao-sys/CloudPilot/releases/tag/v1.0.0">GitHub Release v1.0.0</a>
+          <a class="btn btn-secondary" href="https://github.com/JonathanYao-sys/CloudPilot">GitHub 开源仓库</a>
+          <a class="btn btn-secondary" href="../model/MODEL_CARD_CN.md">中文模型卡 (.safetensors)</a>
+          <a class="btn btn-secondary" href="../evaluation/EVALUATION_REPORT_CN.md">中文三模型评测报告</a>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-value">95.31%</div>
+            <div class="kpi-label">微调模型 B 留出测试集精确工具接地率（较基座 A 提升 +39.06%）</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">92.86%</div>
+            <div class="kpi-label">纯模型安全拒答准确率（26/28，未微调基座 A 与小模型 C 均为 0.0%）</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">167.96 tok/s</div>
+            <div class="kpi-label">Apple M4 Metal 4 本机推理速度（峰值显存仅 534 MB）</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">16 / 16</div>
+            <div class="kpi-label">第二层确定性策略校验器越权攻击拦截率（0 次未授权落盘）</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. What It Does & Actual Hardware Requirements -->
+    <section class="section" id="features">
+      <div class="container">
+        <h2>产品功能定位与真实硬件配置要求</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>有界、非破坏性的本地文件自动分类整理</h3>
+            <p>
+              用户只需选择一个授权的沙盒工作区文件夹，并用自然语言描述整理需求（如“将学习 PDF、笔记和 CSV 表格按类别整理并校验哈希”）。
+              CloudPilot 会在修改任何文件前生成分步 DAG 计划供用户预览审批，默认采用非破坏性复制
+              <code>copy_file</code>（<code>on_conflict="skip"</code>），逐个比对源文件与目标文件的 SHA-256 校验和，并输出可审计的 JSON 清单。
+            </p>
+            <ul>
+              <li><strong>6 个白名单确定性工具：</strong> <code>list_files</code>、<code>get_file_info</code>、<code>create_folder</code>、<code>copy_file</code>、<code>verify_file</code>、<code>generate_manifest</code></li>
+              <li><strong>零 Shell / 零 Eval：</strong> 严禁任意终端命令执行、代码动态求值或未经审查的删除操作。</li>
+              <li><strong>SQLite 持久化状态机：</strong> 本地记录每个任务与步骤的状态变迁与审计日志。</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>实测支持的 macOS 系统与硬件环境</h3>
+            <table class="spec-table">
+              <tbody>
+                <tr><th>支持平台</th><td>macOS 14.0+（Apple Silicon <code>arm64</code> M1 / M2 / M3 / M4）</td></tr>
+                <tr><th>实测开发/训练主机</th><td>Apple M4 MacBook Air（<code>Mac16,12</code>，10 核 CPU，10 核 Metal 4 GPU）</td></tr>
+                <tr><th>内存要求</th><td>最低 8 GB 统一内存（实测 24 GB 主机上峰值 Metal 显存 &lt; 600 MB）</td></tr>
+                <tr><th>独立安装包体积</th><td><code>487.01 MiB</code>（内置独立 Python 3.13 解释器、MLX 运行时与 265 MiB 微调权重）</td></tr>
+                <tr><th>运行期网络要求</th><td><strong>完全零网络依赖</strong>（强制启用 <code>HF_HUB_OFFLINE=1</code> 并通过断网测试）</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Local-Only Reference Architecture -->
+    <section class="section alt-bg" id="architecture">
+      <div class="container">
+        <h2>四层全本地安全闭环架构</h2>
+        <p class="section-intro">
+          CloudPilot 将“意图规划”、“工具参数接地”、“确定性策略校验”与“文件系统执行”严格解耦在 Mac 本地的四个层级：
+        </p>
+        <div class="arch-flow">
+          <div class="arch-step">
+            <div class="arch-num">1</div>
+            <h4>本地规划器 (Planner P)</h4>
+            <p>基于 <code>Qwen2.5-0.5B-Instruct-4bit</code> 与确定性 Schema 编译器，将用户自然语言与目录列表编译为有界 <code>TaskPlanV1</code> 计划。</p>
+          </div>
+          <div class="arch-step">
+            <div class="arch-num">2</div>
+            <h4>本机微调执行模型 (Executor B)</h4>
+            <p>在本机 Apple M4 上经 MLX LoRA 微调并融合的 <code>CloudPilot-Executor-v1</code>，将计划步骤与实时工作区状态映射为 <code>ToolCallV1</code> JSON 调用或安全拒答。</p>
+          </div>
+          <div class="arch-step">
+            <div class="arch-num">3</div>
+            <h4>确定性策略校验器 (PolicyValidator)</h4>
+            <p>强制校验工作区根目录边界，确定性拦截 <code>..</code> 路径穿越、外部软链接逃逸、未审批写入及未授权覆盖。</p>
+          </div>
+          <div class="arch-step">
+            <div class="arch-num">4</div>
+            <h4>确定性工具运行时与 SQLite</h4>
+            <p>仅通过 <code>pathlib</code>/<code>shutil</code>/<code>hashlib</code> 执行安全文件操作，逐文件核验 SHA-256 并写入本地 SQLite 审计库。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Real Native SwiftUI App Screenshots & Recorded Demo -->
+    <section class="section" id="screenshots">
+      <div class="container">
+        <h2>原生 macOS SwiftUI 应用界面画廊与中文有声宣传片</h2>
+        <p class="section-intro">
+          以下 6 张截图均由编译后的 <code>CloudPilot.app</code> 在实机离线执行完真实整理任务后直接导出（6 张图片具有完全不同的界面布局与 SHA-256 校验值）：
+        </p>
+        <div class="gallery-tabs">
+          <button class="tab-btn active" data-target="shot-1">1. 离线任务首页 (Home/Chat)</button>
+          <button class="tab-btn" data-target="shot-2">2. 计划预览与审批 (Plan Preview)</button>
+          <button class="tab-btn" data-target="shot-3">3. 实时执行监控 (Execution Monitor)</button>
+          <button class="tab-btn" data-target="shot-4">4. 内置模型库 (Local Models)</button>
+          <button class="tab-btn" data-target="shot-5">5. 安全与隐私边界 (Security)</button>
+          <button class="tab-btn" data-target="shot-6">6. SQLite 审计日志 (History)</button>
+        </div>
+        <div class="screenshot-frame">
+          <img id="shot-1" class="shot-img active" src="assets/01_home_chat.png" alt="CloudPilot 离线任务首页" />
+          <img id="shot-2" class="shot-img" src="assets/02_plan_preview.png" alt="CloudPilot 计划预览与审批" />
+          <img id="shot-3" class="shot-img" src="assets/03_execution_monitor.png" alt="CloudPilot 执行监控界面" />
+          <img id="shot-4" class="shot-img" src="assets/04_local_models.png" alt="CloudPilot 内置本地模型库" />
+          <img id="shot-5" class="shot-img" src="assets/05_settings_privacy.png" alt="CloudPilot 安全与隐私设置" />
+          <img id="shot-6" class="shot-img" src="assets/06_audit_history.png" alt="CloudPilot SQLite 审计历史" />
+        </div>
+        <div class="video-card">
+          <h3>观看中文普通话有声解说宣传片（6 章节 · 1080p MP4 · 讲明产品是什么与我们做了什么）</h3>
+          <video controls preload="metadata" width="100%" poster="assets/03_execution_monitor.png">
+            <source src="../marketing/exports/CloudPilot_Promo_CN.mp4" type="video/mp4" />
+            您的浏览器不支持 HTML5 视频播放。
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. A/B/C Three-Model Benchmark Results -->
+    <section class="section alt-bg" id="benchmarks">
+      <div class="container">
+        <h2>三模型（A / B / C）同机离线基准评测与双层安全验证</h2>
+        <p class="section-intro">
+          在同一台 Apple M4 MacBook Air 上以 <code>HF_HUB_OFFLINE=1</code> 对 64 个留出测试集样本（8 大任务族）与 12 个 BFCL 风格本地函数调用样本进行实测。
+          <strong>基线与榜单诚实披露：</strong> 独立 A/C 基线文件标注为<strong>事后补测的未修改 A/C 基线（<code>POST_HOC_UNMODIFIED_AC_BASELINE</code>）</strong>；BFCL 本地子集得分为<strong>本机自测结果，绝非官方公开排行榜名次</strong>。
+        </p>
+        <div class="table-wrap">
+          <table class="bench-table">
+            <thead>
+              <tr>
+                <th>评测指标（纯模型输出隔离评测，不含规则拦截器）</th>
+                <th>模型 A（基座 <code>Qwen2.5-0.5B-Instruct-4bit</code>）</th>
+                <th class="highlight-col">模型 B（本机微调 <code>CloudPilot-LoRA-v1</code>）</th>
+                <th>模型 C（独立小模型 <code>SmolLM2-135M-Instruct</code>）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>留出测试集 JSON 格式有效率 (%)</td>
+                <td>100.0%</td>
+                <td class="highlight-col"><strong>100.0%</strong></td>
+                <td>67.19%</td>
+              </tr>
+              <tr>
+                <td>留出测试集工具选择准确率 (%)</td>
+                <td>56.25%</td>
+                <td class="highlight-col"><strong>96.88%</strong></td>
+                <td>0.0%</td>
+              </tr>
+              <tr>
+                <td>留出测试集参数精确接地准确率 (%)</td>
+                <td>56.25%</td>
+                <td class="highlight-col"><strong>95.31%</strong></td>
+                <td>0.0%</td>
+              </tr>
+              <tr>
+                <td>纯模型安全与权限拒答准确率（28 例拒答样本，无规则拦截器）</td>
+                <td>0.0% (0/28)</td>
+                <td class="highlight-col"><strong>92.86% (26/28)</strong></td>
+                <td>0.0% (0/28)</td>
+              </tr>
+              <tr>
+                <td>BFCL 风格本地函数调用子集准确率 (%)</td>
+                <td>66.67%</td>
+                <td class="highlight-col"><strong>75.0%</strong></td>
+                <td>0.0%</td>
+              </tr>
+              <tr>
+                <td>本机平均推理吞吐速度 (tokens/sec)</td>
+                <td>164.07 tok/s</td>
+                <td class="highlight-col"><strong>149.79 ~ 167.96 tok/s</strong></td>
+                <td>185.95 tok/s</td>
+              </tr>
+              <tr>
+                <td>峰值统一显存占用 (Peak Metal Memory)</td>
+                <td>534.23 MB</td>
+                <td class="highlight-col"><strong>534.23 MB</strong></td>
+                <td>432.07 MB</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="charts-grid">
+          <div class="chart-box">
+            <img src="assets/accuracy_comparison_cn.png" alt="三模型准确率与纯模型安全拒答对比图（中文版）" />
+          </div>
+          <div class="chart-box">
+            <img src="assets/latency_memory_comparison_cn.png" alt="三模型本机吞吐速度与显存占用对比图（中文版）" />
+          </div>
+          <div class="chart-box full-width">
+            <img src="assets/family_breakdown_cn.png" alt="留出测试集八大任务族准确率分布对比图（中文版）" />
+          </div>
+        </div>
+        <p class="bench-links">
+          中文完整评测报告：<a href="../evaluation/EVALUATION_REPORT_CN.md">EVALUATION_REPORT_CN.md</a> ·
+          英文评测报告：<a href="../evaluation/EVALUATION_REPORT.md">EVALUATION_REPORT.md</a> ·
+          复现指南：<a href="../evaluation/REPRODUCIBILITY.md">REPRODUCIBILITY.md</a> ·
+          原始 CSV：<a href="../evaluation/results.csv">evaluation/results.csv</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- 6. Privacy & Security Guarantees -->
+    <section class="section" id="privacy">
+      <div class="container">
+        <h2>数据隐私与双层确定性安全架构</h2>
+        <div class="grid-3">
+          <div class="card">
+            <h3>100% 本地数据主权</h3>
+            <p>您的文件名、目录结构、自然语言指令、模型推理过程与 SQLite 审计日志永远不会离开这台 Mac。所有核心流程均在进程级封锁网络 Socket 的条件下验证通过。</p>
+          </div>
+          <div class="card">
+            <h3>第一层微调拒答 + 第二层确定性拦截</h3>
+            <p>本机 LoRA 微调使模型 B 自身具备 92.86% 的越权与路径穿越拒答能力；同时第二层确定性 <code>PolicyValidator</code> 100% 拦截任何残余越权尝试（16/16 全部拦截）。</p>
+          </div>
+          <div class="card">
+            <h3>离线计算与发布传输严格分离</h3>
+            <p>网络连接仅用于初始开源权重缓存与用户授权后的 GitHub Release 文件上传，绝不用于任何云端推理、云端训练或远程 CI 编译。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 & 8. Verified Downloads, Release/Signing Status & License -->
+    <section class="section alt-bg" id="downloads">
+      <div class="container">
+        <h2>已验证交付产物、签名状态披露与开源许可证</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>七大强制交付产物直链</h3>
+            <ul class="artifact-list">
+              <li><strong>GitHub 开源仓库：</strong> <a href="https://github.com/JonathanYao-sys/CloudPilot"><code>https://github.com/JonathanYao-sys/CloudPilot</code></a></li>
+              <li><strong>GitHub Release (v1.0.0)：</strong> <a href="https://github.com/JonathanYao-sys/CloudPilot/releases/tag/v1.0.0"><code>https://github.com/JonathanYao-sys/CloudPilot/releases/tag/v1.0.0</code></a></li>
+              <li><strong>自包含 macOS 安装包 (.dmg)：</strong> <a href="../release/artifacts/CloudPilot-v1.0-macOS.dmg"><code>release/artifacts/CloudPilot-v1.0-macOS.dmg</code></a>（487.01 MiB · <a href="https://github.com/JonathanYao-sys/CloudPilot/releases/download/v1.0.0/CloudPilot-v1.0-macOS.dmg">Release 下载</a>）</li>
+              <li><strong>LoRA 适配器微调权重：</strong> <a href="../model/adapters/adapters.safetensors"><code>model/adapters/adapters.safetensors</code></a>（5.61 MiB · <a href="https://github.com/JonathanYao-sys/CloudPilot/releases/download/v1.0.0/adapters.safetensors">Release 下载</a>）</li>
+              <li><strong>融合部署模型权重：</strong> <a href="../model/deployment/model.safetensors"><code>model/deployment/model.safetensors</code></a>（265.18 MiB · <a href="https://github.com/JonathanYao-sys/CloudPilot/releases/download/v1.0.0/model.safetensors">Release 下载</a>）</li>
+              <li><strong>中文有声宣传片 (.mp4)：</strong> <a href="../marketing/exports/CloudPilot_Promo_CN.mp4"><code>marketing/exports/CloudPilot_Promo_CN.mp4</code></a>（5.61 MiB · <a href="https://github.com/JonathanYao-sys/CloudPilot/releases/download/v1.0.0/CloudPilot_Promo_CN.mp4">Release 下载</a>）</li>
+              <li><strong>实机连续交互原始录屏：</strong> <a href="../marketing/footage/live_app_recording.mp4"><code>marketing/footage/live_app_recording.mp4</code></a>（1.50 MiB）</li>
+              <li><strong>中文交付清单与校验和：</strong> <a href="../release/DELIVERY_MANIFEST_CN.md"><code>DELIVERY_MANIFEST_CN.md</code></a> · <a href="../release/checksums.sha256"><code>checksums.sha256</code></a></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>代码签名状态、开源协议与文档</h3>
+            <ul>
+              <li><strong>macOS 代码签名披露：</strong> 已在本地完成 Ad-hoc 签名（<code>codesign --force --deep --sign -</code>）。按 <code>agent.md</code> 第 11.6 节如实披露：<strong>未使用付费 Apple Developer ID 进行苹果云端公证（Unnotarized）</strong>，新账户首次打开请右键点击应用选择“打开”。</li>
+              <li><strong>开源许可证：</strong> Apache-2.0（<a href="../LICENSE">LICENSE</a>），衍生自 Apache-2.0 许可的 <code>Qwen2.5-0.5B-Instruct</code>。</li>
+              <li><strong>中文文档体系：</strong> <a href="../README_CN.md">中文总览 (README_CN)</a> · <a href="../model/MODEL_CARD_CN.md">中文模型卡</a> · <a href="../evaluation/EVALUATION_REPORT_CN.md">中文评测报告</a> · <a href="../release/DELIVERY_MANIFEST_CN.md">中文交付清单</a> · <a href="../docs/user_guide.md">中英用户指南</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>CloudPilot 云领航 v1.0 · 100% 在 Apple M4 Mac 本机训练、评测、打包与渲染 · Apache-2.0 开源许可</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

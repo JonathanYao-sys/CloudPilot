@@ -18,7 +18,7 @@
 | **M5** | Phase 6 (Gate 6) | Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B | `PASSED` | 3/3 | `checkpoint-M5` (`6ce10a9`) |
 | **M6** | Phase 7 (Gate 7) | Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts | `PASSED` | 2/3 | `checkpoint-M6` (`a133cef`) |
 | **M7** | Phase 8, Phase 9 & Phase 10 (Local Build) (Gate 8 (Local), Gate 9 (Local), Gate 10) | Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest | `PASSED` | 3/3 | `checkpoint-M7` (`deaae56`) |
-| **M8** | Phase 8 & Phase 9 (Public Internet Publication) (Gate 8 (Public) & Gate 9 (Public)) | Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication | `PASSED` | 1/3 | `checkpoint-M8` (`995eab4`) |
+| **M8** | Phase 8 & Phase 9 (Public Internet Publication) (Gate 8 (Public) & Gate 9 (Public)) | Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication | `PASSED` | 1/3 | `checkpoint-M8` (`4b593fc`) |
 
 ## 2. Detailed Milestone Evidence, Failure Reasons & Next Steps
 
@@ -109,7 +109,7 @@
   1. `BLOCKED — ACCOUNT/PERMISSION: Per agent.md Section 2.2, Section 13, and Section 14, uploading the repository, release DMG, model weights, static website, and promo MP4 to the public internet requires explicit user permission and target repository/hosting configuration.`
   2. `BLOCKED — ACCOUNT/PERMISSION: Per agent.md Section 2.2, Section 13, and Section 14, uploading the repository, release DMG, model weights, static website, and promo MP4 to the public internet requires explicit user permission and target repository/hosting configuration.`
 - **Gate Verification Evidence:** Published https://github.com/JonathanYao-sys/CloudPilot, Release v1.0.0 with all 6 assets (CloudPilot-v1.0-macOS.dmg, model.safetensors, adapters.safetensors, adapter_config.json, CloudPilot_Promo.mp4, checksums.sha256), and GitHub Pages https://jonathanyao-sys.github.io/CloudPilot/website/
-- **Git Checkpoint:** commit `995eab408b50bf9ab1201e26eaec54b1afc7d1c3`, tag `checkpoint-M8` at `2026-11-20T08:32:06Z`
+- **Git Checkpoint:** commit `4b593fcaae985d81a37457372ac4d9a478291ce0`, tag `checkpoint-M8` at `2026-11-20T08:32:06Z`
 - **Next Step:** All milestones completed.
 
 ## 3. Orchestrator Execution Log (Recent Events)

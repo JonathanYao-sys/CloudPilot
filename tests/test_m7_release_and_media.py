@@ -20,6 +20,7 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 def test_m7_all_docs_website_video_and_manifest_exist():
     required = [
         "README.md",
+        "README_CN.md",
         "docs/architecture.md",
         "docs/installation.md",
         "docs/user_guide.md",
@@ -27,15 +28,24 @@ def test_m7_all_docs_website_video_and_manifest_exist():
         "docs/privacy.md",
         "docs/troubleshooting.md",
         "docs/offline_compliance.md",
+        "model/MODEL_CARD_CN.md",
+        "evaluation/EVALUATION_REPORT_CN.md",
+        "evaluation/charts/accuracy_comparison_cn.png",
+        "evaluation/charts/latency_memory_comparison_cn.png",
+        "evaluation/charts/family_breakdown_cn.png",
         "website/index.html",
+        "website/index_cn.html",
         "website/styles.css",
         "website/app.js",
         "marketing/storyboard.md",
         "marketing/footage/live_app_recording.mp4",
         "marketing/exports/CloudPilot_Promo.mp4",
+        "marketing/exports/CloudPilot_Promo_CN.mp4",
         "marketing/exports/CloudPilot_Promo.srt",
+        "marketing/exports/CloudPilot_Promo_CN.srt",
         "release/checksums.sha256",
         "release/DELIVERY_MANIFEST.md",
+        "release/DELIVERY_MANIFEST_CN.md",
     ]
     for rel in required:
         p = ROOT_DIR / rel

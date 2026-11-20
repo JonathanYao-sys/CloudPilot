@@ -39,7 +39,9 @@ SLIDES_DIR = ROOT_DIR / "marketing" / "footage" / "slides"
 LIVE_RECORDING_MP4 = ROOT_DIR / "marketing" / "footage" / "live_app_recording.mp4"
 EXPORTS_DIR = ROOT_DIR / "marketing" / "exports"
 OUTPUT_MP4 = EXPORTS_DIR / "CloudPilot_Promo.mp4"
+OUTPUT_CN_MP4 = EXPORTS_DIR / "CloudPilot_Promo_CN.mp4"
 OUTPUT_SRT = EXPORTS_DIR / "CloudPilot_Promo.srt"
+OUTPUT_CN_SRT = EXPORTS_DIR / "CloudPilot_Promo_CN.srt"
 
 
 def get_audio_duration(audio_path: Path) -> float:
@@ -229,8 +231,8 @@ def main() -> int:
                 "纯模型安全拒答率从 0% 提升至 92.86% (26/28)，叠加第二层确定性 PolicyValidator 后 16 项越权攻击 100% 拦截。",
             ],
             "frame_groups": [
-                [CHARTS_DIR / "accuracy_comparison.png", CHARTS_DIR / "family_breakdown.png"],
-                [CHARTS_DIR / "accuracy_comparison.png", CHARTS_DIR / "latency_memory_comparison.png"],
+                [CHARTS_DIR / "accuracy_comparison_cn.png", CHARTS_DIR / "family_breakdown_cn.png"],
+                [CHARTS_DIR / "accuracy_comparison_cn.png", CHARTS_DIR / "latency_memory_comparison_cn.png"],
             ],
         },
         {
@@ -348,9 +350,12 @@ def main() -> int:
     )
 
     OUTPUT_SRT.write_text("\n".join(srt_entries), encoding="utf-8")
+    OUTPUT_CN_SRT.write_text("\n".join(srt_entries), encoding="utf-8")
+    OUTPUT_CN_MP4.write_bytes(OUTPUT_MP4.read_bytes())
     total_dur = get_audio_duration(OUTPUT_MP4)
     print(
-        f"Rendered 6-chapter Mandarin-voiced promo video to {OUTPUT_MP4.relative_to(ROOT_DIR)} "
+        f"Rendered 6-chapter Mandarin-voiced promo video to {OUTPUT_MP4.relative_to(ROOT_DIR)} and "
+        f"{OUTPUT_CN_MP4.relative_to(ROOT_DIR)} "
         f"({OUTPUT_MP4.stat().st_size / (1024 * 1024):.2f} MiB, duration={total_dur:.2f}s) "
         f"and subtitles to {OUTPUT_SRT.relative_to(ROOT_DIR)}."
     )

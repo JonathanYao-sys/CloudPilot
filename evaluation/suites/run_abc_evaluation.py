@@ -380,6 +380,73 @@ def render_charts(summaries: List[Dict[str, Any]]) -> None:
     fig.savefig(CHARTS_DIR / "family_breakdown.png")
     plt.close(fig)
 
+    # Also render full Chinese versions of all 3 charts for Chinese docs, website, and promo video
+    plt.rcParams["font.sans-serif"] = ["PingFang HK", "Heiti TC", "Hiragino Sans GB", "Arial Unicode MS", "DejaVu Sans"]
+    plt.rcParams["axes.unicode_minus"] = False
+    cn_labels = [
+        "模型 A (基座 Qwen2.5-0.5B)",
+        "模型 B (本机微调 CloudPilot-LoRA)",
+        "模型 C (独立小模型 SmolLM2-135M)",
+    ]
+
+    fig, ax = plt.subplots(figsize=(9.5, 5.4), dpi=160)
+    ax.bar([i - 1.5 * w for i in x], [s["json_valid_pct"] for s in summaries], width=w, label="JSON 格式有效率 (%)", color="#4C78A8")
+    ax.bar([i - 0.5 * w for i in x], [s["tool_selection_acc_pct"] for s in summaries], width=w, label="工具选择准确率 (%)", color="#F58518")
+    ax.bar([i + 0.5 * w for i in x], [s["exact_grounding_acc_pct"] for s in summaries], width=w, label="参数精确接地率 (%)", color="#54A24B")
+    ax.bar([i + 1.5 * w for i in x], [s["model_only_safety_refusal_pct"] for s in summaries], width=w, label="纯模型安全拒答率 (%)", color="#E45756")
+    ax.set_xticks(list(x))
+    ax.set_xticklabels(cn_labels, fontsize=10)
+    ax.set_ylim(0, 112)
+    ax.set_ylabel("准确率 (%)")
+    ax.set_title("CloudPilot 三模型本机离线评测对比（纯模型准确率与安全拒答能力）")
+    ax.legend(loc="upper left", fontsize=9)
+    ax.grid(axis="y", linestyle="--", alpha=0.4)
+    fig.tight_layout()
+    fig.savefig(CHARTS_DIR / "accuracy_comparison_cn.png")
+    plt.close(fig)
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4.6), dpi=160)
+    ax1.bar(cn_labels, [s["mean_tokens_per_sec"] for s in summaries], color=["#4C78A8", "#54A24B", "#E45756"])
+    ax1.set_ylabel("每秒生成 Token 数 (Apple M4 Metal)")
+    ax1.set_title("本机推理吞吐速度 (tok/s)")
+    ax1.tick_params(axis="x", rotation=12)
+    ax1.grid(axis="y", linestyle="--", alpha=0.4)
+
+    ax2.bar(cn_labels, [s["peak_metal_memory_mb"] for s in summaries], color=["#4C78A8", "#54A24B", "#E45756"])
+    ax2.set_ylabel("峰值统一显存占用 (MB)")
+    ax2.set_title("Metal 峰值显存占用 (MB)")
+    ax2.tick_params(axis="x", rotation=12)
+    ax2.grid(axis="y", linestyle="--", alpha=0.4)
+    fig.tight_layout()
+    fig.savefig(CHARTS_DIR / "latency_memory_comparison_cn.png")
+    plt.close(fig)
+
+    cn_fams = [
+        "族1\n工具选择",
+        "族2\n安全复制",
+        "族3\n依赖与校验",
+        "族4\n歧义拒答",
+        "族5\n缺失报错",
+        "族6\n权限拒绝",
+        "族7\n幂等重放",
+        "族8\n对抗与路径穿越",
+    ]
+    fig, ax = plt.subplots(figsize=(11, 5.5), dpi=160)
+    for idx, s in enumerate(summaries):
+        offset = (idx - 1) * fw
+        vals = [s["family_accuracy_pct"][f] for f in FAMILIES]
+        ax.bar([i + offset for i in fx], vals, width=fw, label=cn_labels[idx], color=colors[idx])
+    ax.set_xticks(list(fx))
+    ax.set_xticklabels(cn_fams, fontsize=9.5)
+    ax.set_ylim(0, 112)
+    ax.set_ylabel("参数精确接地准确率 (%)")
+    ax.set_title("留出测试集（Frozen Test Split）八大任务族准确率分布对比")
+    ax.legend()
+    ax.grid(axis="y", linestyle="--", alpha=0.4)
+    fig.tight_layout()
+    fig.savefig(CHARTS_DIR / "family_breakdown_cn.png")
+    plt.close(fig)
+
 
 def write_reports(summaries: List[Dict[str, Any]], security_res: Dict[str, Any]) -> None:
     fieldnames = [

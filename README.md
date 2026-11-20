@@ -4,7 +4,8 @@
 > **Specification:** `agent.md` v4.0 — **LOCAL-ONLY**  
 > **Workflow Architecture:** `agent.md -> Orchestrator (orchestrator.py) -> Coding Agent -> progress.json + Git Checkpoints`  
 > **Hardware Verified:** Apple M4 MacBook Air (`Mac16,12`, 10-core CPU, 10-core Metal 4 GPU, 24 GB Unified Memory, macOS `27.2.1`)  
-> **Cloud Compute / Cloud API Keys:** **ZERO (0 Remote Calls, `HF_HUB_OFFLINE=1`)**
+> **Cloud Compute / Cloud API Keys:** **ZERO (0 Remote Calls, `HF_HUB_OFFLINE=1`)**  
+> **中文完整文档体系：** [`README_CN.md`](README_CN.md) · [`中文模型卡`](model/MODEL_CARD_CN.md) · [`中文评测报告`](evaluation/EVALUATION_REPORT_CN.md) · [`中文交付清单`](release/DELIVERY_MANIFEST_CN.md) · [`中文版网站`](website/index_cn.html) · [`中文有声宣传片`](marketing/exports/CloudPilot_Promo_CN.mp4)
 
 ---
 
