@@ -33,6 +33,35 @@ MODEL_B_ADAPTER_DIR = ROOT_DIR / "model" / "adapters"
 MODEL_B_DEPLOY_DIR = ROOT_DIR / "model" / "deployment"
 
 
+def _resolve_bundled_or_local_deploy_dir() -> Optional[Path]:
+    env_dir = os.environ.get("CLOUDPILOT_BUNDLED_MODEL_DIR")
+    if env_dir:
+        p = Path(env_dir).resolve()
+        if (p / "model.safetensors").exists():
+            return p
+    # If running from inside CloudPilot.app/Contents/Resources/backend
+    app_res_deploy = (ROOT_DIR.parent / "model" / "deployment").resolve()
+    if (app_res_deploy / "model.safetensors").exists():
+        return app_res_deploy
+    if (MODEL_B_DEPLOY_DIR / "model.safetensors").exists():
+        return MODEL_B_DEPLOY_DIR.resolve()
+    return None
+
+
+def _resolve_bundled_or_local_adapter_dir() -> Optional[Path]:
+    env_dir = os.environ.get("CLOUDPILOT_BUNDLED_ADAPTER_DIR")
+    if env_dir:
+        p = Path(env_dir).resolve()
+        if (p / "adapters.safetensors").exists():
+            return p
+    app_res_adapter = (ROOT_DIR.parent / "model" / "adapters").resolve()
+    if (app_res_adapter / "adapters.safetensors").exists():
+        return app_res_adapter
+    if (MODEL_B_ADAPTER_DIR / "adapters.safetensors").exists():
+        return MODEL_B_ADAPTER_DIR.resolve()
+    return None
+
+
 def sha256_file(path: Path) -> str:
     h = hashlib.sha256()
     with open(path, "rb") as f:
@@ -133,18 +162,24 @@ class LocalMLXRuntime:
 
     def resolve_role_paths(self, role: str) -> Tuple[Path, Optional[Path], str]:
         role_upper = role.upper()
+        bundled_deploy = _resolve_bundled_or_local_deploy_dir()
+        bundled_adapter = _resolve_bundled_or_local_adapter_dir()
+
         if role_upper == "A":
-            return MODEL_A_DIR, None, "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
+            if (MODEL_A_DIR / "model.safetensors").exists():
+                return MODEL_A_DIR.resolve(), None, "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
+            if bundled_deploy is not None:
+                return bundled_deploy, None, "CloudPilot-Bundled-Qwen2.5-0.5B-4bit"
+            return MODEL_A_DIR.resolve(), None, "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
         if role_upper == "B":
-            # Prefer fused deployment model if already exported; otherwise base A + trained LoRA adapter;
-            # if M4 training hasn't run yet (e.g. during M2 test), fall back to base A with explicit disclosure.
-            if (MODEL_B_DEPLOY_DIR / "model.safetensors").exists():
-                return MODEL_B_DEPLOY_DIR, None, "CloudPilot-Qwen2.5-0.5B-Executor-Fused-v1"
-            if (MODEL_B_ADAPTER_DIR / "adapters.safetensors").exists():
-                return MODEL_A_DIR, MODEL_B_ADAPTER_DIR, "CloudPilot-Qwen2.5-0.5B-Executor-LoRA-v1"
-            return MODEL_A_DIR, None, "mlx-community/Qwen2.5-0.5B-Instruct-4bit (pre-M4-base)"
+            # Prefer bundled or local fused deployment model; otherwise base A + trained LoRA adapter
+            if bundled_deploy is not None:
+                return bundled_deploy, None, "CloudPilot-Qwen2.5-0.5B-Executor-Fused-v1"
+            if bundled_adapter is not None:
+                return MODEL_A_DIR.resolve(), bundled_adapter, "CloudPilot-Qwen2.5-0.5B-Executor-LoRA-v1"
+            return MODEL_A_DIR.resolve(), None, "mlx-community/Qwen2.5-0.5B-Instruct-4bit (pre-M4-base)"
         if role_upper == "C":
-            return MODEL_C_DIR, None, "mlx-community/SmolLM2-135M-Instruct"
+            return MODEL_C_DIR.resolve(), None, "mlx-community/SmolLM2-135M-Instruct"
         raise ValueError(f"Unknown model role: {role}")
 
     def ensure_loaded(self, role: str) -> None:
@@ -160,7 +195,7 @@ class LocalMLXRuntime:
         t0 = time.perf_counter()
         if adapter_dir is not None:
             self._model, self._tokenizer = load(str(model_dir), adapter_path=str(adapter_dir))
-            self._active_adapter = str(adapter_dir.relative_to(ROOT_DIR))
+            self._active_adapter = str(adapter_dir)
         else:
             self._model, self._tokenizer = load(str(model_dir))
             self._active_adapter = None

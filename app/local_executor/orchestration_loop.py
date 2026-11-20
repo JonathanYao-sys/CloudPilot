@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional
@@ -290,7 +291,15 @@ def main() -> int:
         )
         draft = loop.draft_plan(args.request, auto_approve=False)
         res = loop.approve_and_execute(draft["task_id"], approved_by="macos_app_user")
-        print(json.dumps({"draft": draft, "execution": res}, indent=2, ensure_ascii=False))
+        model_dir, adapter_dir, model_id = loop.mlx_runtime.resolve_role_paths(args.role)
+        runtime_provenance = {
+            "backend_module_file": str(Path(__file__).resolve()),
+            "loaded_model_id": model_id,
+            "loaded_model_dir": str(model_dir),
+            "loaded_adapter_dir": str(adapter_dir) if adapter_dir else None,
+            "hf_hub_offline": os.environ.get("HF_HUB_OFFLINE") == "1",
+        }
+        print(json.dumps({"draft": draft, "execution": res, "runtime_provenance": runtime_provenance}, indent=2, ensure_ascii=False))
         return 0
 
     if args.cmd == "history":

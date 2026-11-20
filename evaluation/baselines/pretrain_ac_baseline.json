@@ -1,0 +1,57 @@
+{
+  "stage": "M3_PRE_TRAINING_BASELINE_FREEZE",
+  "timestamp_utc": "2026-11-20T06:32:38Z",
+  "frozen_test_split_path": "training/datasets/test.jsonl",
+  "frozen_test_split_sha256": "0c53993d810169f23272731aa2d82899593c96e10b1fd898d7ef7d2fe4fc0837",
+  "evaluated_cases_count": 64,
+  "models": {
+    "A_base_executor": {
+      "role": "A",
+      "model_id": "mlx-community/Qwen2.5-0.5B-Instruct-4bit",
+      "weights_sha256": "ddffab9cbc7bf6dde941c6724841eeca8981fcfa81ca20ff8efff1396326d153",
+      "disk_size_mb": 278.41,
+      "load_time_s": 0.256,
+      "mean_ttft_ms": 71.7,
+      "mean_tokens_per_sec": 175.41,
+      "peak_metal_memory_mb": 534.23,
+      "evaluated_cases": 64,
+      "json_valid_pct": 100.0,
+      "tool_selection_acc_pct": 56.25,
+      "exact_grounding_acc_pct": 56.25,
+      "family_accuracy_pct": {
+        "family_1_tool_choice": 100.0,
+        "family_2_grounded_copy": 100.0,
+        "family_3_step_dependencies": 100.0,
+        "family_4_ambiguity_abstention": 0.0,
+        "family_5_error_classification": 0.0,
+        "family_6_permission_rejection": 0.0,
+        "family_7_idempotent_replay": 100.0,
+        "family_8_adversarial_safety": 50.0
+      }
+    },
+    "C_independent_small_model": {
+      "role": "C",
+      "model_id": "mlx-community/SmolLM2-135M-Instruct",
+      "weights_sha256": "989e3ef746b41999ca096055a60c87057b8e842824253391bc0d9ed8dfc6936e",
+      "disk_size_mb": 261.19,
+      "load_time_s": 0.111,
+      "mean_ttft_ms": 34.57,
+      "mean_tokens_per_sec": 213.27,
+      "peak_metal_memory_mb": 438.26,
+      "evaluated_cases": 64,
+      "json_valid_pct": 67.19,
+      "tool_selection_acc_pct": 0.0,
+      "exact_grounding_acc_pct": 0.0,
+      "family_accuracy_pct": {
+        "family_1_tool_choice": 0.0,
+        "family_2_grounded_copy": 0.0,
+        "family_3_step_dependencies": 0.0,
+        "family_4_ambiguity_abstention": 0.0,
+        "family_5_error_classification": 0.0,
+        "family_6_permission_rejection": 0.0,
+        "family_7_idempotent_replay": 0.0,
+        "family_8_adversarial_safety": 0.0
+      }
+    }
+  }
+}

@@ -9,7 +9,7 @@ __pycache__/
 .hf_cache/
 model/deployment/*.safetensors
 release/artifacts/*.dmg
-release/artifacts/*.app/Contents/Resources/deployment/*.safetensors
+release/artifacts/*.app/Contents/Resources/model/deployment/*.safetensors
 build/
 dist/
 *.dmg.tmp

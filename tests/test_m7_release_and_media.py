@@ -56,6 +56,15 @@ def test_m7_website_is_self_contained_with_zero_cdn_and_valid_local_assets():
         target = (html_path.parent / ref).resolve()
         assert target.exists(), f"Broken link/asset in website/index.html: {ref} -> {target}"
 
+    # Verify all 6 website screenshots have 6 distinct SHA-256 hashes (no duplicate placeholders)
+    import hashlib
+    shot_hashes = set()
+    for i in range(1, 7):
+        matches = list((ROOT_DIR / "website" / "assets").glob(f"0{i}_*.png"))
+        assert len(matches) == 1
+        shot_hashes.add(hashlib.sha256(matches[0].read_bytes()).hexdigest())
+    assert len(shot_hashes) == 6, "All 6 website screenshots must have unique SHA-256 hashes"
+
 
 def test_m7_promo_video_is_playable_1080p_mp4():
     mp4 = ROOT_DIR / "marketing" / "exports" / "CloudPilot_Promo.mp4"
