@@ -82,7 +82,7 @@ class LocalExecutorAgent:
                     raw_model_valid = True
                     tool_call = {"tool": tool_name, "args": tool_args, "step_id": step.step_id}
                 elif tool_name in ("abstain", "report_error") and self._should_abstain_or_error(
-                    step, workspace_files, allow_overwrite
+                    step, tool_name, tool_args, workspace_files, allow_overwrite
                 ):
                     raw_model_valid = True
                     tool_call = {"tool": tool_name, "args": tool_args, "step_id": step.step_id}
@@ -141,16 +141,20 @@ class LocalExecutorAgent:
     @staticmethod
     def _should_abstain_or_error(
         step: PlanStep,
+        tool_name: str,
+        tool_args: Dict[str, Any],
         workspace_files: List[str],
         allow_overwrite: bool,
     ) -> bool:
         raw_vals = [str(v) for v in step.args.values()]
-        if any("*" in v or ".." in v or v.startswith("/") or v.startswith("~") for v in raw_vals):
-            return True
+        if any(".." in v or v.startswith("/") or v.startswith("~") for v in raw_vals):
+            return tool_name == "report_error" and tool_args.get("error_code") == "UNSAFE_PATH"
+        if any("*" in v for v in raw_vals):
+            return tool_name == "abstain"
         if step.action == "copy_file":
             if step.args.get("on_conflict") == "overwrite" and not allow_overwrite:
-                return True
+                return tool_name == "abstain"
             src = step.args.get("source")
             if isinstance(src, str) and workspace_files and src not in workspace_files:
-                return True
+                return tool_name == "report_error" and tool_args.get("error_code") == "FILE_NOT_FOUND"
         return False
