@@ -12,6 +12,9 @@ release/artifacts/*.dmg
 release/artifacts/CloudPilot.app/
 marketing/footage/live_frames/
 marketing/footage/slides/*.aiff
+marketing/footage/slides/*.wav
+marketing/footage/slides/ch*
+marketing/footage/slides/master_*
 build/
 dist/
 *.dmg.tmp

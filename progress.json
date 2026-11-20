@@ -283,7 +283,7 @@
       ],
       "evidence": "Published https://github.com/JonathanYao-sys/CloudPilot, Release v1.0.0 with all 6 assets (CloudPilot-v1.0-macOS.dmg, model.safetensors, adapters.safetensors, adapter_config.json, CloudPilot_Promo.mp4, checksums.sha256), and GitHub Pages https://jonathanyao-sys.github.io/CloudPilot/website/",
       "git_checkpoint": {
-        "commit": "3bd27ff2a2c00c4c17b2dd31c38517ef2da76e5b",
+        "commit": "995eab408b50bf9ab1201e26eaec54b1afc7d1c3",
         "tag": "checkpoint-M8",
         "timestamp": "2026-11-20T08:32:06Z"
       },

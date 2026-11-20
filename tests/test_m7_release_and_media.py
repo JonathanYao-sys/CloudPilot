@@ -33,6 +33,7 @@ def test_m7_all_docs_website_video_and_manifest_exist():
         "marketing/storyboard.md",
         "marketing/footage/live_app_recording.mp4",
         "marketing/exports/CloudPilot_Promo.mp4",
+        "marketing/exports/CloudPilot_Promo.srt",
         "release/checksums.sha256",
         "release/DELIVERY_MANIFEST.md",
     ]
@@ -98,6 +99,15 @@ def test_m7_promo_video_and_live_recording_are_multi_frame_1080p_mp4():
         assert video_streams[0]["height"] == 1080
         duration = float(info["format"]["duration"])
         assert duration >= 20.0
+        if rel.endswith("CloudPilot_Promo.mp4"):
+            audio_streams = [s for s in streams if s.get("codec_name") == "aac"]
+            assert len(audio_streams) == 1, "CloudPilot_Promo.mp4 must include an AAC voice narration audio stream"
+            assert duration >= 120.0, f"Expected full 6-chapter voiced promo video >= 120s, got {duration}s"
+
+    srt_text = (ROOT_DIR / "marketing" / "exports" / "CloudPilot_Promo.srt").read_text(encoding="utf-8")
+    assert "CloudPilot 云领航" in srt_text
+    assert "研发工作 ①" in srt_text
+    assert "研发工作 ④" in srt_text
 
     # Extract 1 frame every 1.5s from CloudPilot_Promo.mp4 and verify >= 15 distinct visual states
     with tempfile.TemporaryDirectory() as tmpdir:
