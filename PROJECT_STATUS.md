@@ -4,7 +4,7 @@
 > **Workflow Pattern:** `agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints`  
 > **Overall Workflow Status:** `COMPLETED`  
 > **Current Active Milestone:** `M8`  
-> **Last Updated (UTC):** `2026-11-20T07:00:02Z`
+> **Last Updated (UTC):** `2026-11-20T08:32:06Z`
 
 ## 1. Milestone & Gate Summary
 
@@ -17,8 +17,8 @@
 | **M4** | Phase 5 (Gate 5) | On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card | `PASSED` | 1/3 | `checkpoint-M4` (`5e9aa8a`) |
 | **M5** | Phase 6 (Gate 6) | Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B | `PASSED` | 3/3 | `checkpoint-M5` (`6ce10a9`) |
 | **M6** | Phase 7 (Gate 7) | Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts | `PASSED` | 2/3 | `checkpoint-M6` (`a133cef`) |
-| **M7** | Phase 8, Phase 9 & Phase 10 (Local Build) (Gate 8 (Local), Gate 9 (Local), Gate 10) | Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest | `PASSED` | 3/3 | `checkpoint-M7` (`e6e25d4`) |
-| **M8** | Phase 8 & Phase 9 (Public Internet Publication) (Gate 8 (Public) & Gate 9 (Public)) | Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication | `BLOCKED` | 0/3 | `checkpoint-M8-blocked` (`1b97894`) |
+| **M7** | Phase 8, Phase 9 & Phase 10 (Local Build) (Gate 8 (Local), Gate 9 (Local), Gate 10) | Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest | `PASSED` | 3/3 | `checkpoint-M7` (`deaae56`) |
+| **M8** | Phase 8 & Phase 9 (Public Internet Publication) (Gate 8 (Public) & Gate 9 (Public)) | Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication | `PASSED` | 1/3 | `checkpoint-M8` (`ce873c2`) |
 
 ## 2. Detailed Milestone Evidence, Failure Reasons & Next Steps
 
@@ -97,25 +97,23 @@
 - **Verification Command:** `.venv/bin/pytest tests/test_m7_release_and_media.py -v`
 - **Attempts:** 3 / 3
 - **Gate Verification Evidence:** Complete CN/EN docs, offline_compliance.md, static website with 6 unique SHA-256 screenshots & 0 CDN links, 1080p MP4 promo video (1.27 MB), and checksums verified (4/4 pytest passed).
-- **Git Checkpoint:** commit `e6e25d4b14224d24a8a7d50c39f12ca47a1d290a`, tag `checkpoint-M7` at `2026-11-20T07:00:02Z`
+- **Git Checkpoint:** commit `deaae56b0583a0dc8d61c47c235e2b83c79b5f79`, tag `checkpoint-M7` at `2026-11-20T07:00:02Z`
 - **Next Step:** All milestones completed.
 
 ### M8: Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication
-- **Status:** `BLOCKED`
+- **Status:** `PASSED`
 - **Dependencies:** M7
 - **Verification Command:** `python3 orchestrator.py check-publication`
-- **Attempts:** 0 / 3
+- **Attempts:** 1 / 3
 - **Recorded Failure Reasons (Auto-Repair Loop):**
   1. `BLOCKED — ACCOUNT/PERMISSION: Per agent.md Section 2.2, Section 13, and Section 14, uploading the repository, release DMG, model weights, static website, and promo MP4 to the public internet requires explicit user permission and target repository/hosting configuration.`
   2. `BLOCKED — ACCOUNT/PERMISSION: Per agent.md Section 2.2, Section 13, and Section 14, uploading the repository, release DMG, model weights, static website, and promo MP4 to the public internet requires explicit user permission and target repository/hosting configuration.`
-- **Git Checkpoint:** commit `1b978949be5283784112d1b572ef82d3112bbe43`, tag `checkpoint-M8-blocked` at `2026-11-20T06:43:24Z`
-- **Next Step:** Await user authorization, target GitHub repo URL, visibility, and static hosting preference before executing public upload.
+- **Gate Verification Evidence:** Published https://github.com/JonathanYao-sys/CloudPilot, Release v1.0.0 with all 6 assets (CloudPilot-v1.0-macOS.dmg, model.safetensors, adapters.safetensors, adapter_config.json, CloudPilot_Promo.mp4, checksums.sha256), and GitHub Pages https://jonathanyao-sys.github.io/CloudPilot/website/
+- **Git Checkpoint:** commit `ce873c2c4e7088d097a82086d524b45abb142221`, tag `checkpoint-M8` at `2026-11-20T08:32:06Z`
+- **Next Step:** All milestones completed.
 
 ## 3. Orchestrator Execution Log (Recent Events)
 
-- `2026-11-20T06:11:02Z` **[MILESTONE_PASSED]** (`M5`): Attempt 2 passed gate verification. Evidence: Native SwiftUI CloudPilot.app and CloudPilot-v1.0-macOS.dmg built locally, ad-hoc signed, hdiutil-verified, and tested offline with Model B (3/3 pytest passed).
-- `2026-11-20T06:11:02Z` **[GIT_CHECKPOINT_CREATED]** (`M5`): Created git tag checkpoint-M5 at commit 1feaf82
-- `2026-11-20T06:11:02Z` **[MILESTONE_STARTED]** (`M6`): Orchestrator assigned M6 (Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts) to Coding Agent.
 - `2026-11-20T06:11:02Z` **[MILESTONE_PASSED]** (`M6`): Attempt 1 passed gate verification. Evidence: Three-model (A/B/C) local benchmark completed: Model B achieved 95.31% exact grounding (+39.06% over Base A, +95.31% over Small C) at 167.87 tok/s and 0 unauthorized security actions (3/3 pytest passed).
 - `2026-11-20T06:11:02Z` **[GIT_CHECKPOINT_CREATED]** (`M6`): Created git tag checkpoint-M6 at commit 2533c71
 - `2026-11-20T06:11:02Z` **[MILESTONE_STARTED]** (`M7`): Orchestrator assigned M7 (Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest) to Coding Agent.
@@ -133,3 +131,6 @@
 - `2026-11-20T06:43:24Z` **[MILESTONE_BLOCKED_ON_GATE]** (`M8`): BLOCKED — ACCOUNT/PERMISSION: Per agent.md Section 2.2, Section 13, and Section 14, uploading the repository, release DMG, model weights, static website, and promo MP4 to the public internet requires explicit user permission and target repository/hosting configuration.
 - `2026-11-20T07:00:02Z` **[MILESTONE_PASSED]** (`M7`): Attempt 3 passed gate verification. Evidence: Complete CN/EN docs, offline_compliance.md, static website with 6 unique SHA-256 screenshots & 0 CDN links, 1080p MP4 promo video (1.27 MB), and checksums verified (4/4 pytest passed).
 - `2026-11-20T07:00:02Z` **[GIT_CHECKPOINT_CREATED]** (`M7`): Created git tag checkpoint-M7 at commit e6e25d4
+- `2026-11-20T07:00:02Z` **[MILESTONE_STARTED]** (`M8`): Orchestrator assigned M8 (Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication) to Coding Agent.
+- `2026-11-20T08:32:06Z` **[MILESTONE_PASSED]** (`M8`): Attempt 1 passed gate verification. Evidence: Published https://github.com/JonathanYao-sys/CloudPilot, Release v1.0.0 with all 6 assets (CloudPilot-v1.0-macOS.dmg, model.safetensors, adapters.safetensors, adapter_config.json, CloudPilot_Promo.mp4, checksums.sha256), and GitHub Pages https://jonathanyao-sys.github.io/CloudPilot/website/
+- `2026-11-20T08:32:06Z` **[GIT_CHECKPOINT_CREATED]** (`M8`): Created git tag checkpoint-M8 at commit 7b98aae

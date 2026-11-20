@@ -6,7 +6,7 @@
   "workflow_status": "COMPLETED",
   "current_milestone": "M8",
   "max_retries_per_milestone": 3,
-  "updated_at": "2026-11-20T07:00:02Z",
+  "updated_at": "2026-11-20T08:32:06Z",
   "milestones": [
     {
       "id": "M0",
@@ -255,7 +255,7 @@
       ],
       "evidence": "Complete CN/EN docs, offline_compliance.md, static website with 6 unique SHA-256 screenshots & 0 CDN links, 1080p MP4 promo video (1.27 MB), and checksums verified (4/4 pytest passed).",
       "git_checkpoint": {
-        "commit": "e6e25d4b14224d24a8a7d50c39f12ca47a1d290a",
+        "commit": "deaae56b0583a0dc8d61c47c235e2b83c79b5f79",
         "tag": "checkpoint-M7",
         "timestamp": "2026-11-20T07:00:02Z"
       },
@@ -269,8 +269,8 @@
       "depends_on": [
         "M7"
       ],
-      "status": "BLOCKED",
-      "attempts": 0,
+      "status": "PASSED",
+      "attempts": 1,
       "max_attempts": 3,
       "failure_reasons": [
         "BLOCKED — ACCOUNT/PERMISSION: Per agent.md Section 2.2, Section 13, and Section 14, uploading the repository, release DMG, model weights, static website, and promo MP4 to the public internet requires explicit user permission and target repository/hosting configuration.",
@@ -280,13 +280,13 @@
       "deliverables": [
         "release/DELIVERY_MANIFEST.md"
       ],
-      "evidence": null,
+      "evidence": "Published https://github.com/JonathanYao-sys/CloudPilot, Release v1.0.0 with all 6 assets (CloudPilot-v1.0-macOS.dmg, model.safetensors, adapters.safetensors, adapter_config.json, CloudPilot_Promo.mp4, checksums.sha256), and GitHub Pages https://jonathanyao-sys.github.io/CloudPilot/website/",
       "git_checkpoint": {
-        "commit": "1b978949be5283784112d1b572ef82d3112bbe43",
-        "tag": "checkpoint-M8-blocked",
-        "timestamp": "2026-11-20T06:43:24Z"
+        "commit": "ce873c2c4e7088d097a82086d524b45abb142221",
+        "tag": "checkpoint-M8",
+        "timestamp": "2026-11-20T08:32:06Z"
       },
-      "next_step": "Await user authorization, target GitHub repo URL, visibility, and static hosting preference before executing public upload."
+      "next_step": "All milestones completed."
     }
   ],
   "history": [
@@ -529,6 +529,24 @@
       "event": "GIT_CHECKPOINT_CREATED",
       "milestone": "M7",
       "detail": "Created git tag checkpoint-M7 at commit e6e25d4"
+    },
+    {
+      "timestamp": "2026-11-20T07:00:02Z",
+      "event": "MILESTONE_STARTED",
+      "milestone": "M8",
+      "detail": "Orchestrator assigned M8 (Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication) to Coding Agent."
+    },
+    {
+      "timestamp": "2026-11-20T08:32:06Z",
+      "event": "MILESTONE_PASSED",
+      "milestone": "M8",
+      "detail": "Attempt 1 passed gate verification. Evidence: Published https://github.com/JonathanYao-sys/CloudPilot, Release v1.0.0 with all 6 assets (CloudPilot-v1.0-macOS.dmg, model.safetensors, adapters.safetensors, adapter_config.json, CloudPilot_Promo.mp4, checksums.sha256), and GitHub Pages https://jonathanyao-sys.github.io/CloudPilot/website/"
+    },
+    {
+      "timestamp": "2026-11-20T08:32:06Z",
+      "event": "GIT_CHECKPOINT_CREATED",
+      "milestone": "M8",
+      "detail": "Created git tag checkpoint-M8 at commit 7b98aae"
     }
   ]
 }
