@@ -38,7 +38,7 @@ Per `agent.md` Section 10.7, CloudPilot exports and clearly distinguishes both a
 - **Trainable Parameters:** `Trainable parameters: 0.297% (1.466M/494.033M)`
 - **Wall-Clock Training Duration:** `210.05 seconds`
 - **Fuse & Export Duration:** `1.57 seconds`
-- **Validation Loss:** `3.728` (iter 1) → **`0.366`** (iter 160)
+- **Validation Loss:** `3.728` (iter 1) → `0.348` (best, iter 120) / `0.366` (final, iter 160)
 - **Training Loss:** `0.962` (iter 10) → **`0.07`** (iter 160)
 
 ## 5. Intended Use, Boundaries & Limitations

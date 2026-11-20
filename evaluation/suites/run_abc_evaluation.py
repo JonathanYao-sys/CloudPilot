@@ -409,7 +409,7 @@ def write_reports(summaries: List[Dict[str, Any]], security_res: Dict[str, Any])
 
 > **Execution Environment:** Apple M4 MacBook Air (`Mac16,12`, 10-core CPU, 10-core Metal 4 GPU, 24 GB Unified Memory, macOS `27.2.1`)  
 > **Network Condition:** `HF_HUB_OFFLINE=1`, `TRANSFORMERS_OFFLINE=1` (**100% Local Execution & Local Deterministic Scoring**)  
-> **Pre-Training Baseline Reference:** Frozen prior to M4 fine-tuning in `evaluation/baselines/pretrain_ac_baseline.json` and `evaluation/baselines/PRETRAIN_BASELINE_REPORT.md`.  
+> **Baseline Chronology Disclosure:** The standalone A/C baseline report in `evaluation/baselines/pretrain_ac_baseline.json` and `evaluation/baselines/PRETRAIN_BASELINE_REPORT.md` is truthfully labeled as a **Post-Hoc Baseline on Unmodified A/C Checkpoints (`POST_HOC_UNMODIFIED_AC_BASELINE` / 事后补测的未修改 A/C 基线)** evaluated against the `test.jsonl` split that was frozen in M3 prior to M4 training (only the M0 single-prompt inference smoke test was run prior to M4 training).  
 > **Leaderboard Integrity Notice (`agent.md` Section 12):** All BFCL-style scores reported below are **self-run offline benchmark results** executed on this Mac, **not an official public leaderboard ranking**.
 
 ## 1. Executive Summary: Model A vs. Fine-Tuned Model B vs. Baseline Model C (Model-Only Isolation)

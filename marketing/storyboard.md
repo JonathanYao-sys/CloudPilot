@@ -1,8 +1,8 @@
 # CloudPilot — Promotional Video Storyboard (`marketing/storyboard.md`)
 
-> **Output File:** `marketing/exports/CloudPilot_Promo.mp4`  
+> **Output File:** `marketing/exports/CloudPilot_Promo.mp4` (`2.22 MiB` / `2,326,573 bytes`) + Continuous Live App Recording `marketing/footage/live_app_recording.mp4` (`1.50 MiB` / `1,569,848 bytes`)  
 > **Resolution & Codec:** `1920x1080` (1080p Full HD), `H.264 (yuv420p)` video + `AAC` offline narration audio, `30 fps`  
-> **Production Pipeline:** 100% locally rendered on Apple M4 MacBook Air using real `CloudPilot.app` captures, local `matplotlib` frame compositing, macOS offline `say` TTS, and local `/opt/homebrew/bin/ffmpeg` (`agent.md` Section 15).
+> **Production Pipeline:** 100% locally recorded and rendered on Apple M4 MacBook Air. First, `CloudPilot.app --record-live-demo` runs a real offline file-organization task with network sockets blocked and captures **36 sequential live interactive window frames** (`marketing/footage/live_frames/frame_0001.png` .. `frame_0036.png`) showing progressive request typing, step-by-step DAG plan compilation (`S1..S10`), user approval transition, real-time step-by-step Model B Metal GPU log streaming (`S1..S10`), model inventory inspection, security policy checks, and row-by-row SQLite audit logging. These 36 live interactive frames are encoded into `marketing/footage/live_app_recording.mp4` and combined with the 2 benchmark/release analysis cards and macOS offline `/usr/bin/say` narration via `/opt/homebrew/bin/ffmpeg` (`agent.md` Section 15).
 
 ## Scene-by-Scene Breakdown (26 Seconds Total)
 

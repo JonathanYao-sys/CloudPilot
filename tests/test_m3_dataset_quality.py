@@ -46,10 +46,11 @@ def test_m3_dataset_quality_and_zero_leakage():
     assert len(report["family_counts"]["test"]) == 8
 
 
-def test_m3_frozen_pretrain_ac_baseline():
+def test_m3_post_hoc_unmodified_ac_baseline():
     baseline_path = ROOT_DIR / "evaluation" / "baselines" / "pretrain_ac_baseline.json"
     data = json.loads(baseline_path.read_text(encoding="utf-8"))
-    assert data["stage"] == "M3_PRE_TRAINING_BASELINE_FREEZE"
+    assert data["stage"] == "POST_HOC_UNMODIFIED_AC_BASELINE"
+    assert "post-hoc" in data["chronology_disclosure"].lower()
     assert len(data["frozen_test_split_sha256"]) == 64
     assert data["evaluated_cases_count"] == 64
 

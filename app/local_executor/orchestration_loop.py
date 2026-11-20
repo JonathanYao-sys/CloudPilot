@@ -264,6 +264,7 @@ def main() -> int:
     p_run.add_argument("--workspace", required=True, help="Workspace directory path")
     p_run.add_argument("--request", required=True, help="Natural language user request")
     p_run.add_argument("--role", default="B", help="Executor model role (B, A, or C)")
+    p_run.add_argument("--block-network", action="store_true", help="Monkeypatch socket.connect to enforce zero network access")
 
     p_hist = sub.add_parser("history", help="Fetch SQLite task & audit history for a workspace")
     p_hist.add_argument("--workspace", required=True, help="Workspace directory path")
@@ -284,6 +285,15 @@ def main() -> int:
         return 0
 
     if args.cmd == "run":
+        if getattr(args, "block_network", False):
+            import socket
+
+            def _blocked_connect(*_a, **_kw):
+                raise RuntimeError("NETWORK_DISABLED_BY_OFFLINE_PROOF: outbound socket connection blocked")
+
+            socket.socket.connect = _blocked_connect  # type: ignore[method-assign]
+            socket.create_connection = _blocked_connect  # type: ignore[assignment]
+
         loop = LocalOrchestrationLoop(
             workspace_root=Path(args.workspace),
             executor_role=args.role,
@@ -293,11 +303,14 @@ def main() -> int:
         res = loop.approve_and_execute(draft["task_id"], approved_by="macos_app_user")
         model_dir, adapter_dir, model_id = loop.mlx_runtime.resolve_role_paths(args.role)
         runtime_provenance = {
+            "python_executable": str(Path(sys.executable).resolve()),
+            "python_home": os.environ.get("PYTHONHOME", ""),
             "backend_module_file": str(Path(__file__).resolve()),
             "loaded_model_id": model_id,
             "loaded_model_dir": str(model_dir),
             "loaded_adapter_dir": str(adapter_dir) if adapter_dir else None,
             "hf_hub_offline": os.environ.get("HF_HUB_OFFLINE") == "1",
+            "network_sockets_blocked": bool(getattr(args, "block_network", False)),
         }
         print(json.dumps({"draft": draft, "execution": res, "runtime_provenance": runtime_provenance}, indent=2, ensure_ascii=False))
         return 0

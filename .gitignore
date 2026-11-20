@@ -10,6 +10,8 @@ __pycache__/
 model/deployment/*.safetensors
 release/artifacts/*.dmg
 release/artifacts/CloudPilot.app/
+marketing/footage/live_frames/
+marketing/footage/slides/*.aiff
 build/
 dist/
 *.dmg.tmp

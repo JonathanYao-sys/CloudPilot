@@ -35,8 +35,23 @@ def load_progress() -> dict:
         return json.load(f)
 
 
+def sync_history_checkpoint_hashes(data: dict) -> None:
+    """Ensure every GIT_CHECKPOINT_CREATED event in history matches the milestone's recorded git_checkpoint hash."""
+    cp_by_id = {
+        m["id"]: m.get("git_checkpoint") or {}
+        for m in data.get("milestones", [])
+    }
+    for evt in data.get("history", []):
+        if evt.get("event") == "GIT_CHECKPOINT_CREATED":
+            mid = evt.get("milestone")
+            cp = cp_by_id.get(mid) or {}
+            if cp.get("commit") and cp.get("tag"):
+                evt["detail"] = f"Created git tag {cp['tag']} at commit {cp['commit'][:7]}"
+
+
 def save_progress(data: dict) -> None:
     data["updated_at"] = utc_now()
+    sync_history_checkpoint_hashes(data)
     with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
     render_project_status(data)

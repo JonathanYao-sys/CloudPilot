@@ -1,4 +1,4 @@
 role,model_id,heldout_total,json_valid_pct,tool_selection_acc_pct,exact_grounding_acc_pct,bfcl_local_subset_acc_pct,model_only_safety_refusal_pct,model_only_safety_suite_pct,model_only_unsafe_attempts,mean_tokens_per_sec,mean_ttft_ms,load_time_s,peak_metal_memory_mb
-A,mlx-community/Qwen2.5-0.5B-Instruct-4bit,64,100.0,56.25,56.25,66.67,0.0,12.5,28,176.74,70.12,0.257,534.23
-B,CloudPilot-Qwen2.5-0.5B-Executor-Fused-v1,64,100.0,96.88,95.31,75.0,92.86,93.75,2,167.96,68.05,0.41,534.23
-C,mlx-community/SmolLM2-135M-Instruct,64,67.19,0.0,0.0,0.0,0.0,0.0,28,217.54,35.13,0.113,436.76
+A,mlx-community/Qwen2.5-0.5B-Instruct-4bit,64,100.0,56.25,56.25,66.67,0.0,12.5,28,164.07,73.51,0.271,534.23
+B,CloudPilot-Qwen2.5-0.5B-Executor-Fused-v1,64,100.0,96.88,95.31,75.0,92.86,93.75,2,149.79,78.39,0.559,534.23
+C,mlx-community/SmolLM2-135M-Instruct,64,67.19,0.0,0.0,0.0,0.0,0.0,28,185.95,39.12,0.13,431.9

@@ -73,7 +73,29 @@ find "${APP_BUNDLE}/Contents/Resources/backend" -name "__pycache__" -exec rm -rf
 # Sanitize any absolute path in bundled adapter_config.json
 sed -i '' 's|/Users/[^/]*/CloudPilot/||g' "${APP_BUNDLE}/Contents/Resources/model/adapters/adapter_config.json" 2>/dev/null || true
 
-echo "2b. Bundling offline Python/MLX runtime packages into ${APP_BUNDLE}/Contents/Resources/python_packages/..."
+echo "2b. Bundling standalone relocatable Python 3.13 interpreter into ${APP_BUNDLE}/Contents/Resources/python_runtime/..."
+PY_STANDALONE_SRC="$("${ROOT_DIR}/.venv/bin/python" -c 'import sys, pathlib; print(pathlib.Path(sys.executable).resolve().parents[1])')"
+mkdir -p "${APP_BUNDLE}/Contents/Resources/python_runtime"
+rsync -a \
+  --exclude='__pycache__' \
+  --exclude='/include' \
+  --exclude='/share' \
+  --exclude='/lib/tcl*' \
+  --exclude='/lib/tk*' \
+  --exclude='/lib/itcl*' \
+  --exclude='/lib/thread*' \
+  --exclude='/lib/libtcl*' \
+  --exclude='/lib/pkgconfig' \
+  --exclude='/lib/python3.13/test' \
+  --exclude='/lib/python3.13/idlelib' \
+  --exclude='/lib/python3.13/tkinter' \
+  --exclude='/lib/python3.13/turtledemo' \
+  --exclude='/lib/python3.13/ensurepip' \
+  --exclude='/bin/idle*' \
+  --exclude='/bin/pip*' \
+  "${PY_STANDALONE_SRC}/" "${APP_BUNDLE}/Contents/Resources/python_runtime/"
+
+echo "2c. Bundling offline Python/MLX runtime packages into ${APP_BUNDLE}/Contents/Resources/python_packages/..."
 mkdir -p "${APP_BUNDLE}/Contents/Resources/python_packages"
 SITE_PKGS="$("${ROOT_DIR}/.venv/bin/python" -c 'import site; print(site.getsitepackages()[0])')"
 rsync -a \
@@ -96,20 +118,12 @@ export TRANSFORMERS_OFFLINE=1
 export CLOUDPILOT_OFFLINE_ONLY=1
 export CLOUDPILOT_BUNDLED_MODEL_DIR="${RES_DIR}/model/deployment"
 export CLOUDPILOT_BUNDLED_ADAPTER_DIR="${RES_DIR}/model/adapters"
+export PYTHONHOME="${RES_DIR}/python_runtime"
+export PYTHONNOUSERSITE=1
 export PYTHONPATH="${RES_DIR}/backend:${RES_DIR}/python_packages"
+export DYLD_LIBRARY_PATH="${RES_DIR}/python_runtime/lib:${DYLD_LIBRARY_PATH:-}"
 
-PYTHON_EXEC=""
-for candidate in \
-  "$(command -v python3.13 2>/dev/null || true)" \
-  "$HOME/.local/share/uv/python/cpython-3.13.18-macos-aarch64-none/bin/python3.13" \
-  "/opt/homebrew/bin/python3.13" \
-  "$(command -v python3 2>/dev/null || true)"; do
-  if [ -n "$candidate" ] && [ -x "$candidate" ]; then
-    PYTHON_EXEC="$candidate"
-    break
-  fi
-done
-
+PYTHON_EXEC="${RES_DIR}/python_runtime/bin/python3.13"
 cd "${RES_DIR}/backend"
 exec "$PYTHON_EXEC" -m app.local_executor.orchestration_loop "$@"
 EOF
@@ -118,9 +132,11 @@ chmod +x "${APP_BUNDLE}/Contents/Resources/run_bundled_backend.sh"
 echo "3. Applying local ad-hoc code signature to ${APP_BUNDLE}..."
 codesign --force --deep --sign - "${APP_BUNDLE}"
 
-echo "4. Exporting 6 distinct real SwiftUI screenshots from live offline execution..."
+echo "4. Exporting 6 distinct real SwiftUI screenshots and recording live interactive demo frames..."
 "${APP_BUNDLE}/Contents/MacOS/${APP_NAME}" \
   --export-screenshots "${ROOT_DIR}/marketing/assets/screenshots"
+"${APP_BUNDLE}/Contents/MacOS/${APP_NAME}" \
+  --record-live-demo "${ROOT_DIR}/marketing/footage/live_frames"
 
 echo "5. Packaging self-contained installable macOS Disk Image (${DMG_PATH})..."
 mkdir -p "${DMG_STAGING}"

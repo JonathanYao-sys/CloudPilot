@@ -24,11 +24,11 @@ To protect the user's SSD from running low on space, total project footprint (in
 | Cached Model A (`Qwen2.5-0.5B-Instruct-4bit`) | `.hf_cache/models/Qwen2.5-0.5B-Instruct-4bit` | 300 MB | `278.41 MB` |
 | Cached Model C (`SmolLM2-135M-Instruct`) | `.hf_cache/models/SmolLM2-135M-Instruct` | 300 MB | `261.19 MB` |
 | Synthetic Datasets (`train`/`val`/`test`) | `training/datasets/*.jsonl` | 15 MB | `~3 MB` |
-| Fine-Tuned LoRA Adapter (`B`) | `model/adapters/adapters.safetensors` | 25 MB | `~6 MB` |
-| Fused Deployment Model (`B-fused`) | `model/deployment/` | 320 MB | `~280 MB` |
-| macOS Application & DMG | `release/artifacts/` | 100 MB | `~25 MB` |
-| Evaluation Logs, Charts & Promo Video | `evaluation/` + `marketing/exports/` | 50 MB | `~15 MB` |
-| **Total Workspace Disk Usage** | `CloudPilot` | **<= 1.2 GB** | **~870 MB** (leaves >35.5 GB free) |
+| Fine-Tuned LoRA Adapter (`B`) | `model/adapters/adapters.safetensors` | 25 MiB | `5.61 MiB` |
+| Fused Deployment Model (`B-fused`) | `model/deployment/model.safetensors` | 320 MiB | `265.18 MiB` |
+| Self-Contained macOS App & DMG (bundling Python 3.13 + MLX + Model B) | `release/artifacts/CloudPilot-v1.0-macOS.dmg` | 600 MiB | `487.01 MiB` (`510,661,870 B`) |
+| Evaluation Logs, Charts & Promo Video | `evaluation/` + `marketing/exports/` | 50 MiB | `~15 MiB` |
+| **Total Workspace Disk Usage** | `CloudPilot` | **<= 2.5 GB** | **~1.95 GB** (leaves >34.5 GB free) |
 
 ## 3. Thermal & Energy Envelope (Fanless MacBook Air M4)
 

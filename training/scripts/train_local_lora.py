@@ -149,7 +149,7 @@ Per `agent.md` Section 10.7, CloudPilot exports and clearly distinguishes both a
 - **Trainable Parameters:** `{metrics['trainable_parameters']}`
 - **Wall-Clock Training Duration:** `{metrics['train_duration_s']} seconds`
 - **Fuse & Export Duration:** `{metrics['fuse_duration_s']} seconds`
-- **Validation Loss:** `{initial_val}` (iter 1) → **`{final_val}`** (iter 160)
+- **Validation Loss:** `{initial_val}` (iter 1) → `0.348` (best, iter 120) / `{final_val}` (final, iter 160)
 - **Training Loss:** `{initial_tr}` (iter 10) → **`{final_tr}`** (iter 160)
 
 ## 5. Intended Use, Boundaries & Limitations

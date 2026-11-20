@@ -120,7 +120,13 @@ def main() -> int:
     res_c = eval_pretrain_model(runtime, "C", cases)
 
     payload = {
-        "stage": "M3_PRE_TRAINING_BASELINE_FREEZE",
+        "stage": "POST_HOC_UNMODIFIED_AC_BASELINE",
+        "chronology_disclosure": (
+            "Post-hoc baseline evaluation (事后补测基线): executed after M4 LoRA training using the unmodified "
+            "original checkpoints for Model A (SHA256: ddffab9cbc7bf6dde941c6724841eeca8981fcfa81ca20ff8efff1396326d153) "
+            "and Model C (SHA256: 989e3ef746b41999ca096055a60c87057b8e842824253391bc0d9ed8dfc6936e) against the "
+            "held-out test.jsonl split that was frozen in M3 prior to M4 training."
+        ),
         "timestamp_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "frozen_test_split_path": "training/datasets/test.jsonl",
         "frozen_test_split_sha256": sha256_file(TEST_PATH),
@@ -132,14 +138,14 @@ def main() -> int:
     }
     OUT_JSON.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    md = f"""# CloudPilot Pre-Training Baseline Report (Models A & C — Frozen Before M4 Training)
+    md = f"""# CloudPilot Post-Hoc Unmodified A & C Baseline Report (`PRETRAIN_BASELINE_REPORT.md`)
 
-> **Milestone:** M3 (Phase 1 / Gate 1 & Phase 4 / Gate 4)  
-> **Frozen Test Split:** `training/datasets/test.jsonl` (SHA-256: `{payload['frozen_test_split_sha256']}`)  
+> **Baseline Classification:** **`POST_HOC_UNMODIFIED_AC_BASELINE`（事后补测的未修改 A/C 基线）**  
+> **Chronology & Provenance Disclosure:** While `training/datasets/test.jsonl` (SHA-256: `{payload['frozen_test_split_sha256']}`) was generated and frozen in M3 prior to M4 LoRA training, and the base checkpoints for Model A and Model C were never modified during training, this 64-case stratified baseline script was executed **post-hoc (after M4 fine-tuning completed)**. It is therefore truthfully labeled as a **Post-Hoc Baseline on Unmodified A/C Checkpoints**, not a pre-training timestamped run.  
 > **Evaluated Stratified Held-Out Cases:** `{len(cases)}` (8 task families × 8 cases)  
 > **Network Condition:** `HF_HUB_OFFLINE=1` (100% On-Mac Apple M4 Metal 4 Execution)
 
-## 1. Pre-Training Model A vs. Model C Baseline Metrics
+## 1. Unmodified Base Model A vs. Small Model C Baseline Metrics
 
 | Metric | **Model A** (`{res_a['model_id']}`) | **Model C** (`{res_c['model_id']}`) |
 | --- | --- | --- |

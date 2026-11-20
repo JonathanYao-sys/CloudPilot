@@ -2,7 +2,7 @@
 
 > **Execution Environment:** Apple M4 MacBook Air (`Mac16,12`, 10-core CPU, 10-core Metal 4 GPU, 24 GB Unified Memory, macOS `27.2.1`)  
 > **Network Condition:** `HF_HUB_OFFLINE=1`, `TRANSFORMERS_OFFLINE=1` (**100% Local Execution & Local Deterministic Scoring**)  
-> **Pre-Training Baseline Reference:** Frozen prior to M4 fine-tuning in `evaluation/baselines/pretrain_ac_baseline.json` and `evaluation/baselines/PRETRAIN_BASELINE_REPORT.md`.  
+> **Baseline Chronology Disclosure:** The standalone A/C baseline report in `evaluation/baselines/pretrain_ac_baseline.json` and `evaluation/baselines/PRETRAIN_BASELINE_REPORT.md` is truthfully labeled as a **Post-Hoc Baseline on Unmodified A/C Checkpoints (`POST_HOC_UNMODIFIED_AC_BASELINE` / 事后补测的未修改 A/C 基线)** evaluated against the `test.jsonl` split that was frozen in M3 prior to M4 training (only the M0 single-prompt inference smoke test was run prior to M4 training).  
 > **Leaderboard Integrity Notice (`agent.md` Section 12):** All BFCL-style scores reported below are **self-run offline benchmark results** executed on this Mac, **not an official public leaderboard ranking**.
 
 ## 1. Executive Summary: Model A vs. Fine-Tuned Model B vs. Baseline Model C (Model-Only Isolation)
@@ -17,10 +17,10 @@ All accuracy metrics below measure the **raw model output in isolation (with `Po
 | **Model-Only Safety & Permission Refusal Rate (28 refusal cases)** | `0.0%` (`0/28`) | **`92.86%` (`26/28`)** | `0.0%` (`0/28`) |
 | **Model-Only Unblocked Unsafe/Invalid Attempts (out of 28)** | `28 / 28` | **`2 / 28`** | `28 / 28` |
 | **BFCL-Style Local Function-Calling Subset (%)** | `66.67%` | **`75.0%`** | `0.0%` |
-| **On-Mac Decode Speed (`tokens/sec`)** | `176.74 tok/s` | **`167.96 tok/s`** | `217.54 tok/s` |
-| **Mean Time-To-First-Token (`ms`)** | `70.12 ms` | **`68.05 ms`** | `35.13 ms` |
-| **Model Load Time (`s`)** | `0.257 s` | **`0.41 s`** | `0.113 s` |
-| **Peak Unified Metal Memory (`MB`)** | `534.23 MB` | **`534.23 MB`** | `436.76 MB` |
+| **On-Mac Decode Speed (`tokens/sec`)** | `164.07 tok/s` | **`149.79 tok/s`** | `185.95 tok/s` |
+| **Mean Time-To-First-Token (`ms`)** | `73.51 ms` | **`78.39 ms`** | `39.12 ms` |
+| **Model Load Time (`s`)** | `0.271 s` | **`0.559 s`** | `0.13 s` |
+| **Peak Unified Metal Memory (`MB`)** | `534.23 MB` | **`534.23 MB`** | `431.9 MB` |
 
 ## 2. Track-by-Track Findings
 
@@ -43,7 +43,7 @@ All accuracy metrics below measure the **raw model output in isolation (with `Po
 | `family_8_adversarial_safety` | `50.0%` | **`87.5%`** | `0.0%` |
 
 ### Track 3 — On-Device Performance & Memory Efficiency
-- Fusing the trained LoRA adapter into `model/deployment/model.safetensors` allows **Model B** to run at **`167.96 tokens/sec`** with zero adapter runtime overhead and a peak Metal footprint of only **`534.23 MB`** (< 2.3% of the Mac's 24 GB unified memory).
+- Fusing the trained LoRA adapter into `model/deployment/model.safetensors` allows **Model B** to run at **`149.79 tokens/sec`** with zero adapter runtime overhead and a peak Metal footprint of only **`534.23 MB`** (< 2.3% of the Mac's 24 GB unified memory).
 - Sequential loading via `LocalMLXRuntime.unload()` + `mx.clear_cache()` ensures only one checkpoint resides in Metal RAM at any time.
 
 ### Track 4 — Two-Layer Security Evaluation: Model-Only Capability vs. Deterministic `PolicyValidator`

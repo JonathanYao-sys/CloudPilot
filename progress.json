@@ -93,13 +93,13 @@
         "tag": "checkpoint-M2",
         "timestamp": "2026-11-20T06:00:18Z"
       },
-      "next_step": "Proceed to M3: Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline"
+      "next_step": "Proceed to M3: Local synthetic dataset generation (train/val/test), validation checks, and post-hoc unmodified A/C baseline"
     },
     {
       "id": "M3",
       "phase": "Phase 4",
       "gate": "Gate 4",
-      "title": "Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline",
+      "title": "Local synthetic dataset generation (train/val/test), validation checks, and post-hoc unmodified A/C baseline",
       "depends_on": [
         "M1",
         "M2"
@@ -120,7 +120,7 @@
         "evaluation/baselines/pretrain_ac_baseline.json",
         "evaluation/baselines/PRETRAIN_BASELINE_REPORT.md"
       ],
-      "evidence": "Generated 1,320 synthetic cases (0 leakage) AND frozen pre-training A/C baseline report (pretrain_ac_baseline.json & PRETRAIN_BASELINE_REPORT.md) before M4 fine-tuning (3/3 pytest passed).",
+      "evidence": "Generated 1,320 synthetic cases (0 leakage, test.jsonl frozen prior to M4) and post-hoc unmodified A/C baseline report (pretrain_ac_baseline.json & PRETRAIN_BASELINE_REPORT.md) (3/3 pytest passed).",
       "git_checkpoint": {
         "commit": "2dd12791d96d03c2615a46b8e03b8ed8d41793a9",
         "tag": "checkpoint-M3",
@@ -150,7 +150,7 @@
         "model/deployment/model.safetensors",
         "model/MODEL_CARD.md"
       ],
-      "evidence": "On-Mac MLX LoRA fine-tuning (160 iters, val_loss 3.728 -> 0.348) produced adapters.safetensors (5.61 MB) and fused model.safetensors (265.18 MB); verified in App loader (3/3 pytest passed).",
+      "evidence": "On-Mac MLX LoRA fine-tuning (160 iters, val_loss 3.728 [iter 1] -> 0.348 [best, iter 120] / 0.366 [final, iter 160]) produced adapters.safetensors (5.61 MiB) and fused model.safetensors (265.18 MiB); verified in App loader (3/3 pytest passed).",
       "git_checkpoint": {
         "commit": "5e9aa8abe4664dd72b9687689b7263c330b039d1",
         "tag": "checkpoint-M4",
@@ -180,7 +180,7 @@
         "release/artifacts/CloudPilot.app",
         "release/artifacts/CloudPilot-v1.0-macOS.dmg"
       ],
-      "evidence": "Self-contained CloudPilot.app and 261 MB CloudPilot-v1.0-macOS.dmg bundling model.safetensors & backend verified via DMG mount + isolated install outside CloudPilot + 6 distinct UI screenshots (3/3 pytest passed).",
+      "evidence": "Self-contained CloudPilot.app and 487.01 MiB (510,661,870 B) CloudPilot-v1.0-macOS.dmg bundling standalone Python 3.13 + MLX + model.safetensors + backend verified via DMG mount + clean-Mac stripped-env offline test + 6 distinct UI screenshots + 36 live interactive recording frames (3/3 pytest passed).",
       "git_checkpoint": {
         "commit": "6ce10a99609ba64a8b54d29ace46f1dddc7fa5c4",
         "tag": "checkpoint-M5",
@@ -249,11 +249,12 @@
         "website/styles.css",
         "website/app.js",
         "marketing/storyboard.md",
+        "marketing/footage/live_app_recording.mp4",
         "marketing/exports/CloudPilot_Promo.mp4",
         "release/checksums.sha256",
         "release/DELIVERY_MANIFEST.md"
       ],
-      "evidence": "Complete CN/EN docs, offline_compliance.md, static website with 6 unique SHA-256 screenshots & 0 CDN links, 1080p MP4 promo video (1.27 MB), and checksums verified (4/4 pytest passed).",
+      "evidence": "Complete CN/EN docs, offline_compliance.md, static website with 6 unique SHA-256 screenshots & 0 CDN links, 36-frame live app recording (1.50 MiB) + 1080p MP4 promo video (2.22 MiB), and cross-document consistency verified (4/4 pytest passed).",
       "git_checkpoint": {
         "commit": "deaae56b0583a0dc8d61c47c235e2b83c79b5f79",
         "tag": "checkpoint-M7",
@@ -282,7 +283,7 @@
       ],
       "evidence": "Published https://github.com/JonathanYao-sys/CloudPilot, Release v1.0.0 with all 6 assets (CloudPilot-v1.0-macOS.dmg, model.safetensors, adapters.safetensors, adapter_config.json, CloudPilot_Promo.mp4, checksums.sha256), and GitHub Pages https://jonathanyao-sys.github.io/CloudPilot/website/",
       "git_checkpoint": {
-        "commit": "ce873c2c4e7088d097a82086d524b45abb142221",
+        "commit": "3bd27ff2a2c00c4c17b2dd31c38517ef2da76e5b",
         "tag": "checkpoint-M8",
         "timestamp": "2026-11-20T08:32:06Z"
       },
@@ -366,7 +367,7 @@
       "timestamp": "2026-11-20T06:00:33Z",
       "event": "MILESTONE_STARTED",
       "milestone": "M3",
-      "detail": "Orchestrator assigned M3 (Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline) to Coding Agent."
+      "detail": "Orchestrator assigned M3 (Local synthetic dataset generation (train/val/test), validation checks, and post-hoc unmodified A/C baseline) to Coding Agent."
     },
     {
       "timestamp": "2026-11-20T06:02:07Z",
@@ -390,7 +391,7 @@
       "timestamp": "2026-11-20T06:09:11Z",
       "event": "MILESTONE_PASSED",
       "milestone": "M4",
-      "detail": "Attempt 1 passed gate verification. Evidence: On-Mac MLX LoRA fine-tuning (160 iters, val_loss 3.728 -> 0.348) produced adapters.safetensors (5.61 MB) and fused model.safetensors (265.18 MB); verified in App loader (3/3 pytest passed)."
+      "detail": "Attempt 1 passed gate verification. Evidence: On-Mac MLX LoRA fine-tuning (160 iters, val_loss 3.728 [iter 1] -> 0.348 [best, iter 120] / 0.366 [final, iter 160]) produced adapters.safetensors (5.61 MB) and fused model.safetensors (265.18 MB); verified in App loader (3/3 pytest passed)."
     },
     {
       "timestamp": "2026-11-20T06:09:12Z",
@@ -468,7 +469,7 @@
       "timestamp": "2026-11-20T06:43:11Z",
       "event": "MILESTONE_PASSED",
       "milestone": "M3",
-      "detail": "Attempt 2 passed gate verification. Evidence: Generated 1,320 synthetic cases (0 leakage) AND frozen pre-training A/C baseline report (pretrain_ac_baseline.json & PRETRAIN_BASELINE_REPORT.md) before M4 fine-tuning (3/3 pytest passed)."
+      "detail": "Attempt 2 passed gate verification. Evidence: Generated 1,320 synthetic cases (0 leakage) AND frozen post-hoc unmodified A/C baseline report (pretrain_ac_baseline.json & PRETRAIN_BASELINE_REPORT.md) before M4 fine-tuning (3/3 pytest passed)."
     },
     {
       "timestamp": "2026-11-20T06:43:11Z",
@@ -480,7 +481,7 @@
       "timestamp": "2026-11-20T06:43:22Z",
       "event": "MILESTONE_PASSED",
       "milestone": "M5",
-      "detail": "Attempt 3 passed gate verification. Evidence: Self-contained CloudPilot.app and 261 MB CloudPilot-v1.0-macOS.dmg bundling model.safetensors & backend verified via DMG mount + isolated install outside CloudPilot + 6 distinct UI screenshots (3/3 pytest passed)."
+      "detail": "Attempt 3 passed gate verification. Evidence: Self-contained CloudPilot.app and 487.01 MiB (510,661,870 B) CloudPilot-v1.0-macOS.dmg bundling model.safetensors & backend verified via DMG mount + isolated install outside CloudPilot + 6 distinct UI screenshots (3/3 pytest passed)."
     },
     {
       "timestamp": "2026-11-20T06:43:22Z",
