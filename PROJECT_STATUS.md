@@ -15,8 +15,8 @@
 | **M2** | Phase 3 (Gate 3) | Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice | `PASSED` | 2/3 | `checkpoint-M2` (`1b0b81e`) |
 | **M3** | Phase 4 (Gate 4) | Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline | `PASSED` | 2/3 | `checkpoint-M3` (`2dd1279`) |
 | **M4** | Phase 5 (Gate 5) | On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card | `PASSED` | 1/3 | `checkpoint-M4` (`5e9aa8a`) |
-| **M5** | Phase 6 (Gate 6) | Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B | `PASSED` | 3/3 | `checkpoint-M5` (`5c67ab4`) |
-| **M6** | Phase 7 (Gate 7) | Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts | `PASSED` | 1/3 | `checkpoint-M6` (`334fef5`) |
+| **M5** | Phase 6 (Gate 6) | Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B | `PASSED` | 3/3 | `checkpoint-M5` (`6ce10a9`) |
+| **M6** | Phase 7 (Gate 7) | Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts | `PASSED` | 2/3 | `checkpoint-M6` (`4777d54`) |
 | **M7** | Phase 8, Phase 9 & Phase 10 (Local Build) (Gate 8 (Local), Gate 9 (Local), Gate 10) | Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest | `PASSED` | 1/3 | `checkpoint-M7` (`8c894f1`) |
 | **M8** | Phase 8 & Phase 9 (Public Internet Publication) (Gate 8 (Public) & Gate 9 (Public)) | Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication | `BLOCKED` | 0/3 | `checkpoint-M8-blocked` (`d060dbc`) |
 
@@ -79,17 +79,17 @@
 - **Recorded Failure Reasons (Auto-Repair Loop):**
   1. `Command `.venv/bin/pytest tests/test_m5_macos_app_and_dmg.py -v` exited 1:              output=stdout, stderr=stderr) | E               subprocess.CalledProcessError: Command '['/Users/yao/CloudPilot/release/artifacts/CloudPilot.app/Contents/MacOS/CloudPilot', '--headless-self-test']' returned non-zero exit status 1. |  | ../.local/share/uv/python/cpython-3.13.18-macos-aarch64-none/lib/python3.13/subprocess.py:578: CalledProcessError | =========================== short test summary info ============================ | FAILED tests/test_m5_macos_app_and_dmg.py::test_m5_app_headless_offline_self_test | ========================= 1 failed, 2 passed in 3.84s ==========================`
 - **Gate Verification Evidence:** Self-contained CloudPilot.app and 261 MB CloudPilot-v1.0-macOS.dmg bundling model.safetensors & backend verified via DMG mount + isolated install outside /Users/yao/CloudPilot + 6 distinct UI screenshots (3/3 pytest passed).
-- **Git Checkpoint:** commit `5c67ab43831470a69ecf444f1bb68260e91e927f`, tag `checkpoint-M5` at `2026-11-20T06:43:22Z`
+- **Git Checkpoint:** commit `6ce10a99609ba64a8b54d29ace46f1dddc7fa5c4`, tag `checkpoint-M5` at `2026-11-20T06:43:22Z`
 - **Next Step:** All milestones completed.
 
 ### M6: Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts
 - **Status:** `PASSED`
 - **Dependencies:** M4, M5
 - **Verification Command:** `.venv/bin/pytest tests/test_m6_benchmarks.py -v`
-- **Attempts:** 1 / 3
-- **Gate Verification Evidence:** Three-model (A/B/C) local benchmark completed: Model B achieved 95.31% exact grounding (+39.06% over Base A, +95.31% over Small C) at 167.87 tok/s and 0 unauthorized security actions (3/3 pytest passed).
-- **Git Checkpoint:** commit `334fef577bf6cdfd3af460182d96bdd0e27bc2f6`, tag `checkpoint-M6` at `2026-11-20T06:11:02Z`
-- **Next Step:** Proceed to M7: Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest
+- **Attempts:** 2 / 3
+- **Gate Verification Evidence:** A/B/C benchmark with Model-Only safety refusal isolation (Model B 92.86% vs Base A 0.0% & Small C 0.0%, exact grounding 95.31% vs 56.25% & 0.0%) + Layer 2 PolicyValidator defense-in-depth verified (3/3 pytest passed).
+- **Git Checkpoint:** commit `4777d5469ec853846ca0870d226dd428e4956ba8`, tag `checkpoint-M6` at `2026-11-20T06:43:22Z`
+- **Next Step:** All milestones completed.
 
 ### M7: Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest
 - **Status:** `PASSED`
@@ -112,8 +112,6 @@
 
 ## 3. Orchestrator Execution Log (Recent Events)
 
-- `2026-11-20T06:02:07Z` **[MILESTONE_PASSED]** (`M3`): Attempt 1 passed gate verification. Evidence: Generated and rule-validated 1,320 synthetic cases (1000 train, 160 val, 160 frozen test) across 8 families with 0 cross-split leakage and 0 PII (2/2 pytest passed).
-- `2026-11-20T06:02:07Z` **[GIT_CHECKPOINT_CREATED]** (`M3`): Created git tag checkpoint-M3 at commit 2915e8e
 - `2026-11-20T06:02:15Z` **[MILESTONE_STARTED]** (`M4`): Orchestrator assigned M4 (On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card) to Coding Agent.
 - `2026-11-20T06:09:11Z` **[MILESTONE_PASSED]** (`M4`): Attempt 1 passed gate verification. Evidence: On-Mac MLX LoRA fine-tuning (160 iters, val_loss 3.728 -> 0.348) produced adapters.safetensors (5.61 MB) and fused model.safetensors (265.18 MB); verified in App loader (3/3 pytest passed).
 - `2026-11-20T06:09:12Z` **[GIT_CHECKPOINT_CREATED]** (`M4`): Created git tag checkpoint-M4 at commit 16f3174
@@ -132,3 +130,5 @@
 - `2026-11-20T06:43:11Z` **[GIT_CHECKPOINT_CREATED]** (`M3`): Created git tag checkpoint-M3 at commit be3aa1b
 - `2026-11-20T06:43:22Z` **[MILESTONE_PASSED]** (`M5`): Attempt 3 passed gate verification. Evidence: Self-contained CloudPilot.app and 261 MB CloudPilot-v1.0-macOS.dmg bundling model.safetensors & backend verified via DMG mount + isolated install outside /Users/yao/CloudPilot + 6 distinct UI screenshots (3/3 pytest passed).
 - `2026-11-20T06:43:22Z` **[GIT_CHECKPOINT_CREATED]** (`M5`): Created git tag checkpoint-M5 at commit 5c67ab4
+- `2026-11-20T06:43:22Z` **[MILESTONE_PASSED]** (`M6`): Attempt 2 passed gate verification. Evidence: A/B/C benchmark with Model-Only safety refusal isolation (Model B 92.86% vs Base A 0.0% & Small C 0.0%, exact grounding 95.31% vs 56.25% & 0.0%) + Layer 2 PolicyValidator defense-in-depth verified (3/3 pytest passed).
+- `2026-11-20T06:43:22Z` **[GIT_CHECKPOINT_CREATED]** (`M6`): Created git tag checkpoint-M6 at commit 4777d54

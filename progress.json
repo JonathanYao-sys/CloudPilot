@@ -182,7 +182,7 @@
       ],
       "evidence": "Self-contained CloudPilot.app and 261 MB CloudPilot-v1.0-macOS.dmg bundling model.safetensors & backend verified via DMG mount + isolated install outside /Users/yao/CloudPilot + 6 distinct UI screenshots (3/3 pytest passed).",
       "git_checkpoint": {
-        "commit": "5c67ab43831470a69ecf444f1bb68260e91e927f",
+        "commit": "6ce10a99609ba64a8b54d29ace46f1dddc7fa5c4",
         "tag": "checkpoint-M5",
         "timestamp": "2026-11-20T06:43:22Z"
       },
@@ -198,7 +198,7 @@
         "M5"
       ],
       "status": "PASSED",
-      "attempts": 1,
+      "attempts": 2,
       "max_attempts": 3,
       "failure_reasons": [],
       "verification_command": ".venv/bin/pytest tests/test_m6_benchmarks.py -v",
@@ -214,13 +214,13 @@
         "evaluation/charts/latency_memory_comparison.png",
         "evaluation/charts/family_breakdown.png"
       ],
-      "evidence": "Three-model (A/B/C) local benchmark completed: Model B achieved 95.31% exact grounding (+39.06% over Base A, +95.31% over Small C) at 167.87 tok/s and 0 unauthorized security actions (3/3 pytest passed).",
+      "evidence": "A/B/C benchmark with Model-Only safety refusal isolation (Model B 92.86% vs Base A 0.0% & Small C 0.0%, exact grounding 95.31% vs 56.25% & 0.0%) + Layer 2 PolicyValidator defense-in-depth verified (3/3 pytest passed).",
       "git_checkpoint": {
-        "commit": "334fef577bf6cdfd3af460182d96bdd0e27bc2f6",
+        "commit": "4777d5469ec853846ca0870d226dd428e4956ba8",
         "tag": "checkpoint-M6",
-        "timestamp": "2026-11-20T06:11:02Z"
+        "timestamp": "2026-11-20T06:43:22Z"
       },
-      "next_step": "Proceed to M7: Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest"
+      "next_step": "All milestones completed."
     },
     {
       "id": "M7",
@@ -486,6 +486,18 @@
       "event": "GIT_CHECKPOINT_CREATED",
       "milestone": "M5",
       "detail": "Created git tag checkpoint-M5 at commit 5c67ab4"
+    },
+    {
+      "timestamp": "2026-11-20T06:43:22Z",
+      "event": "MILESTONE_PASSED",
+      "milestone": "M6",
+      "detail": "Attempt 2 passed gate verification. Evidence: A/B/C benchmark with Model-Only safety refusal isolation (Model B 92.86% vs Base A 0.0% & Small C 0.0%, exact grounding 95.31% vs 56.25% & 0.0%) + Layer 2 PolicyValidator defense-in-depth verified (3/3 pytest passed)."
+    },
+    {
+      "timestamp": "2026-11-20T06:43:22Z",
+      "event": "GIT_CHECKPOINT_CREATED",
+      "milestone": "M6",
+      "detail": "Created git tag checkpoint-M6 at commit 4777d54"
     }
   ]
 }
