@@ -3,7 +3,7 @@
   "source_spec": "agent.md",
   "spec_version": "4.0 — LOCAL-ONLY",
   "workflow_architecture": "agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints",
-  "workflow_status": "COMPLETED",
+  "workflow_status": "PAUSED_AWAITING_USER_APPROVAL",
   "current_milestone": "M8",
   "max_retries_per_milestone": 3,
   "updated_at": "2026-11-20T06:43:24Z",
@@ -255,7 +255,7 @@
       ],
       "evidence": "Complete CN/EN docs, offline_compliance.md, static website with 6 unique SHA-256 screenshots & 0 CDN links, 1080p MP4 promo video (1.28 MB), and checksums verified (4/4 pytest passed).",
       "git_checkpoint": {
-        "commit": "906051a177aae1dd1feff9e21701ea538488ba3e",
+        "commit": "2729510410aedb9c7aeaebd602107d7494e94612",
         "tag": "checkpoint-M7",
         "timestamp": "2026-11-20T06:43:24Z"
       },
@@ -273,6 +273,7 @@
       "attempts": 0,
       "max_attempts": 3,
       "failure_reasons": [
+        "BLOCKED — ACCOUNT/PERMISSION: Per agent.md Section 2.2, Section 13, and Section 14, uploading the repository, release DMG, model weights, static website, and promo MP4 to the public internet requires explicit user permission and target repository/hosting configuration.",
         "BLOCKED — ACCOUNT/PERMISSION: Per agent.md Section 2.2, Section 13, and Section 14, uploading the repository, release DMG, model weights, static website, and promo MP4 to the public internet requires explicit user permission and target repository/hosting configuration."
       ],
       "verification_command": "python3 orchestrator.py check-publication",
@@ -281,9 +282,9 @@
       ],
       "evidence": null,
       "git_checkpoint": {
-        "commit": "d060dbcde727c57fb89c253a6e2b2b42ec79c1fa",
+        "commit": "1b978949be5283784112d1b572ef82d3112bbe43",
         "tag": "checkpoint-M8-blocked",
-        "timestamp": "2026-11-20T06:15:55Z"
+        "timestamp": "2026-11-20T06:43:24Z"
       },
       "next_step": "Await user authorization, target GitHub repo URL, visibility, and static hosting preference before executing public upload."
     }
@@ -510,6 +511,12 @@
       "event": "GIT_CHECKPOINT_CREATED",
       "milestone": "M7",
       "detail": "Created git tag checkpoint-M7 at commit 906051a"
+    },
+    {
+      "timestamp": "2026-11-20T06:43:24Z",
+      "event": "MILESTONE_BLOCKED_ON_GATE",
+      "milestone": "M8",
+      "detail": "BLOCKED — ACCOUNT/PERMISSION: Per agent.md Section 2.2, Section 13, and Section 14, uploading the repository, release DMG, model weights, static website, and promo MP4 to the public internet requires explicit user permission and target repository/hosting configuration."
     }
   ]
 }

@@ -2,7 +2,7 @@
 
 > **Source Specification:** `agent.md` (4.0 — LOCAL-ONLY)  
 > **Workflow Pattern:** `agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints`  
-> **Overall Workflow Status:** `COMPLETED`  
+> **Overall Workflow Status:** `PAUSED_AWAITING_USER_APPROVAL`  
 > **Current Active Milestone:** `M8`  
 > **Last Updated (UTC):** `2026-11-20T06:43:24Z`
 
@@ -17,8 +17,8 @@
 | **M4** | Phase 5 (Gate 5) | On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card | `PASSED` | 1/3 | `checkpoint-M4` (`5e9aa8a`) |
 | **M5** | Phase 6 (Gate 6) | Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B | `PASSED` | 3/3 | `checkpoint-M5` (`6ce10a9`) |
 | **M6** | Phase 7 (Gate 7) | Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts | `PASSED` | 2/3 | `checkpoint-M6` (`a133cef`) |
-| **M7** | Phase 8, Phase 9 & Phase 10 (Local Build) (Gate 8 (Local), Gate 9 (Local), Gate 10) | Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest | `PASSED` | 2/3 | `checkpoint-M7` (`906051a`) |
-| **M8** | Phase 8 & Phase 9 (Public Internet Publication) (Gate 8 (Public) & Gate 9 (Public)) | Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication | `BLOCKED` | 0/3 | `checkpoint-M8-blocked` (`d060dbc`) |
+| **M7** | Phase 8, Phase 9 & Phase 10 (Local Build) (Gate 8 (Local), Gate 9 (Local), Gate 10) | Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest | `PASSED` | 2/3 | `checkpoint-M7` (`2729510`) |
+| **M8** | Phase 8 & Phase 9 (Public Internet Publication) (Gate 8 (Public) & Gate 9 (Public)) | Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication | `BLOCKED` | 0/3 | `checkpoint-M8-blocked` (`1b97894`) |
 
 ## 2. Detailed Milestone Evidence, Failure Reasons & Next Steps
 
@@ -97,7 +97,7 @@
 - **Verification Command:** `.venv/bin/pytest tests/test_m7_release_and_media.py -v`
 - **Attempts:** 2 / 3
 - **Gate Verification Evidence:** Complete CN/EN docs, offline_compliance.md, static website with 6 unique SHA-256 screenshots & 0 CDN links, 1080p MP4 promo video (1.28 MB), and checksums verified (4/4 pytest passed).
-- **Git Checkpoint:** commit `906051a177aae1dd1feff9e21701ea538488ba3e`, tag `checkpoint-M7` at `2026-11-20T06:43:24Z`
+- **Git Checkpoint:** commit `2729510410aedb9c7aeaebd602107d7494e94612`, tag `checkpoint-M7` at `2026-11-20T06:43:24Z`
 - **Next Step:** All milestones completed.
 
 ### M8: Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication
@@ -107,12 +107,12 @@
 - **Attempts:** 0 / 3
 - **Recorded Failure Reasons (Auto-Repair Loop):**
   1. `BLOCKED — ACCOUNT/PERMISSION: Per agent.md Section 2.2, Section 13, and Section 14, uploading the repository, release DMG, model weights, static website, and promo MP4 to the public internet requires explicit user permission and target repository/hosting configuration.`
-- **Git Checkpoint:** commit `d060dbcde727c57fb89c253a6e2b2b42ec79c1fa`, tag `checkpoint-M8-blocked` at `2026-11-20T06:15:55Z`
+  2. `BLOCKED — ACCOUNT/PERMISSION: Per agent.md Section 2.2, Section 13, and Section 14, uploading the repository, release DMG, model weights, static website, and promo MP4 to the public internet requires explicit user permission and target repository/hosting configuration.`
+- **Git Checkpoint:** commit `1b978949be5283784112d1b572ef82d3112bbe43`, tag `checkpoint-M8-blocked` at `2026-11-20T06:43:24Z`
 - **Next Step:** Await user authorization, target GitHub repo URL, visibility, and static hosting preference before executing public upload.
 
 ## 3. Orchestrator Execution Log (Recent Events)
 
-- `2026-11-20T06:09:12Z` **[GIT_CHECKPOINT_CREATED]** (`M4`): Created git tag checkpoint-M4 at commit 16f3174
 - `2026-11-20T06:09:12Z` **[MILESTONE_STARTED]** (`M5`): Orchestrator assigned M5 (Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B) to Coding Agent.
 - `2026-11-20T06:10:07Z` **[VERIFICATION_FAILED]** (`M5`): Attempt 1/3 failed: Command `.venv/bin/pytest tests/test_m5_macos_app_and_dmg.py -v` exited 1:              output=stdout, stderr=stderr) | E               subprocess.CalledProcessError: Command '['/Users/yao/CloudPilot/release/artifacts/CloudPilot.app/Content
 - `2026-11-20T06:11:02Z` **[MILESTONE_PASSED]** (`M5`): Attempt 2 passed gate verification. Evidence: Native SwiftUI CloudPilot.app and CloudPilot-v1.0-macOS.dmg built locally, ad-hoc signed, hdiutil-verified, and tested offline with Model B (3/3 pytest passed).
@@ -132,3 +132,4 @@
 - `2026-11-20T06:43:22Z` **[GIT_CHECKPOINT_CREATED]** (`M6`): Created git tag checkpoint-M6 at commit 4777d54
 - `2026-11-20T06:43:24Z` **[MILESTONE_PASSED]** (`M7`): Attempt 2 passed gate verification. Evidence: Complete CN/EN docs, offline_compliance.md, static website with 6 unique SHA-256 screenshots & 0 CDN links, 1080p MP4 promo video (1.28 MB), and checksums verified (4/4 pytest passed).
 - `2026-11-20T06:43:24Z` **[GIT_CHECKPOINT_CREATED]** (`M7`): Created git tag checkpoint-M7 at commit 906051a
+- `2026-11-20T06:43:24Z` **[MILESTONE_BLOCKED_ON_GATE]** (`M8`): BLOCKED — ACCOUNT/PERMISSION: Per agent.md Section 2.2, Section 13, and Section 14, uploading the repository, release DMG, model weights, static website, and promo MP4 to the public internet requires explicit user permission and target repository/hosting configuration.
