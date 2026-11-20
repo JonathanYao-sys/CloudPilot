@@ -1,0 +1,86 @@
+{
+  "protocol_version": "1.0",
+  "task_id": "demo-001",
+  "plan_version": 1,
+  "workspace_id": "demo_workspace",
+  "goal": "Organize AP European History study PDF into AP_Euro folder and verify copy integrity.",
+  "success_conditions": [
+    "Folder AP_Euro exists inside workspace",
+    "AP_Euro/Chapter3.pdf matches SHA-256 of Chapter3.pdf",
+    "Manifest AP_Euro/manifest.json records verified operations"
+  ],
+  "idempotency_key": "idem-demo-001-v1",
+  "retry_bounds": {
+    "max_retries": 2,
+    "timeout_seconds": 30.0
+  },
+  "approvals": {
+    "requires_user_approval": true,
+    "approved": true,
+    "allow_overwrite": false,
+    "approved_by": "local_user",
+    "approved_at": "2026-11-20T06:00:00Z"
+  },
+  "verification_requirements": {
+    "verify_checksums": true,
+    "require_manifest": true
+  },
+  "steps": [
+    {
+      "step_id": "s1",
+      "action": "create_folder",
+      "args": {
+        "path": "AP_Euro"
+      },
+      "depends_on": [],
+      "preconditions": [
+        "workspace_writable"
+      ],
+      "description": "Create target directory AP_Euro"
+    },
+    {
+      "step_id": "s2",
+      "action": "copy_file",
+      "args": {
+        "source": "Chapter3.pdf",
+        "destination": "AP_Euro/Chapter3.pdf",
+        "on_conflict": "skip"
+      },
+      "depends_on": [
+        "s1"
+      ],
+      "preconditions": [
+        "source_exists:Chapter3.pdf"
+      ],
+      "description": "Safely copy Chapter3.pdf into AP_Euro without overwriting"
+    },
+    {
+      "step_id": "s3",
+      "action": "verify_file",
+      "args": {
+        "path": "AP_Euro/Chapter3.pdf",
+        "against": "Chapter3.pdf"
+      },
+      "depends_on": [
+        "s2"
+      ],
+      "preconditions": [
+        "target_exists:AP_Euro/Chapter3.pdf"
+      ],
+      "description": "Verify copied file size and SHA-256 hash against original"
+    },
+    {
+      "step_id": "s4",
+      "action": "generate_manifest",
+      "args": {
+        "destination": "AP_Euro/manifest.json",
+        "include_hashes": true
+      },
+      "depends_on": [
+        "s3"
+      ],
+      "preconditions": [],
+      "description": "Generate organization manifest inside AP_Euro"
+    }
+  ]
+}

@@ -3,15 +3,15 @@
 > **Source Specification:** `agent.md` (4.0 — LOCAL-ONLY)  
 > **Workflow Pattern:** `agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints`  
 > **Overall Workflow Status:** `IN_PROGRESS`  
-> **Current Active Milestone:** `M1`  
-> **Last Updated (UTC):** `2026-11-20T05:54:43Z`
+> **Current Active Milestone:** `M2`  
+> **Last Updated (UTC):** `2026-11-20T05:57:44Z`
 
 ## 1. Milestone & Gate Summary
 
 | Milestone | Phase / Gate | Title | Status | Attempts | Git Checkpoint |
 | --- | --- | --- | --- | --- | --- |
-| **M0** | Phase 0 & Phase 1 (Gate 0 & Gate 1) | Local hardware/agent audit, MLX environment setup, inference & tiny train smoke test, A/B/C/P baseline freeze | `PASSED` | 1/3 | `checkpoint-M0` (`2d29a55`) |
-| **M1** | Phase 2 (Gate 2) | Versioned local task protocol, JSON schemas, Policy Validator, and deterministic safe Tool Runtime | `NOT_STARTED` | 0/3 | — |
+| **M0** | Phase 0 & Phase 1 (Gate 0 & Gate 1) | Local hardware/agent audit, MLX environment setup, inference & tiny train smoke test, A/B/C/P baseline freeze | `PASSED` | 1/3 | `checkpoint-M0` (`4e43417`) |
+| **M1** | Phase 2 (Gate 2) | Versioned local task protocol, JSON schemas, Policy Validator, and deterministic safe Tool Runtime | `PASSED` | 2/3 | `checkpoint-M1` (`5f33cdd`) |
 | **M2** | Phase 3 (Gate 3) | Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice | `NOT_STARTED` | 0/3 | — |
 | **M3** | Phase 4 (Gate 4) | Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline | `NOT_STARTED` | 0/3 | — |
 | **M4** | Phase 5 (Gate 5) | On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card | `NOT_STARTED` | 0/3 | — |
@@ -28,15 +28,19 @@
 - **Verification Command:** `.venv/bin/pytest tests/test_m0_hardware_and_models.py -v`
 - **Attempts:** 1 / 3
 - **Gate Verification Evidence:** Apple M4 24GB RAM verified; Model A (124.9 tok/s) & Model C (253.71 tok/s) cached locally; 5-step MLX LoRA smoke test passed in 10.33s.
-- **Git Checkpoint:** commit `2d29a55698918bf5a7df71f5d798da5d17263dc3`, tag `checkpoint-M0` at `2026-11-20T05:54:43Z`
+- **Git Checkpoint:** commit `4e43417ea3a77d0e1e7cb9b03336e11f4c26aabb`, tag `checkpoint-M0` at `2026-11-20T05:54:43Z`
 - **Next Step:** Proceed to M1: Versioned local task protocol, JSON schemas, Policy Validator, and deterministic safe Tool Runtime
 
 ### M1: Versioned local task protocol, JSON schemas, Policy Validator, and deterministic safe Tool Runtime
-- **Status:** `NOT_STARTED`
+- **Status:** `PASSED`
 - **Dependencies:** M0
 - **Verification Command:** `.venv/bin/pytest tests/test_m1_protocol_and_security.py -v`
-- **Attempts:** 0 / 3
-- **Next Step:** Implement task protocol v1.0, Pydantic/JSON schemas, Policy Validator, SQLite state store, and deterministic 6-tool runtime.
+- **Attempts:** 2 / 3
+- **Recorded Failure Reasons (Auto-Repair Loop):**
+  1. `Command `.venv/bin/pytest tests/test_m1_protocol_and_security.py -v` exited 2: .py:88: in import_module |     return _bootstrap._gcd_import(name[level:], package, level) |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ | tests/test_m1_protocol_and_security.py:13: in <module> |     from app.local_executor.state_store import StateStore | E   ModuleNotFoundError: No module named 'app' | =========================== short test summary info ============================ | ERROR tests/test_m1_protocol_and_security.py | !!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!! | =============================== 1 error in 0.05s ===============================`
+- **Gate Verification Evidence:** TaskPlanV1/ToolCallV1 JSON schemas, DAG validation, PolicyValidator path/symlink/approval guards, SQLite StateStore, and 6-tool DeterministicToolRuntime verified (4/4 pytest passed).
+- **Git Checkpoint:** commit `5f33cdd6836b7bcaa42623f02f2f14b49f69cd1a`, tag `checkpoint-M1` at `2026-11-20T05:57:44Z`
+- **Next Step:** Proceed to M2: Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice
 
 ### M2: Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice
 - **Status:** `NOT_STARTED`
@@ -93,3 +97,7 @@
 - `2026-11-20T05:45:42Z` **[MILESTONE_STARTED]** (`M0`): Orchestrator assigned M0 (Local hardware/agent audit, MLX environment setup, inference & tiny train smoke test, A/B/C/P baseline freeze) to Coding Agent.
 - `2026-11-20T05:54:43Z` **[MILESTONE_PASSED]** (`M0`): Attempt 1 passed gate verification. Evidence: Apple M4 24GB RAM verified; Model A (124.9 tok/s) & Model C (253.71 tok/s) cached locally; 5-step MLX LoRA smoke test passed in 10.33s.
 - `2026-11-20T05:54:43Z` **[GIT_CHECKPOINT_CREATED]** (`M0`): Created git tag checkpoint-M0 at commit 2d29a55
+- `2026-11-20T05:54:51Z` **[MILESTONE_STARTED]** (`M1`): Orchestrator assigned M1 (Versioned local task protocol, JSON schemas, Policy Validator, and deterministic safe Tool Runtime) to Coding Agent.
+- `2026-11-20T05:57:00Z` **[VERIFICATION_FAILED]** (`M1`): Attempt 1/3 failed: Command `.venv/bin/pytest tests/test_m1_protocol_and_security.py -v` exited 2: .py:88: in import_module |     return _bootstrap._gcd_import(name[level:], package, level) |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ | te
+- `2026-11-20T05:57:44Z` **[MILESTONE_PASSED]** (`M1`): Attempt 2 passed gate verification. Evidence: TaskPlanV1/ToolCallV1 JSON schemas, DAG validation, PolicyValidator path/symlink/approval guards, SQLite StateStore, and 6-tool DeterministicToolRuntime verified (4/4 pytest passed).
+- `2026-11-20T05:57:44Z` **[GIT_CHECKPOINT_CREATED]** (`M1`): Created git tag checkpoint-M1 at commit 5f33cdd
