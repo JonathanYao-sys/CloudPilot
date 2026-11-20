@@ -1,0 +1,94 @@
+{
+  "timestamp_utc": "2026-11-20T05:52:59Z",
+  "hardware": {
+    "model_name": "MacBook Air (Mac16,12)",
+    "chip": "Apple M4",
+    "architecture": "arm64",
+    "cpu_cores_total": 10,
+    "cpu_performance_cores": 4,
+    "cpu_efficiency_cores": 6,
+    "gpu_cores": 10,
+    "metal_support": "Metal 4",
+    "metal_device_info": "{'device_name': 'Apple M4', 'max_recommended_working_set_size': 19069665280, 'memory_size': 25769803776, 'architecture': 'applegpu_g16g', 'max_buffer_length': 14302248960, 'resource_limit': 499000}",
+    "unified_memory_gb": 24,
+    "disk_total_gb": 228.27,
+    "disk_free_gb": 36.64
+  },
+  "os_and_toolchain": {
+    "macos_version": "27.2.1",
+    "python_version": "3.13.18",
+    "mlx_version": "0.32.4",
+    "git_version": "git version 2.54.0 (Apple Git-157)",
+    "swift_version": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)",
+    "ffmpeg_available": true
+  },
+  "selected_models": {
+    "A_base_executor": {
+      "id": "mlx-community/Qwen2.5-0.5B-Instruct-4bit",
+      "license": "Apache-2.0",
+      "role": "Original Base Executor Checkpoint (A)",
+      "smoke_test": {
+        "model_id": "mlx-community/Qwen2.5-0.5B-Instruct-4bit",
+        "local_dir": ".hf_cache/models/Qwen2.5-0.5B-Instruct-4bit",
+        "total_size_mb": 278.41,
+        "primary_safetensors_sha256": "ddffab9cbc7bf6dde941c6724841eeca8981fcfa81ca20ff8efff1396326d153",
+        "load_time_s": 0.268,
+        "ttft_ms": 626.72,
+        "generated_tokens": 18,
+        "generation_time_s": 0.144,
+        "tokens_per_sec": 124.9,
+        "peak_metal_memory_mb": 357.38,
+        "active_metal_memory_mb": 268.14,
+        "sample_output": "{\n  \"workspace\": {\n    \"folder\": \"AP_Euro\"\n  }\n}"
+      }
+    },
+    "B_finetuned_executor": {
+      "id": "CloudPilot-Qwen2.5-0.5B-Executor-LoRA-v1",
+      "base_model": "mlx-community/Qwen2.5-0.5B-Instruct-4bit",
+      "license": "Apache-2.0",
+      "role": "On-Mac MLX LoRA Fine-Tuned Executor Checkpoint (B)",
+      "tiny_train_smoke_test": {
+        "status": "PASSED",
+        "backend": "mlx_lm.lora (Apple Metal GPU)",
+        "iters": 5,
+        "batch_size": 2,
+        "num_layers": 4,
+        "duration_s": 10.33,
+        "adapter_size_kb": 2869.77,
+        "adapter_sha256": "8d43e6b69c91e815579146b7b31ae67b84d3c8e8353730cfaf79b087067063b6",
+        "stdout_tail": [
+          "Trainable parameters: 0.148% (0.733M/494.033M)",
+          "  \u001b[1miter   train_loss     tok/s     tokens\u001b[0m",
+          "  \u001b[38;5;244m   1\u001b[0m    \u001b[1;35mval\u001b[0m \u001b[1m5.111\u001b[0m    \u001b[38;5;244m0.94s\u001b[0m",
+          "  \u001b[38;5;244m   5\u001b[0m    \u001b[1;35mval\u001b[0m \u001b[1m3.605\u001b[0m    \u001b[38;5;244m0.45s\u001b[0m",
+          "  \u001b[38;5;244m   5\u001b[0m    \u001b[1;32m4.403 ▼\u001b[0m    \u001b[1m  175\u001b[0m    \u001b[38;5;244m  0.6k\u001b[0m",
+          "\u001b[1;34mtrain\u001b[0m \u001b[34m██████████████████████████████\u001b[0m \u001b[1;34m100%\u001b[0m \u001b[38;5;244m·\u001b[0m \u001b[1;34m    5\u001b[0m\u001b[38;5;244m/5\u001b[0m"
+        ]
+      }
+    },
+    "C_independent_small_model": {
+      "id": "mlx-community/SmolLM2-135M-Instruct",
+      "license": "Apache-2.0",
+      "role": "Independent Locally Runnable Small Model Baseline (C)",
+      "smoke_test": {
+        "model_id": "mlx-community/SmolLM2-135M-Instruct",
+        "local_dir": ".hf_cache/models/SmolLM2-135M-Instruct",
+        "total_size_mb": 261.19,
+        "primary_safetensors_sha256": "989e3ef746b41999ca096055a60c87057b8e842824253391bc0d9ed8dfc6936e",
+        "load_time_s": 0.128,
+        "ttft_ms": 442.56,
+        "generated_tokens": 64,
+        "generation_time_s": 0.252,
+        "tokens_per_sec": 253.71,
+        "peak_metal_memory_mb": 298.18,
+        "active_metal_memory_mb": 257.54,
+        "sample_output": "Step s1: create folder \"AP_Euro\" inside workspace. Emit JSON tool call.\n\nStep s2: create folder \"AP_Euro\" inside workspace. Emit JSON tool call.\n\nStep s3: create folder \"AP_Euro\" inside workspace. Emi"
+      }
+    },
+    "P_local_planner": {
+      "id": "mlx-community/Qwen2.5-0.5B-Instruct-4bit + Deterministic Schema-Constrained Task Planner",
+      "license": "Apache-2.0",
+      "role": "Local Planner (P) running sequentially on the same Mac without dual-model RAM residency requirement"
+    }
+  }
+}

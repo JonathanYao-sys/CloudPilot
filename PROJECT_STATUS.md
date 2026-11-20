@@ -3,14 +3,14 @@
 > **Source Specification:** `agent.md` (4.0 — LOCAL-ONLY)  
 > **Workflow Pattern:** `agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints`  
 > **Overall Workflow Status:** `IN_PROGRESS`  
-> **Current Active Milestone:** `M0`  
-> **Last Updated (UTC):** `2026-11-20T00:00:00Z`
+> **Current Active Milestone:** `M1`  
+> **Last Updated (UTC):** `2026-11-20T05:54:43Z`
 
 ## 1. Milestone & Gate Summary
 
 | Milestone | Phase / Gate | Title | Status | Attempts | Git Checkpoint |
 | --- | --- | --- | --- | --- | --- |
-| **M0** | Phase 0 & Phase 1 (Gate 0 & Gate 1) | Local hardware/agent audit, MLX environment setup, inference & tiny train smoke test, A/B/C/P baseline freeze | `NOT_STARTED` | 0/3 | — |
+| **M0** | Phase 0 & Phase 1 (Gate 0 & Gate 1) | Local hardware/agent audit, MLX environment setup, inference & tiny train smoke test, A/B/C/P baseline freeze | `PASSED` | 1/3 | `checkpoint-M0` (`2d29a55`) |
 | **M1** | Phase 2 (Gate 2) | Versioned local task protocol, JSON schemas, Policy Validator, and deterministic safe Tool Runtime | `NOT_STARTED` | 0/3 | — |
 | **M2** | Phase 3 (Gate 3) | Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice | `NOT_STARTED` | 0/3 | — |
 | **M3** | Phase 4 (Gate 4) | Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline | `NOT_STARTED` | 0/3 | — |
@@ -23,11 +23,13 @@
 ## 2. Detailed Milestone Evidence, Failure Reasons & Next Steps
 
 ### M0: Local hardware/agent audit, MLX environment setup, inference & tiny train smoke test, A/B/C/P baseline freeze
-- **Status:** `NOT_STARTED`
+- **Status:** `PASSED`
 - **Dependencies:** None
 - **Verification Command:** `.venv/bin/pytest tests/test_m0_hardware_and_models.py -v`
-- **Attempts:** 0 / 3
-- **Next Step:** Run M0 hardware inspection, provision local Python 3.13 + MLX venv, cache A/C models, and run inference/training smoke test.
+- **Attempts:** 1 / 3
+- **Gate Verification Evidence:** Apple M4 24GB RAM verified; Model A (124.9 tok/s) & Model C (253.71 tok/s) cached locally; 5-step MLX LoRA smoke test passed in 10.33s.
+- **Git Checkpoint:** commit `2d29a55698918bf5a7df71f5d798da5d17263dc3`, tag `checkpoint-M0` at `2026-11-20T05:54:43Z`
+- **Next Step:** Proceed to M1: Versioned local task protocol, JSON schemas, Policy Validator, and deterministic safe Tool Runtime
 
 ### M1: Versioned local task protocol, JSON schemas, Policy Validator, and deterministic safe Tool Runtime
 - **Status:** `NOT_STARTED`
@@ -88,3 +90,6 @@
 ## 3. Orchestrator Execution Log (Recent Events)
 
 - `2026-11-20T00:00:00Z` **[WORKFLOW_INITIALIZED]** (`M0`): Initialized CloudPilot orchestrator state from agent.md with semua gates NOT_STARTED.
+- `2026-11-20T05:45:42Z` **[MILESTONE_STARTED]** (`M0`): Orchestrator assigned M0 (Local hardware/agent audit, MLX environment setup, inference & tiny train smoke test, A/B/C/P baseline freeze) to Coding Agent.
+- `2026-11-20T05:54:43Z` **[MILESTONE_PASSED]** (`M0`): Attempt 1 passed gate verification. Evidence: Apple M4 24GB RAM verified; Model A (124.9 tok/s) & Model C (253.71 tok/s) cached locally; 5-step MLX LoRA smoke test passed in 10.33s.
+- `2026-11-20T05:54:43Z` **[GIT_CHECKPOINT_CREATED]** (`M0`): Created git tag checkpoint-M0 at commit 2d29a55
