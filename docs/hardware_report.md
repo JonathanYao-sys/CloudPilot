@@ -33,7 +33,7 @@
 
 ## 3. Local Development Agent & Execution Audit
 
-- **Development Environment:** Running directly on the user's Apple M4 MacBook Air in `/Users/yao/CloudPilot` (workspace root), managed by `orchestrator.py` and `progress.json` with local Git checkpoints.
+- **Development Environment:** Running directly on the user's Apple M4 MacBook Air in `CloudPilot` (workspace root), managed by `orchestrator.py` and `progress.json` with local Git checkpoints.
 - **Local ML Runtime:** Apple MLX (`mlx.core` + `mlx_lm`) executing natively on the Apple M4 10-core Metal 4 GPU.
 - **Local Model Cache:** Provisioned under `CloudPilot/.hf_cache/models/` so that all training, inference, planning, execution, app packaging, and benchmark evaluation run with `HF_HUB_OFFLINE=1` and zero external API calls.
 

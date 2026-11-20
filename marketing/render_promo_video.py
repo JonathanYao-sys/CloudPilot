@@ -139,10 +139,10 @@ def main() -> int:
     for fname, duration, badge, title, sub_en, sub_cn, imgs, footer in slides_spec:
         out_png = FRAMES_DIR / fname
         render_slide(out_png, badge, title, sub_en, sub_cn, imgs, footer)
-        concat_lines.append(f"file '{out_png}'")
+        concat_lines.append(f"file '{fname}'")
         concat_lines.append(f"duration {duration}")
     # Repeat last file per ffmpeg concat demuxer spec
-    concat_lines.append(f"file '{FRAMES_DIR / slides_spec[-1][0]}'")
+    concat_lines.append(f"file '{slides_spec[-1][0]}'")
 
     concat_file = FRAMES_DIR / "ffconcat.txt"
     concat_file.write_text("\n".join(concat_lines) + "\n", encoding="utf-8")

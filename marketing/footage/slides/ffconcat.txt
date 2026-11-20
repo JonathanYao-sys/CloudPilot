@@ -1,11 +1,11 @@
-file '/Users/yao/CloudPilot/marketing/footage/slides/slide_01.png'
+file 'slide_01.png'
 duration 4
-file '/Users/yao/CloudPilot/marketing/footage/slides/slide_02.png'
+file 'slide_02.png'
 duration 4
-file '/Users/yao/CloudPilot/marketing/footage/slides/slide_03.png'
+file 'slide_03.png'
 duration 6
-file '/Users/yao/CloudPilot/marketing/footage/slides/slide_04.png'
+file 'slide_04.png'
 duration 7
-file '/Users/yao/CloudPilot/marketing/footage/slides/slide_05.png'
+file 'slide_05.png'
 duration 5
-file '/Users/yao/CloudPilot/marketing/footage/slides/slide_05.png'
+file 'slide_05.png'

@@ -28,7 +28,7 @@ To protect the user's SSD from running low on space, total project footprint (in
 | Fused Deployment Model (`B-fused`) | `model/deployment/` | 320 MB | `~280 MB` |
 | macOS Application & DMG | `release/artifacts/` | 100 MB | `~25 MB` |
 | Evaluation Logs, Charts & Promo Video | `evaluation/` + `marketing/exports/` | 50 MB | `~15 MB` |
-| **Total Workspace Disk Usage** | `/Users/yao/CloudPilot` | **<= 1.2 GB** | **~870 MB** (leaves >35.5 GB free) |
+| **Total Workspace Disk Usage** | `CloudPilot` | **<= 1.2 GB** | **~870 MB** (leaves >35.5 GB free) |
 
 ## 3. Thermal & Energy Envelope (Fanless MacBook Air M4)
 

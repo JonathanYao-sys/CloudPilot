@@ -70,22 +70,48 @@ cp -R "${ROOT_DIR}/app" "${APP_BUNDLE}/Contents/Resources/backend/"
 cp -R "${ROOT_DIR}/protocol" "${APP_BUNDLE}/Contents/Resources/backend/"
 find "${APP_BUNDLE}/Contents/Resources/backend" -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
 
-# Record the Python 3.13 + MLX runtime environment path for local Metal execution
-VENV_SITE_PACKAGES="$("${ROOT_DIR}/.venv/bin/python" -c 'import site; print(":".join(site.getsitepackages()))')"
-PYTHON_BIN="$("${ROOT_DIR}/.venv/bin/python" -c 'import sys; print(sys.executable)')"
+# Sanitize any absolute path in bundled adapter_config.json
+sed -i '' 's|/Users/[^/]*/CloudPilot/||g' "${APP_BUNDLE}/Contents/Resources/model/adapters/adapter_config.json" 2>/dev/null || true
 
-cat > "${APP_BUNDLE}/Contents/Resources/run_bundled_backend.sh" <<EOF
+echo "2b. Bundling offline Python/MLX runtime packages into ${APP_BUNDLE}/Contents/Resources/python_packages/..."
+mkdir -p "${APP_BUNDLE}/Contents/Resources/python_packages"
+SITE_PKGS="$("${ROOT_DIR}/.venv/bin/python" -c 'import site; print(site.getsitepackages()[0])')"
+rsync -a \
+  --exclude='__pycache__' \
+  --exclude='/matplotlib*' \
+  --exclude='/PIL*' \
+  --exclude='/pillow*' \
+  --exclude='/fontTools*' \
+  --exclude='/fonttools*' \
+  --exclude='/_pytest*' \
+  --exclude='/pytest*' \
+  "${SITE_PKGS}/" "${APP_BUNDLE}/Contents/Resources/python_packages/"
+
+cat > "${APP_BUNDLE}/Contents/Resources/run_bundled_backend.sh" <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
-RES_DIR="\$(cd "\$(dirname "\${BASH_SOURCE[0]}")" && pwd)"
+RES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export HF_HUB_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
 export CLOUDPILOT_OFFLINE_ONLY=1
-export CLOUDPILOT_BUNDLED_MODEL_DIR="\${RES_DIR}/model/deployment"
-export CLOUDPILOT_BUNDLED_ADAPTER_DIR="\${RES_DIR}/model/adapters"
-export PYTHONPATH="\${RES_DIR}/backend:${VENV_SITE_PACKAGES}"
-cd "\${RES_DIR}/backend"
-exec "${PYTHON_BIN}" -m app.local_executor.orchestration_loop "\$@"
+export CLOUDPILOT_BUNDLED_MODEL_DIR="${RES_DIR}/model/deployment"
+export CLOUDPILOT_BUNDLED_ADAPTER_DIR="${RES_DIR}/model/adapters"
+export PYTHONPATH="${RES_DIR}/backend:${RES_DIR}/python_packages"
+
+PYTHON_EXEC=""
+for candidate in \
+  "$(command -v python3.13 2>/dev/null || true)" \
+  "$HOME/.local/share/uv/python/cpython-3.13.18-macos-aarch64-none/bin/python3.13" \
+  "/opt/homebrew/bin/python3.13" \
+  "$(command -v python3 2>/dev/null || true)"; do
+  if [ -n "$candidate" ] && [ -x "$candidate" ]; then
+    PYTHON_EXEC="$candidate"
+    break
+  fi
+done
+
+cd "${RES_DIR}/backend"
+exec "$PYTHON_EXEC" -m app.local_executor.orchestration_loop "$@"
 EOF
 chmod +x "${APP_BUNDLE}/Contents/Resources/run_bundled_backend.sh"
 

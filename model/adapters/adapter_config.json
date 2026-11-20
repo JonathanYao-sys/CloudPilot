@@ -2,7 +2,7 @@
     "adapter_path": "model/adapters",
     "batch_size": 4,
     "clear_cache_threshold": 0,
-    "config": "/Users/yao/CloudPilot/training/configs/lora_config.yaml",
+    "config": "training/configs/lora_config.yaml",
     "data": "training/datasets",
     "fine_tune_type": "lora",
     "grad_accumulation_steps": 1,

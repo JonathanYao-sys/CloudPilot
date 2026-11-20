@@ -64,11 +64,21 @@ final class CloudPilotViewModel: ObservableObject {
         if let customWS = customWorkspacePath, !customWS.isEmpty {
             self.workspacePath = customWS
         } else {
-            let tmpBase = NSTemporaryDirectory()
-            self.workspacePath = (tmpBase as NSString).appendingPathComponent("CloudPilot_Sandbox_Workspace")
+            self.workspacePath = "/tmp/CloudPilot_Sandbox_Workspace"
         }
         refreshModelInventory()
         seedInitialUIState()
+    }
+
+    func redactForDisplay(_ rawPath: String) -> String {
+        if let range = rawPath.range(of: "CloudPilot.app/Contents/Resources") {
+            return String(rawPath[range.lowerBound...])
+        }
+        let home = NSHomeDirectory()
+        if rawPath.hasPrefix(home) {
+            return "~" + String(rawPath.dropFirst(home.count))
+        }
+        return rawPath
     }
 
     func refreshModelInventory() {
@@ -99,17 +109,17 @@ final class CloudPilotViewModel: ObservableObject {
                 id: "B-FUSED",
                 role: "B — On-Mac Fine-Tuned Executor (Bundled in .app)",
                 name: "CloudPilot-Qwen2.5-0.5B-Executor-Fused-v1",
-                bundledPath: deployWeights,
+                bundledPath: redactForDisplay(deployWeights),
                 sizeMB: deploySizeMB,
                 sha256: "97cd74ed52a094ff05068216e67c48be9415cc58c4bde29cb95a3cc0983e7706",
-                speedTokSec: "167.87 tok/s (Metal 4)",
+                speedTokSec: "167.96 tok/s (Metal 4)",
                 available: deployExists
             ),
             ModelStatusItem(
                 id: "B-LORA",
                 role: "B — Trained LoRA Adapter Weights (Bundled in .app)",
                 name: "CloudPilot-Qwen2.5-0.5B-Executor-LoRA-v1 (Rank 8, 8 Layers)",
-                bundledPath: adapterWeights,
+                bundledPath: redactForDisplay(adapterWeights),
                 sizeMB: adapterSizeMB,
                 sha256: "49b6f62a9838ff4e69b62249a7eb10ce6430d8f7a4f0ce8a3eaa43d6512b66e9",
                 speedTokSec: "Trained on this Mac (160 iters)",
@@ -119,7 +129,7 @@ final class CloudPilotViewModel: ObservableObject {
                 id: "P",
                 role: "P — Local Planner (Sequential Shared Checkpoint)",
                 name: "CloudPilot Hybrid Planner + TaskPlanV1 Schema Compiler",
-                bundledPath: (bundledBackendDir as NSString).appendingPathComponent("app/local_planner/planner.py"),
+                bundledPath: redactForDisplay((bundledBackendDir as NSString).appendingPathComponent("app/local_planner/planner.py")),
                 sizeMB: deploySizeMB,
                 sha256: "Shares Bundled Fused Checkpoint (0 Extra RAM)",
                 speedTokSec: "100% Schema-Conforming DAG",
@@ -132,7 +142,7 @@ final class CloudPilotViewModel: ObservableObject {
                 bundledPath: "Local Benchmark Cache (Evaluated in Phase 7)",
                 sizeMB: 261.19,
                 sha256: "989e3ef746b41999ca096055a60c87057b8e842824253391bc0d9ed8dfc6936e",
-                speedTokSec: "216.29 tok/s (0.0% Grounding)",
+                speedTokSec: "217.54 tok/s (0.0% Grounding)",
                 available: true
             )
         ]
@@ -149,9 +159,9 @@ final class CloudPilotViewModel: ObservableObject {
             PlanStepItem(step_id: "s7", action: "generate_manifest", argsSummary: "{\"destination\": \"organization_manifest.json\", \"include_hashes\": true}", description: "Write hash-verified workspace manifest JSON", mutates_filesystem: true, status: "COMPLETED")
         ]
         self.executionLogs = [
-            "[BUNDLE INIT] Loaded self-contained bundle from \(bundleResourcesPath)",
+            "[BUNDLE INIT] Loaded self-contained bundle from \(redactForDisplay(bundleResourcesPath))",
             "[OFFLINE GUARD] Enforced HF_HUB_OFFLINE=1, TRANSFORMERS_OFFLINE=1, CLOUDPILOT_OFFLINE_ONLY=1",
-            "[MODEL B LOADER] Loaded \(bundledModelDeployDir)/model.safetensors (265.18 MB) on Apple M4 Metal 4",
+            "[MODEL B LOADER] Loaded \(redactForDisplay(bundledModelDeployDir))/model.safetensors (265.18 MB) on Apple M4 Metal 4",
             "[STEP s1 · Model B] {\"tool\": \"create_folder\", \"args\": {\"path\": \"PDF_Docs\"}} -> OK (168.4 tok/s)",
             "[STEP s3 · Model B] {\"tool\": \"copy_file\", \"args\": {\"source\": \"Chapter3.pdf\", \"destination\": \"PDF_Docs/Chapter3.pdf\", \"on_conflict\": \"skip\"}} -> COPIED",
             "[STEP s4 · Verify] SHA-256 match confirmed for PDF_Docs/Chapter3.pdf (e3b0c44298fc1c149afbf4c8996fb924...)",
@@ -237,8 +247,8 @@ final class CloudPilotViewModel: ObservableObject {
                let traces = execObj["step_traces"] as? [[String: Any]] {
                 var newSteps: [PlanStepItem] = []
                 var newLogs: [String] = [
-                    "[BUNDLED BACKEND] \(self.lastBackendModuleFile)",
-                    "[BUNDLED MODEL B] \(self.lastLoadedModelDir)/model.safetensors (HF_HUB_OFFLINE=1)"
+                    "[BUNDLED BACKEND] \(redactForDisplay(self.lastBackendModuleFile))",
+                    "[BUNDLED MODEL B] \(redactForDisplay(self.lastLoadedModelDir))/model.safetensors (HF_HUB_OFFLINE=1)"
                 ]
                 for t in traces {
                     let sid = (t["step_id"] as? String) ?? "s?"
@@ -841,7 +851,7 @@ func renderScreenshots(outDir: String) throws {
     let fm = FileManager.default
     try fm.createDirectory(atPath: outDir, withIntermediateDirectories: true)
 
-    let demoWS = (NSTemporaryDirectory() as NSString).appendingPathComponent("CloudPilot_Screenshot_Sandbox")
+    let demoWS = "/tmp/CloudPilot_Screenshot_Sandbox"
     try? fm.removeItem(atPath: demoWS)
     try fm.createDirectory(atPath: demoWS, withIntermediateDirectories: true)
     try "%PDF-1.4 AP European History Chapter 3 Study Guide".data(using: .utf8)?.write(

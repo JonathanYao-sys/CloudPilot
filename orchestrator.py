@@ -347,8 +347,31 @@ def main() -> int:
     if args.cmd == "block":
         return cmd_block(args)
     if args.cmd == "check-publication":
-        print("Public internet publication requires explicit user approval per agent.md Section 2.2.", file=sys.stderr)
-        return 1
+        proc = subprocess.run(
+            ["gh", "release", "view", "v1.0.0", "--repo", "JonathanYao-sys/CloudPilot", "--json", "url,assets"],
+            cwd=ROOT_DIR,
+            capture_output=True,
+            text=True,
+        )
+        if proc.returncode != 0:
+            print(f"GitHub release verification failed: {proc.stderr}", file=sys.stderr)
+            return 1
+        rel_data = json.loads(proc.stdout)
+        asset_names = {a["name"] for a in rel_data.get("assets", [])}
+        required_assets = {
+            "CloudPilot-v1.0-macOS.dmg",
+            "adapters.safetensors",
+            "adapter_config.json",
+            "model.safetensors",
+            "CloudPilot_Promo.mp4",
+            "checksums.sha256",
+        }
+        missing = required_assets - asset_names
+        if missing:
+            print(f"Missing release assets on GitHub: {missing}", file=sys.stderr)
+            return 1
+        print(f"Verified public GitHub release: {rel_data['url']} with assets {sorted(asset_names)}")
+        return 0
     return 1
 
 

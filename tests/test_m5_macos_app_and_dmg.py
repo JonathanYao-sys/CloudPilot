@@ -3,9 +3,9 @@ M5 Verification Test Suite (Gate 6):
 Verifies that:
 1. CloudPilot.app and CloudPilot-v1.0-macOS.dmg bundle the fine-tuned Model B weights (.safetensors)
    and backend runtime directly inside Contents/Resources/.
-2. Mounting the DMG, installing CloudPilot.app to an isolated directory outside /Users/yao/CloudPilot,
+2. Mounting the DMG, installing CloudPilot.app to an isolated directory outside CloudPilot,
    and running it offline (--headless-self-test) loads both the model weights and backend from inside
-   the installed .app bundle (zero dependency on /Users/yao/CloudPilot source tree) and completes a task.
+   the installed .app bundle (zero dependency on CloudPilot source tree) and completes a task.
 3. All 6 exported macOS UI screenshots are genuine, distinct, high-resolution captures with 6 unique SHA-256 hashes.
 """
 
@@ -52,7 +52,7 @@ def test_m5_app_bundle_and_dmg_include_bundled_weights():
 
 
 def test_m5_dmg_mount_install_and_isolated_offline_execution(tmp_path: Path):
-    """Mount DMG, copy CloudPilot.app to an isolated temp directory outside /Users/yao/CloudPilot,
+    """Mount DMG, copy CloudPilot.app to an isolated temp directory outside CloudPilot,
     detach DMG, and run offline task to prove standalone execution."""
     dmg = ROOT_DIR / "release" / "artifacts" / "CloudPilot-v1.0-macOS.dmg"
     verify_proc = subprocess.run(["hdiutil", "verify", str(dmg)], capture_output=True, text=True)
@@ -81,7 +81,7 @@ def test_m5_dmg_mount_install_and_isolated_offline_execution(tmp_path: Path):
     installed_exe = installed_app / "Contents" / "MacOS" / "CloudPilot"
     assert installed_exe.exists()
 
-    # Run from tmp_path with CLOUDPILOT_ROOT unset so it cannot fall back to /Users/yao/CloudPilot
+    # Run from tmp_path with CLOUDPILOT_ROOT unset so it cannot fall back to CloudPilot
     env = os.environ.copy()
     env.pop("CLOUDPILOT_ROOT", None)
     env["HF_HUB_OFFLINE"] = "1"

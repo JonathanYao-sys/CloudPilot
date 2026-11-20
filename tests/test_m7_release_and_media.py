@@ -46,12 +46,21 @@ def test_m7_website_is_self_contained_with_zero_cdn_and_valid_local_assets():
     assert "95.31%" in html
     assert "167.87 tok/s" in html
 
-    # Verify zero remote http/https script, stylesheet, or image sources
-    remote_refs = re.findall(r'(?:src|href)=["\'](https?://[^"\']+)["\']', html)
-    assert len(remote_refs) == 0, f"Website must not depend on external/CDN URLs at runtime, found: {remote_refs}"
+    # Verify zero remote http/https script, stylesheet, or image/video runtime sources (no CDN dependencies)
+    remote_src = re.findall(r'src=["\'](https?://[^"\']+)["\']', html)
+    remote_css = re.findall(r'<link[^>]+href=["\'](https?://[^"\']+)["\']', html)
+    assert len(remote_src) == 0 and len(remote_css) == 0, (
+        f"Website must not depend on external/CDN runtime assets, found: {remote_src + remote_css}"
+    )
 
-    # Verify every local src/href target exists on disk
-    local_refs = re.findall(r'(?:src|href)=["\']([^"\'#]+)["\']', html)
+    # Verify real GitHub repository and release links are present
+    assert "https://github.com/JonathanYao-sys/CloudPilot" in html
+
+    # Verify every local relative src/href target exists on disk
+    local_refs = [
+        ref for ref in re.findall(r'(?:src|href)=["\']([^"\'#]+)["\']', html)
+        if not ref.startswith("http://") and not ref.startswith("https://")
+    ]
     for ref in local_refs:
         target = (html_path.parent / ref).resolve()
         assert target.exists(), f"Broken link/asset in website/index.html: {ref} -> {target}"

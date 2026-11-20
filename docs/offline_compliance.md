@@ -16,7 +16,7 @@
 
 ## 2. Development Agent & Workflow Orchestrator Audit
 
-- **Workflow Orchestrator:** `/Users/yao/CloudPilot/orchestrator.py` + `progress.json` + local Git tags (`checkpoint-M0` through `checkpoint-M7`).
+- **Workflow Orchestrator:** `orchestrator.py` + `progress.json` + local Git tags (`checkpoint-M0` through `checkpoint-M7`).
 - **Execution Proof:** Every build, dataset synthesis, LoRA fine-tuning run, model fusion, benchmark evaluation, SwiftUI compilation (`swiftc`), DMG creation (`hdiutil`), screenshot export, and FFmpeg MP4 video render executed directly on this Apple M4 MacBook Air (`Mac16,12`, 24 GB RAM).
 
 ## 3. Commands & Logs Confirming Training Occurred on This Mac
@@ -45,4 +45,5 @@
 
 ## 6. Online Storage / Distribution Services Confirmation
 
-- **Current Status:** **No online storage, cloud CI/CD, or remote hosting services have been invoked.** All artifacts remain 100% local on this Mac pending explicit user authorization (`M8`) for public GitHub release / static website upload per `agent.md` Section 2.2.
+- **Authorized Publication Host:** Following explicit user authorization (`M8`), GitHub (`https://github.com/JonathanYao-sys/CloudPilot`), GitHub Releases (`https://github.com/JonathanYao-sys/CloudPilot/releases/tag/v1.0.0`), and GitHub Pages (`https://jonathanyao-sys.github.io/CloudPilot/website/`) were used **solely for static file storage and distribution transport**.
+- **Zero Remote Compute Confirmation:** No GitHub Actions build runners, remote CI/CD workflows, cloud GPUs, or hosted AI APIs were invoked at any stage. All code compilation, synthetic dataset generation, MLX LoRA fine-tuning, weight fusion, A/B/C benchmarking, DMG packaging, static website authoring, and FFmpeg video rendering occurred 100% locally on the user's Apple M4 MacBook Air.
