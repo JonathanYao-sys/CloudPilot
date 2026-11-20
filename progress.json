@@ -6,7 +6,7 @@
   "workflow_status": "COMPLETED",
   "current_milestone": "M8",
   "max_retries_per_milestone": 3,
-  "updated_at": "2026-11-20T06:43:11Z",
+  "updated_at": "2026-11-20T06:43:22Z",
   "milestones": [
     {
       "id": "M0",
@@ -122,7 +122,7 @@
       ],
       "evidence": "Generated 1,320 synthetic cases (0 leakage) AND frozen pre-training A/C baseline report (pretrain_ac_baseline.json & PRETRAIN_BASELINE_REPORT.md) before M4 fine-tuning (3/3 pytest passed).",
       "git_checkpoint": {
-        "commit": "be3aa1ba7e843424f1ff793cac18cf6d904a2fbd",
+        "commit": "2dd12791d96d03c2615a46b8e03b8ed8d41793a9",
         "tag": "checkpoint-M3",
         "timestamp": "2026-11-20T06:43:11Z"
       },
@@ -168,7 +168,7 @@
         "M4"
       ],
       "status": "PASSED",
-      "attempts": 2,
+      "attempts": 3,
       "max_attempts": 3,
       "failure_reasons": [
         "Command `.venv/bin/pytest tests/test_m5_macos_app_and_dmg.py -v` exited 1:              output=stdout, stderr=stderr) | E               subprocess.CalledProcessError: Command '['/Users/yao/CloudPilot/release/artifacts/CloudPilot.app/Contents/MacOS/CloudPilot', '--headless-self-test']' returned non-zero exit status 1. |  | ../.local/share/uv/python/cpython-3.13.18-macos-aarch64-none/lib/python3.13/subprocess.py:578: CalledProcessError | =========================== short test summary info ============================ | FAILED tests/test_m5_macos_app_and_dmg.py::test_m5_app_headless_offline_self_test | ========================= 1 failed, 2 passed in 3.84s =========================="
@@ -180,13 +180,13 @@
         "release/artifacts/CloudPilot.app",
         "release/artifacts/CloudPilot-v1.0-macOS.dmg"
       ],
-      "evidence": "Native SwiftUI CloudPilot.app and CloudPilot-v1.0-macOS.dmg built locally, ad-hoc signed, hdiutil-verified, and tested offline with Model B (3/3 pytest passed).",
+      "evidence": "Self-contained CloudPilot.app and 261 MB CloudPilot-v1.0-macOS.dmg bundling model.safetensors & backend verified via DMG mount + isolated install outside /Users/yao/CloudPilot + 6 distinct UI screenshots (3/3 pytest passed).",
       "git_checkpoint": {
-        "commit": "25d902011cdab8d08835f4b0dc38861d5b05c65b",
+        "commit": "5c67ab43831470a69ecf444f1bb68260e91e927f",
         "tag": "checkpoint-M5",
-        "timestamp": "2026-11-20T06:11:02Z"
+        "timestamp": "2026-11-20T06:43:22Z"
       },
-      "next_step": "Proceed to M6: Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts"
+      "next_step": "All milestones completed."
     },
     {
       "id": "M6",
@@ -474,6 +474,18 @@
       "event": "GIT_CHECKPOINT_CREATED",
       "milestone": "M3",
       "detail": "Created git tag checkpoint-M3 at commit be3aa1b"
+    },
+    {
+      "timestamp": "2026-11-20T06:43:22Z",
+      "event": "MILESTONE_PASSED",
+      "milestone": "M5",
+      "detail": "Attempt 3 passed gate verification. Evidence: Self-contained CloudPilot.app and 261 MB CloudPilot-v1.0-macOS.dmg bundling model.safetensors & backend verified via DMG mount + isolated install outside /Users/yao/CloudPilot + 6 distinct UI screenshots (3/3 pytest passed)."
+    },
+    {
+      "timestamp": "2026-11-20T06:43:22Z",
+      "event": "GIT_CHECKPOINT_CREATED",
+      "milestone": "M5",
+      "detail": "Created git tag checkpoint-M5 at commit 5c67ab4"
     }
   ]
 }

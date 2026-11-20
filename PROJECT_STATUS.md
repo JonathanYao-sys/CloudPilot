@@ -4,7 +4,7 @@
 > **Workflow Pattern:** `agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints`  
 > **Overall Workflow Status:** `COMPLETED`  
 > **Current Active Milestone:** `M8`  
-> **Last Updated (UTC):** `2026-11-20T06:43:11Z`
+> **Last Updated (UTC):** `2026-11-20T06:43:22Z`
 
 ## 1. Milestone & Gate Summary
 
@@ -13,9 +13,9 @@
 | **M0** | Phase 0 & Phase 1 (Gate 0 & Gate 1) | Local hardware/agent audit, MLX environment setup, inference & tiny train smoke test, A/B/C/P baseline freeze | `PASSED` | 1/3 | `checkpoint-M0` (`4e43417`) |
 | **M1** | Phase 2 (Gate 2) | Versioned local task protocol, JSON schemas, Policy Validator, and deterministic safe Tool Runtime | `PASSED` | 2/3 | `checkpoint-M1` (`d6132d2`) |
 | **M2** | Phase 3 (Gate 3) | Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice | `PASSED` | 2/3 | `checkpoint-M2` (`1b0b81e`) |
-| **M3** | Phase 4 (Gate 4) | Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline | `PASSED` | 2/3 | `checkpoint-M3` (`be3aa1b`) |
+| **M3** | Phase 4 (Gate 4) | Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline | `PASSED` | 2/3 | `checkpoint-M3` (`2dd1279`) |
 | **M4** | Phase 5 (Gate 5) | On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card | `PASSED` | 1/3 | `checkpoint-M4` (`5e9aa8a`) |
-| **M5** | Phase 6 (Gate 6) | Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B | `PASSED` | 2/3 | `checkpoint-M5` (`25d9020`) |
+| **M5** | Phase 6 (Gate 6) | Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B | `PASSED` | 3/3 | `checkpoint-M5` (`5c67ab4`) |
 | **M6** | Phase 7 (Gate 7) | Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts | `PASSED` | 1/3 | `checkpoint-M6` (`334fef5`) |
 | **M7** | Phase 8, Phase 9 & Phase 10 (Local Build) (Gate 8 (Local), Gate 9 (Local), Gate 10) | Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest | `PASSED` | 1/3 | `checkpoint-M7` (`8c894f1`) |
 | **M8** | Phase 8 & Phase 9 (Public Internet Publication) (Gate 8 (Public) & Gate 9 (Public)) | Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication | `BLOCKED` | 0/3 | `checkpoint-M8-blocked` (`d060dbc`) |
@@ -59,7 +59,7 @@
 - **Verification Command:** `.venv/bin/pytest tests/test_m3_dataset_quality.py -v`
 - **Attempts:** 2 / 3
 - **Gate Verification Evidence:** Generated 1,320 synthetic cases (0 leakage) AND frozen pre-training A/C baseline report (pretrain_ac_baseline.json & PRETRAIN_BASELINE_REPORT.md) before M4 fine-tuning (3/3 pytest passed).
-- **Git Checkpoint:** commit `be3aa1ba7e843424f1ff793cac18cf6d904a2fbd`, tag `checkpoint-M3` at `2026-11-20T06:43:11Z`
+- **Git Checkpoint:** commit `2dd12791d96d03c2615a46b8e03b8ed8d41793a9`, tag `checkpoint-M3` at `2026-11-20T06:43:11Z`
 - **Next Step:** All milestones completed.
 
 ### M4: On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card
@@ -75,12 +75,12 @@
 - **Status:** `PASSED`
 - **Dependencies:** M2, M4
 - **Verification Command:** `.venv/bin/pytest tests/test_m5_macos_app_and_dmg.py -v`
-- **Attempts:** 2 / 3
+- **Attempts:** 3 / 3
 - **Recorded Failure Reasons (Auto-Repair Loop):**
   1. `Command `.venv/bin/pytest tests/test_m5_macos_app_and_dmg.py -v` exited 1:              output=stdout, stderr=stderr) | E               subprocess.CalledProcessError: Command '['/Users/yao/CloudPilot/release/artifacts/CloudPilot.app/Contents/MacOS/CloudPilot', '--headless-self-test']' returned non-zero exit status 1. |  | ../.local/share/uv/python/cpython-3.13.18-macos-aarch64-none/lib/python3.13/subprocess.py:578: CalledProcessError | =========================== short test summary info ============================ | FAILED tests/test_m5_macos_app_and_dmg.py::test_m5_app_headless_offline_self_test | ========================= 1 failed, 2 passed in 3.84s ==========================`
-- **Gate Verification Evidence:** Native SwiftUI CloudPilot.app and CloudPilot-v1.0-macOS.dmg built locally, ad-hoc signed, hdiutil-verified, and tested offline with Model B (3/3 pytest passed).
-- **Git Checkpoint:** commit `25d902011cdab8d08835f4b0dc38861d5b05c65b`, tag `checkpoint-M5` at `2026-11-20T06:11:02Z`
-- **Next Step:** Proceed to M6: Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts
+- **Gate Verification Evidence:** Self-contained CloudPilot.app and 261 MB CloudPilot-v1.0-macOS.dmg bundling model.safetensors & backend verified via DMG mount + isolated install outside /Users/yao/CloudPilot + 6 distinct UI screenshots (3/3 pytest passed).
+- **Git Checkpoint:** commit `5c67ab43831470a69ecf444f1bb68260e91e927f`, tag `checkpoint-M5` at `2026-11-20T06:43:22Z`
+- **Next Step:** All milestones completed.
 
 ### M6: Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts
 - **Status:** `PASSED`
@@ -112,8 +112,6 @@
 
 ## 3. Orchestrator Execution Log (Recent Events)
 
-- `2026-11-20T06:00:18Z` **[GIT_CHECKPOINT_CREATED]** (`M2`): Created git tag checkpoint-M2 at commit 0fc71c5
-- `2026-11-20T06:00:33Z` **[MILESTONE_STARTED]** (`M3`): Orchestrator assigned M3 (Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline) to Coding Agent.
 - `2026-11-20T06:02:07Z` **[MILESTONE_PASSED]** (`M3`): Attempt 1 passed gate verification. Evidence: Generated and rule-validated 1,320 synthetic cases (1000 train, 160 val, 160 frozen test) across 8 families with 0 cross-split leakage and 0 PII (2/2 pytest passed).
 - `2026-11-20T06:02:07Z` **[GIT_CHECKPOINT_CREATED]** (`M3`): Created git tag checkpoint-M3 at commit 2915e8e
 - `2026-11-20T06:02:15Z` **[MILESTONE_STARTED]** (`M4`): Orchestrator assigned M4 (On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card) to Coding Agent.
@@ -132,3 +130,5 @@
 - `2026-11-20T06:15:55Z` **[MILESTONE_BLOCKED_ON_GATE]** (`M8`): BLOCKED — ACCOUNT/PERMISSION: Per agent.md Section 2.2, Section 13, and Section 14, uploading the repository, release DMG, model weights, static website, and promo MP4 to the public internet requires explicit user permission and target repository/hosting configuration.
 - `2026-11-20T06:43:11Z` **[MILESTONE_PASSED]** (`M3`): Attempt 2 passed gate verification. Evidence: Generated 1,320 synthetic cases (0 leakage) AND frozen pre-training A/C baseline report (pretrain_ac_baseline.json & PRETRAIN_BASELINE_REPORT.md) before M4 fine-tuning (3/3 pytest passed).
 - `2026-11-20T06:43:11Z` **[GIT_CHECKPOINT_CREATED]** (`M3`): Created git tag checkpoint-M3 at commit be3aa1b
+- `2026-11-20T06:43:22Z` **[MILESTONE_PASSED]** (`M5`): Attempt 3 passed gate verification. Evidence: Self-contained CloudPilot.app and 261 MB CloudPilot-v1.0-macOS.dmg bundling model.safetensors & backend verified via DMG mount + isolated install outside /Users/yao/CloudPilot + 6 distinct UI screenshots (3/3 pytest passed).
+- `2026-11-20T06:43:22Z` **[GIT_CHECKPOINT_CREATED]** (`M5`): Created git tag checkpoint-M5 at commit 5c67ab4
