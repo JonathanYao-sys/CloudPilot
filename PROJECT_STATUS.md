@@ -3,16 +3,16 @@
 > **Source Specification:** `agent.md` (4.0 — LOCAL-ONLY)  
 > **Workflow Pattern:** `agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints`  
 > **Overall Workflow Status:** `IN_PROGRESS`  
-> **Current Active Milestone:** `M2`  
-> **Last Updated (UTC):** `2026-11-20T05:57:44Z`
+> **Current Active Milestone:** `M3`  
+> **Last Updated (UTC):** `2026-11-20T06:00:18Z`
 
 ## 1. Milestone & Gate Summary
 
 | Milestone | Phase / Gate | Title | Status | Attempts | Git Checkpoint |
 | --- | --- | --- | --- | --- | --- |
 | **M0** | Phase 0 & Phase 1 (Gate 0 & Gate 1) | Local hardware/agent audit, MLX environment setup, inference & tiny train smoke test, A/B/C/P baseline freeze | `PASSED` | 1/3 | `checkpoint-M0` (`4e43417`) |
-| **M1** | Phase 2 (Gate 2) | Versioned local task protocol, JSON schemas, Policy Validator, and deterministic safe Tool Runtime | `PASSED` | 2/3 | `checkpoint-M1` (`5f33cdd`) |
-| **M2** | Phase 3 (Gate 3) | Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice | `NOT_STARTED` | 0/3 | — |
+| **M1** | Phase 2 (Gate 2) | Versioned local task protocol, JSON schemas, Policy Validator, and deterministic safe Tool Runtime | `PASSED` | 2/3 | `checkpoint-M1` (`d6132d2`) |
+| **M2** | Phase 3 (Gate 3) | Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice | `PASSED` | 2/3 | `checkpoint-M2` (`0fc71c5`) |
 | **M3** | Phase 4 (Gate 4) | Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline | `NOT_STARTED` | 0/3 | — |
 | **M4** | Phase 5 (Gate 5) | On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card | `NOT_STARTED` | 0/3 | — |
 | **M5** | Phase 6 (Gate 6) | Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B | `NOT_STARTED` | 0/3 | — |
@@ -39,15 +39,19 @@
 - **Recorded Failure Reasons (Auto-Repair Loop):**
   1. `Command `.venv/bin/pytest tests/test_m1_protocol_and_security.py -v` exited 2: .py:88: in import_module |     return _bootstrap._gcd_import(name[level:], package, level) |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ | tests/test_m1_protocol_and_security.py:13: in <module> |     from app.local_executor.state_store import StateStore | E   ModuleNotFoundError: No module named 'app' | =========================== short test summary info ============================ | ERROR tests/test_m1_protocol_and_security.py | !!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!! | =============================== 1 error in 0.05s ===============================`
 - **Gate Verification Evidence:** TaskPlanV1/ToolCallV1 JSON schemas, DAG validation, PolicyValidator path/symlink/approval guards, SQLite StateStore, and 6-tool DeterministicToolRuntime verified (4/4 pytest passed).
-- **Git Checkpoint:** commit `5f33cdd6836b7bcaa42623f02f2f14b49f69cd1a`, tag `checkpoint-M1` at `2026-11-20T05:57:44Z`
+- **Git Checkpoint:** commit `d6132d2959b6ce9804300712d95368cefc8149b4`, tag `checkpoint-M1` at `2026-11-20T05:57:44Z`
 - **Next Step:** Proceed to M2: Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice
 
 ### M2: Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice
-- **Status:** `NOT_STARTED`
+- **Status:** `PASSED`
 - **Dependencies:** M1
 - **Verification Command:** `.venv/bin/pytest tests/test_m2_offline_loop.py -v`
-- **Attempts:** 0 / 3
-- **Next Step:** Build local Planner + local Executor Model orchestration loop with socket/network-blocked offline proof test.
+- **Attempts:** 2 / 3
+- **Recorded Failure Reasons (Auto-Repair Loop):**
+  1. `Command `.venv/bin/pytest tests/test_m2_offline_loop.py -v` exited 1: " / "KeepMe.pdf").exists() | E       AssertionError: assert False | E        +  where False = exists() | E        +    where exists = ((PosixPath('/private/var/folders/l7/2_dj5q8x14j9h07fp07hfg000000gn/T/pytest-of-yao/pytest-1/test_offline_error_replan_and_0/recovery_ws') / 'Archive_PDFs') / 'KeepMe.pdf').exists |  | tests/test_m2_offline_loop.py:96: AssertionError | =========================== short test summary info ============================ | FAILED tests/test_m2_offline_loop.py::test_offline_error_replan_and_cancellation | ========================= 1 failed, 1 passed in 5.34s ==========================`
+- **Gate Verification Evidence:** Network-disabled socket-blocked end-to-end planning-execution loop, local MLX model traces, SHA-256 verification, FILE_NOT_FOUND replan recovery, and cancellation verified (2/2 pytest passed).
+- **Git Checkpoint:** commit `0fc71c5d13e16f834fa8bdc1a0c90d039b823cf2`, tag `checkpoint-M2` at `2026-11-20T06:00:18Z`
+- **Next Step:** Proceed to M3: Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline
 
 ### M3: Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline
 - **Status:** `NOT_STARTED`
@@ -101,3 +105,7 @@
 - `2026-11-20T05:57:00Z` **[VERIFICATION_FAILED]** (`M1`): Attempt 1/3 failed: Command `.venv/bin/pytest tests/test_m1_protocol_and_security.py -v` exited 2: .py:88: in import_module |     return _bootstrap._gcd_import(name[level:], package, level) |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ | te
 - `2026-11-20T05:57:44Z` **[MILESTONE_PASSED]** (`M1`): Attempt 2 passed gate verification. Evidence: TaskPlanV1/ToolCallV1 JSON schemas, DAG validation, PolicyValidator path/symlink/approval guards, SQLite StateStore, and 6-tool DeterministicToolRuntime verified (4/4 pytest passed).
 - `2026-11-20T05:57:44Z` **[GIT_CHECKPOINT_CREATED]** (`M1`): Created git tag checkpoint-M1 at commit 5f33cdd
+- `2026-11-20T05:57:53Z` **[MILESTONE_STARTED]** (`M2`): Orchestrator assigned M2 (Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice) to Coding Agent.
+- `2026-11-20T05:59:52Z` **[VERIFICATION_FAILED]** (`M2`): Attempt 1/3 failed: Command `.venv/bin/pytest tests/test_m2_offline_loop.py -v` exited 1: " / "KeepMe.pdf").exists() | E       AssertionError: assert False | E        +  where False = exists() | E        +    where exists = ((PosixPath('/private/var/folders/l7
+- `2026-11-20T06:00:18Z` **[MILESTONE_PASSED]** (`M2`): Attempt 2 passed gate verification. Evidence: Network-disabled socket-blocked end-to-end planning-execution loop, local MLX model traces, SHA-256 verification, FILE_NOT_FOUND replan recovery, and cancellation verified (2/2 pytest passed).
+- `2026-11-20T06:00:18Z` **[GIT_CHECKPOINT_CREATED]** (`M2`): Created git tag checkpoint-M2 at commit 0fc71c5

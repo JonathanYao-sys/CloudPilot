@@ -4,9 +4,9 @@
   "spec_version": "4.0 — LOCAL-ONLY",
   "workflow_architecture": "agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints",
   "workflow_status": "IN_PROGRESS",
-  "current_milestone": "M2",
+  "current_milestone": "M3",
   "max_retries_per_milestone": 3,
-  "updated_at": "2026-11-20T05:57:44Z",
+  "updated_at": "2026-11-20T06:00:18Z",
   "milestones": [
     {
       "id": "M0",
@@ -60,7 +60,7 @@
       ],
       "evidence": "TaskPlanV1/ToolCallV1 JSON schemas, DAG validation, PolicyValidator path/symlink/approval guards, SQLite StateStore, and 6-tool DeterministicToolRuntime verified (4/4 pytest passed).",
       "git_checkpoint": {
-        "commit": "5f33cdd6836b7bcaa42623f02f2f14b49f69cd1a",
+        "commit": "d6132d2959b6ce9804300712d95368cefc8149b4",
         "tag": "checkpoint-M1",
         "timestamp": "2026-11-20T05:57:44Z"
       },
@@ -74,10 +74,12 @@
       "depends_on": [
         "M1"
       ],
-      "status": "NOT_STARTED",
-      "attempts": 0,
+      "status": "PASSED",
+      "attempts": 2,
       "max_attempts": 3,
-      "failure_reasons": [],
+      "failure_reasons": [
+        "Command `.venv/bin/pytest tests/test_m2_offline_loop.py -v` exited 1: \" / \"KeepMe.pdf\").exists() | E       AssertionError: assert False | E        +  where False = exists() | E        +    where exists = ((PosixPath('/private/var/folders/l7/2_dj5q8x14j9h07fp07hfg000000gn/T/pytest-of-yao/pytest-1/test_offline_error_replan_and_0/recovery_ws') / 'Archive_PDFs') / 'KeepMe.pdf').exists |  | tests/test_m2_offline_loop.py:96: AssertionError | =========================== short test summary info ============================ | FAILED tests/test_m2_offline_loop.py::test_offline_error_replan_and_cancellation | ========================= 1 failed, 1 passed in 5.34s =========================="
+      ],
       "verification_command": ".venv/bin/pytest tests/test_m2_offline_loop.py -v",
       "deliverables": [
         "app/model_runtime/mlx_loader.py",
@@ -85,13 +87,13 @@
         "app/local_executor/executor_agent.py",
         "app/local_executor/orchestration_loop.py"
       ],
-      "evidence": null,
+      "evidence": "Network-disabled socket-blocked end-to-end planning-execution loop, local MLX model traces, SHA-256 verification, FILE_NOT_FOUND replan recovery, and cancellation verified (2/2 pytest passed).",
       "git_checkpoint": {
-        "commit": null,
-        "tag": null,
-        "timestamp": null
+        "commit": "0fc71c5d13e16f834fa8bdc1a0c90d039b823cf2",
+        "tag": "checkpoint-M2",
+        "timestamp": "2026-11-20T06:00:18Z"
       },
-      "next_step": "Build local Planner + local Executor Model orchestration loop with socket/network-blocked offline proof test."
+      "next_step": "Proceed to M3: Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline"
     },
     {
       "id": "M3",
@@ -328,6 +330,30 @@
       "event": "GIT_CHECKPOINT_CREATED",
       "milestone": "M1",
       "detail": "Created git tag checkpoint-M1 at commit 5f33cdd"
+    },
+    {
+      "timestamp": "2026-11-20T05:57:53Z",
+      "event": "MILESTONE_STARTED",
+      "milestone": "M2",
+      "detail": "Orchestrator assigned M2 (Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice) to Coding Agent."
+    },
+    {
+      "timestamp": "2026-11-20T05:59:52Z",
+      "event": "VERIFICATION_FAILED",
+      "milestone": "M2",
+      "detail": "Attempt 1/3 failed: Command `.venv/bin/pytest tests/test_m2_offline_loop.py -v` exited 1: \" / \"KeepMe.pdf\").exists() | E       AssertionError: assert False | E        +  where False = exists() | E        +    where exists = ((PosixPath('/private/var/folders/l7"
+    },
+    {
+      "timestamp": "2026-11-20T06:00:18Z",
+      "event": "MILESTONE_PASSED",
+      "milestone": "M2",
+      "detail": "Attempt 2 passed gate verification. Evidence: Network-disabled socket-blocked end-to-end planning-execution loop, local MLX model traces, SHA-256 verification, FILE_NOT_FOUND replan recovery, and cancellation verified (2/2 pytest passed)."
+    },
+    {
+      "timestamp": "2026-11-20T06:00:18Z",
+      "event": "GIT_CHECKPOINT_CREATED",
+      "milestone": "M2",
+      "detail": "Created git tag checkpoint-M2 at commit 0fc71c5"
     }
   ]
 }
