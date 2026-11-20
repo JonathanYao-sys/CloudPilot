@@ -1,0 +1,20 @@
+# Virtual environments & Python cache
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Heavy local model cache / uncompressed builds (keep adapters & configs & checksums)
+.hf_cache/
+build/
+dist/
+*.dmg.tmp
+app/frontend/.build/
+
+# macOS
+.DS_Store
+
+# Temporary sandbox workspaces
+/tmp_sandbox/
+logs/*.tmp

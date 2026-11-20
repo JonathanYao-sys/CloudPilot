@@ -1,0 +1,269 @@
+{
+  "project": "CloudPilot",
+  "source_spec": "agent.md",
+  "spec_version": "4.0 — LOCAL-ONLY",
+  "workflow_architecture": "agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints",
+  "workflow_status": "IN_PROGRESS",
+  "current_milestone": "M0",
+  "max_retries_per_milestone": 3,
+  "updated_at": "2026-11-20T00:00:00Z",
+  "milestones": [
+    {
+      "id": "M0",
+      "phase": "Phase 0 & Phase 1",
+      "gate": "Gate 0 & Gate 1",
+      "title": "Local hardware/agent audit, MLX environment setup, inference & tiny train smoke test, A/B/C/P baseline freeze",
+      "depends_on": [],
+      "status": "NOT_STARTED",
+      "attempts": 0,
+      "max_attempts": 3,
+      "failure_reasons": [],
+      "verification_command": ".venv/bin/pytest tests/test_m0_hardware_and_models.py -v",
+      "deliverables": [
+        "docs/hardware_report.md",
+        "docs/environment_report.json",
+        "docs/local_compute_budget.md",
+        "docs/offline_mode.md",
+        "docs/ADR/0001-local-architecture-and-models.md"
+      ],
+      "evidence": null,
+      "git_checkpoint": {
+        "commit": null,
+        "tag": null,
+        "timestamp": null
+      },
+      "next_step": "Run M0 hardware inspection, provision local Python 3.13 + MLX venv, cache A/C models, and run inference/training smoke test."
+    },
+    {
+      "id": "M1",
+      "phase": "Phase 2",
+      "gate": "Gate 2",
+      "title": "Versioned local task protocol, JSON schemas, Policy Validator, and deterministic safe Tool Runtime",
+      "depends_on": ["M0"],
+      "status": "NOT_STARTED",
+      "attempts": 0,
+      "max_attempts": 3,
+      "failure_reasons": [],
+      "verification_command": ".venv/bin/pytest tests/test_m1_protocol_and_security.py -v",
+      "deliverables": [
+        "protocol/schemas/task_plan_v1.json",
+        "protocol/schemas/tool_call_v1.json",
+        "protocol/versions/v1.py",
+        "protocol/examples/demo_plan.json",
+        "app/security/policy_validator.py",
+        "app/local_executor/tool_runtime.py",
+        "app/local_executor/state_store.py"
+      ],
+      "evidence": null,
+      "git_checkpoint": {
+        "commit": null,
+        "tag": null,
+        "timestamp": null
+      },
+      "next_step": "Implement task protocol v1.0, Pydantic/JSON schemas, Policy Validator, SQLite state store, and deterministic 6-tool runtime."
+    },
+    {
+      "id": "M2",
+      "phase": "Phase 3",
+      "gate": "Gate 3",
+      "title": "Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice",
+      "depends_on": ["M1"],
+      "status": "NOT_STARTED",
+      "attempts": 0,
+      "max_attempts": 3,
+      "failure_reasons": [],
+      "verification_command": ".venv/bin/pytest tests/test_m2_offline_loop.py -v",
+      "deliverables": [
+        "app/model_runtime/mlx_loader.py",
+        "app/local_planner/planner.py",
+        "app/local_executor/executor_agent.py",
+        "app/local_executor/orchestration_loop.py"
+      ],
+      "evidence": null,
+      "git_checkpoint": {
+        "commit": null,
+        "tag": null,
+        "timestamp": null
+      },
+      "next_step": "Build local Planner + local Executor Model orchestration loop with socket/network-blocked offline proof test."
+    },
+    {
+      "id": "M3",
+      "phase": "Phase 4",
+      "gate": "Gate 4",
+      "title": "Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline",
+      "depends_on": ["M1", "M2"],
+      "status": "NOT_STARTED",
+      "attempts": 0,
+      "max_attempts": 3,
+      "failure_reasons": [],
+      "verification_command": ".venv/bin/pytest tests/test_m3_dataset_quality.py -v",
+      "deliverables": [
+        "training/data_pipeline/generate_dataset.py",
+        "training/data_pipeline/validate_dataset.py",
+        "training/datasets/train.jsonl",
+        "training/datasets/validation.jsonl",
+        "training/datasets/test.jsonl",
+        "training/datasets/DATASET_CARD.md",
+        "training/reports/data_quality.md"
+      ],
+      "evidence": null,
+      "git_checkpoint": {
+        "commit": null,
+        "tag": null,
+        "timestamp": null
+      },
+      "next_step": "Generate and validate >=1,200 synthetic cases across 8 families with zero train/test leakage."
+    },
+    {
+      "id": "M4",
+      "phase": "Phase 5",
+      "gate": "Gate 5",
+      "title": "On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card",
+      "depends_on": ["M3"],
+      "status": "NOT_STARTED",
+      "attempts": 0,
+      "max_attempts": 3,
+      "failure_reasons": [],
+      "verification_command": ".venv/bin/pytest tests/test_m4_finetuned_model.py -v",
+      "deliverables": [
+        "training/configs/lora_config.yaml",
+        "training/scripts/train_local_lora.py",
+        "training/reports/training_metrics.json",
+        "model/adapters/adapters.safetensors",
+        "model/adapters/adapter_config.json",
+        "model/deployment/model.safetensors",
+        "model/MODEL_CARD.md"
+      ],
+      "evidence": null,
+      "git_checkpoint": {
+        "commit": null,
+        "tag": null,
+        "timestamp": null
+      },
+      "next_step": "Fine-tune Model A on this Apple M4 Mac using MLX LoRA to produce Model B (.safetensors), fuse deployment weights, and verify in app loader."
+    },
+    {
+      "id": "M5",
+      "phase": "Phase 6",
+      "gate": "Gate 6",
+      "title": "Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B",
+      "depends_on": ["M2", "M4"],
+      "status": "NOT_STARTED",
+      "attempts": 0,
+      "max_attempts": 3,
+      "failure_reasons": [],
+      "verification_command": ".venv/bin/pytest tests/test_m5_macos_app_and_dmg.py -v",
+      "deliverables": [
+        "app/frontend/CloudPilotApp.swift",
+        "app/packaging/build_macos_app.sh",
+        "release/artifacts/CloudPilot.app",
+        "release/artifacts/CloudPilot-v1.0-macOS.dmg"
+      ],
+      "evidence": null,
+      "git_checkpoint": {
+        "commit": null,
+        "tag": null,
+        "timestamp": null
+      },
+      "next_step": "Compile native SwiftUI macOS app bundling/connecting to local runtime & Model B, package into installable DMG, and test offline execution."
+    },
+    {
+      "id": "M6",
+      "phase": "Phase 7",
+      "gate": "Gate 7",
+      "title": "Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts",
+      "depends_on": ["M4", "M5"],
+      "status": "NOT_STARTED",
+      "attempts": 0,
+      "max_attempts": 3,
+      "failure_reasons": [],
+      "verification_command": ".venv/bin/pytest tests/test_m6_benchmarks.py -v",
+      "deliverables": [
+        "evaluation/suites/run_abc_evaluation.py",
+        "evaluation/raw_results/base.jsonl",
+        "evaluation/raw_results/finetuned.jsonl",
+        "evaluation/raw_results/small_model.jsonl",
+        "evaluation/results.csv",
+        "evaluation/EVALUATION_REPORT.md",
+        "evaluation/REPRODUCIBILITY.md",
+        "evaluation/charts/accuracy_comparison.png",
+        "evaluation/charts/latency_memory_comparison.png",
+        "evaluation/charts/family_breakdown.png"
+      ],
+      "evidence": null,
+      "git_checkpoint": {
+        "commit": null,
+        "tag": null,
+        "timestamp": null
+      },
+      "next_step": "Run full A/B/C evaluation across public tool-calling subset, CloudPilot held-out test set, performance metrics, and security suite."
+    },
+    {
+      "id": "M7",
+      "phase": "Phase 8, Phase 9 & Phase 10 (Local Build)",
+      "gate": "Gate 8 (Local), Gate 9 (Local), Gate 10",
+      "title": "Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest",
+      "depends_on": ["M5", "M6"],
+      "status": "NOT_STARTED",
+      "attempts": 0,
+      "max_attempts": 3,
+      "failure_reasons": [],
+      "verification_command": ".venv/bin/pytest tests/test_m7_release_and_media.py -v",
+      "deliverables": [
+        "README.md",
+        "docs/architecture.md",
+        "docs/installation.md",
+        "docs/user_guide.md",
+        "docs/security.md",
+        "docs/privacy.md",
+        "docs/troubleshooting.md",
+        "docs/offline_compliance.md",
+        "website/index.html",
+        "website/styles.css",
+        "website/app.js",
+        "marketing/storyboard.md",
+        "marketing/exports/CloudPilot_Promo.mp4",
+        "release/checksums.sha256",
+        "release/DELIVERY_MANIFEST.md"
+      ],
+      "evidence": null,
+      "git_checkpoint": {
+        "commit": null,
+        "tag": null,
+        "timestamp": null
+      },
+      "next_step": "Author CN/EN docs, build static launch website with real screenshots/charts, render real app promo MP4 via FFmpeg, and audit delivery manifest."
+    },
+    {
+      "id": "M8",
+      "phase": "Phase 8 & Phase 9 (Public Internet Publication)",
+      "gate": "Gate 8 (Public) & Gate 9 (Public)",
+      "title": "Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication",
+      "depends_on": ["M7"],
+      "status": "NOT_STARTED",
+      "attempts": 0,
+      "max_attempts": 3,
+      "failure_reasons": [],
+      "verification_command": "python3 orchestrator.py check-publication",
+      "deliverables": [
+        "release/DELIVERY_MANIFEST.md"
+      ],
+      "evidence": null,
+      "git_checkpoint": {
+        "commit": null,
+        "tag": null,
+        "timestamp": null
+      },
+      "next_step": "Await explicit user approval and GitHub target/account configuration per agent.md Section 2.2 before pushing public release/website."
+    }
+  ],
+  "history": [
+    {
+      "timestamp": "2026-11-20T00:00:00Z",
+      "event": "WORKFLOW_INITIALIZED",
+      "milestone": "M0",
+      "detail": "Initialized CloudPilot orchestrator state from agent.md with semua gates NOT_STARTED."
+    }
+  ]
+}
