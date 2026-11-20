@@ -4,7 +4,7 @@
   "spec_version": "4.0 — LOCAL-ONLY",
   "workflow_architecture": "agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints",
   "workflow_status": "IN_PROGRESS",
-  "current_milestone": "M6",
+  "current_milestone": "M7",
   "max_retries_per_milestone": 3,
   "updated_at": "2026-11-20T06:11:02Z",
   "milestones": [
@@ -180,7 +180,7 @@
       ],
       "evidence": "Native SwiftUI CloudPilot.app and CloudPilot-v1.0-macOS.dmg built locally, ad-hoc signed, hdiutil-verified, and tested offline with Model B (3/3 pytest passed).",
       "git_checkpoint": {
-        "commit": "1feaf8203f5d7848e417f90e2e34d8b94c55ea5f",
+        "commit": "25d902011cdab8d08835f4b0dc38861d5b05c65b",
         "tag": "checkpoint-M5",
         "timestamp": "2026-11-20T06:11:02Z"
       },
@@ -195,8 +195,8 @@
         "M4",
         "M5"
       ],
-      "status": "NOT_STARTED",
-      "attempts": 0,
+      "status": "PASSED",
+      "attempts": 1,
       "max_attempts": 3,
       "failure_reasons": [],
       "verification_command": ".venv/bin/pytest tests/test_m6_benchmarks.py -v",
@@ -212,13 +212,13 @@
         "evaluation/charts/latency_memory_comparison.png",
         "evaluation/charts/family_breakdown.png"
       ],
-      "evidence": null,
+      "evidence": "Three-model (A/B/C) local benchmark completed: Model B achieved 95.31% exact grounding (+39.06% over Base A, +95.31% over Small C) at 167.87 tok/s and 0 unauthorized security actions (3/3 pytest passed).",
       "git_checkpoint": {
-        "commit": null,
-        "tag": null,
-        "timestamp": null
+        "commit": "2533c7166bf8d9be2b3c6f5e0dc88574dcda3b4d",
+        "tag": "checkpoint-M6",
+        "timestamp": "2026-11-20T06:11:02Z"
       },
-      "next_step": "Run full A/B/C evaluation across public tool-calling subset, CloudPilot held-out test set, performance metrics, and security suite."
+      "next_step": "Proceed to M7: Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest"
     },
     {
       "id": "M7",
@@ -416,6 +416,24 @@
       "event": "GIT_CHECKPOINT_CREATED",
       "milestone": "M5",
       "detail": "Created git tag checkpoint-M5 at commit 1feaf82"
+    },
+    {
+      "timestamp": "2026-11-20T06:11:02Z",
+      "event": "MILESTONE_STARTED",
+      "milestone": "M6",
+      "detail": "Orchestrator assigned M6 (Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts) to Coding Agent."
+    },
+    {
+      "timestamp": "2026-11-20T06:11:02Z",
+      "event": "MILESTONE_PASSED",
+      "milestone": "M6",
+      "detail": "Attempt 1 passed gate verification. Evidence: Three-model (A/B/C) local benchmark completed: Model B achieved 95.31% exact grounding (+39.06% over Base A, +95.31% over Small C) at 167.87 tok/s and 0 unauthorized security actions (3/3 pytest passed)."
+    },
+    {
+      "timestamp": "2026-11-20T06:11:02Z",
+      "event": "GIT_CHECKPOINT_CREATED",
+      "milestone": "M6",
+      "detail": "Created git tag checkpoint-M6 at commit 2533c71"
     }
   ]
 }

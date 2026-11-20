@@ -3,7 +3,7 @@
 > **Source Specification:** `agent.md` (4.0 — LOCAL-ONLY)  
 > **Workflow Pattern:** `agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints`  
 > **Overall Workflow Status:** `IN_PROGRESS`  
-> **Current Active Milestone:** `M6`  
+> **Current Active Milestone:** `M7`  
 > **Last Updated (UTC):** `2026-11-20T06:11:02Z`
 
 ## 1. Milestone & Gate Summary
@@ -15,8 +15,8 @@
 | **M2** | Phase 3 (Gate 3) | Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice | `PASSED` | 2/3 | `checkpoint-M2` (`1b0b81e`) |
 | **M3** | Phase 4 (Gate 4) | Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline | `PASSED` | 1/3 | `checkpoint-M3` (`42ac98e`) |
 | **M4** | Phase 5 (Gate 5) | On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card | `PASSED` | 1/3 | `checkpoint-M4` (`5e9aa8a`) |
-| **M5** | Phase 6 (Gate 6) | Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B | `PASSED` | 2/3 | `checkpoint-M5` (`1feaf82`) |
-| **M6** | Phase 7 (Gate 7) | Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts | `NOT_STARTED` | 0/3 | — |
+| **M5** | Phase 6 (Gate 6) | Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B | `PASSED` | 2/3 | `checkpoint-M5` (`25d9020`) |
+| **M6** | Phase 7 (Gate 7) | Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts | `PASSED` | 1/3 | `checkpoint-M6` (`2533c71`) |
 | **M7** | Phase 8, Phase 9 & Phase 10 (Local Build) (Gate 8 (Local), Gate 9 (Local), Gate 10) | Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest | `NOT_STARTED` | 0/3 | — |
 | **M8** | Phase 8 & Phase 9 (Public Internet Publication) (Gate 8 (Public) & Gate 9 (Public)) | Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication | `NOT_STARTED` | 0/3 | — |
 
@@ -79,15 +79,17 @@
 - **Recorded Failure Reasons (Auto-Repair Loop):**
   1. `Command `.venv/bin/pytest tests/test_m5_macos_app_and_dmg.py -v` exited 1:              output=stdout, stderr=stderr) | E               subprocess.CalledProcessError: Command '['/Users/yao/CloudPilot/release/artifacts/CloudPilot.app/Contents/MacOS/CloudPilot', '--headless-self-test']' returned non-zero exit status 1. |  | ../.local/share/uv/python/cpython-3.13.18-macos-aarch64-none/lib/python3.13/subprocess.py:578: CalledProcessError | =========================== short test summary info ============================ | FAILED tests/test_m5_macos_app_and_dmg.py::test_m5_app_headless_offline_self_test | ========================= 1 failed, 2 passed in 3.84s ==========================`
 - **Gate Verification Evidence:** Native SwiftUI CloudPilot.app and CloudPilot-v1.0-macOS.dmg built locally, ad-hoc signed, hdiutil-verified, and tested offline with Model B (3/3 pytest passed).
-- **Git Checkpoint:** commit `1feaf8203f5d7848e417f90e2e34d8b94c55ea5f`, tag `checkpoint-M5` at `2026-11-20T06:11:02Z`
+- **Git Checkpoint:** commit `25d902011cdab8d08835f4b0dc38861d5b05c65b`, tag `checkpoint-M5` at `2026-11-20T06:11:02Z`
 - **Next Step:** Proceed to M6: Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts
 
 ### M6: Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts
-- **Status:** `NOT_STARTED`
+- **Status:** `PASSED`
 - **Dependencies:** M4, M5
 - **Verification Command:** `.venv/bin/pytest tests/test_m6_benchmarks.py -v`
-- **Attempts:** 0 / 3
-- **Next Step:** Run full A/B/C evaluation across public tool-calling subset, CloudPilot held-out test set, performance metrics, and security suite.
+- **Attempts:** 1 / 3
+- **Gate Verification Evidence:** Three-model (A/B/C) local benchmark completed: Model B achieved 95.31% exact grounding (+39.06% over Base A, +95.31% over Small C) at 167.87 tok/s and 0 unauthorized security actions (3/3 pytest passed).
+- **Git Checkpoint:** commit `2533c7166bf8d9be2b3c6f5e0dc88574dcda3b4d`, tag `checkpoint-M6` at `2026-11-20T06:11:02Z`
+- **Next Step:** Proceed to M7: Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest
 
 ### M7: Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest
 - **Status:** `NOT_STARTED`
@@ -105,9 +107,6 @@
 
 ## 3. Orchestrator Execution Log (Recent Events)
 
-- `2026-11-20T05:54:43Z` **[MILESTONE_PASSED]** (`M0`): Attempt 1 passed gate verification. Evidence: Apple M4 24GB RAM verified; Model A (124.9 tok/s) & Model C (253.71 tok/s) cached locally; 5-step MLX LoRA smoke test passed in 10.33s.
-- `2026-11-20T05:54:43Z` **[GIT_CHECKPOINT_CREATED]** (`M0`): Created git tag checkpoint-M0 at commit 2d29a55
-- `2026-11-20T05:54:51Z` **[MILESTONE_STARTED]** (`M1`): Orchestrator assigned M1 (Versioned local task protocol, JSON schemas, Policy Validator, and deterministic safe Tool Runtime) to Coding Agent.
 - `2026-11-20T05:57:00Z` **[VERIFICATION_FAILED]** (`M1`): Attempt 1/3 failed: Command `.venv/bin/pytest tests/test_m1_protocol_and_security.py -v` exited 2: .py:88: in import_module |     return _bootstrap._gcd_import(name[level:], package, level) |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ | te
 - `2026-11-20T05:57:44Z` **[MILESTONE_PASSED]** (`M1`): Attempt 2 passed gate verification. Evidence: TaskPlanV1/ToolCallV1 JSON schemas, DAG validation, PolicyValidator path/symlink/approval guards, SQLite StateStore, and 6-tool DeterministicToolRuntime verified (4/4 pytest passed).
 - `2026-11-20T05:57:44Z` **[GIT_CHECKPOINT_CREATED]** (`M1`): Created git tag checkpoint-M1 at commit 5f33cdd
@@ -125,3 +124,6 @@
 - `2026-11-20T06:10:07Z` **[VERIFICATION_FAILED]** (`M5`): Attempt 1/3 failed: Command `.venv/bin/pytest tests/test_m5_macos_app_and_dmg.py -v` exited 1:              output=stdout, stderr=stderr) | E               subprocess.CalledProcessError: Command '['/Users/yao/CloudPilot/release/artifacts/CloudPilot.app/Content
 - `2026-11-20T06:11:02Z` **[MILESTONE_PASSED]** (`M5`): Attempt 2 passed gate verification. Evidence: Native SwiftUI CloudPilot.app and CloudPilot-v1.0-macOS.dmg built locally, ad-hoc signed, hdiutil-verified, and tested offline with Model B (3/3 pytest passed).
 - `2026-11-20T06:11:02Z` **[GIT_CHECKPOINT_CREATED]** (`M5`): Created git tag checkpoint-M5 at commit 1feaf82
+- `2026-11-20T06:11:02Z` **[MILESTONE_STARTED]** (`M6`): Orchestrator assigned M6 (Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts) to Coding Agent.
+- `2026-11-20T06:11:02Z` **[MILESTONE_PASSED]** (`M6`): Attempt 1 passed gate verification. Evidence: Three-model (A/B/C) local benchmark completed: Model B achieved 95.31% exact grounding (+39.06% over Base A, +95.31% over Small C) at 167.87 tok/s and 0 unauthorized security actions (3/3 pytest passed).
+- `2026-11-20T06:11:02Z` **[GIT_CHECKPOINT_CREATED]** (`M6`): Created git tag checkpoint-M6 at commit 2533c71
