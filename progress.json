@@ -4,9 +4,9 @@
   "spec_version": "4.0 — LOCAL-ONLY",
   "workflow_architecture": "agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints",
   "workflow_status": "IN_PROGRESS",
-  "current_milestone": "M7",
+  "current_milestone": "M8",
   "max_retries_per_milestone": 3,
-  "updated_at": "2026-11-20T06:11:02Z",
+  "updated_at": "2026-11-20T06:15:54Z",
   "milestones": [
     {
       "id": "M0",
@@ -214,7 +214,7 @@
       ],
       "evidence": "Three-model (A/B/C) local benchmark completed: Model B achieved 95.31% exact grounding (+39.06% over Base A, +95.31% over Small C) at 167.87 tok/s and 0 unauthorized security actions (3/3 pytest passed).",
       "git_checkpoint": {
-        "commit": "2533c7166bf8d9be2b3c6f5e0dc88574dcda3b4d",
+        "commit": "334fef577bf6cdfd3af460182d96bdd0e27bc2f6",
         "tag": "checkpoint-M6",
         "timestamp": "2026-11-20T06:11:02Z"
       },
@@ -229,8 +229,8 @@
         "M5",
         "M6"
       ],
-      "status": "NOT_STARTED",
-      "attempts": 0,
+      "status": "PASSED",
+      "attempts": 1,
       "max_attempts": 3,
       "failure_reasons": [],
       "verification_command": ".venv/bin/pytest tests/test_m7_release_and_media.py -v",
@@ -251,13 +251,13 @@
         "release/checksums.sha256",
         "release/DELIVERY_MANIFEST.md"
       ],
-      "evidence": null,
+      "evidence": "Complete CN/EN docs, offline_compliance.md, zero-CDN static launch website with real screenshots/charts, playable 1080p H.264 MP4 promo video (31.97s), SHA-256 checksums, and DELIVERY_MANIFEST.md verified (4/4 pytest passed).",
       "git_checkpoint": {
-        "commit": null,
-        "tag": null,
-        "timestamp": null
+        "commit": "4a4b4d0de5c84b6652451474b7bace0915b4da31",
+        "tag": "checkpoint-M7",
+        "timestamp": "2026-11-20T06:15:54Z"
       },
-      "next_step": "Author CN/EN docs, build static launch website with real screenshots/charts, render real app promo MP4 via FFmpeg, and audit delivery manifest."
+      "next_step": "Proceed to M8: Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication"
     },
     {
       "id": "M8",
@@ -434,6 +434,24 @@
       "event": "GIT_CHECKPOINT_CREATED",
       "milestone": "M6",
       "detail": "Created git tag checkpoint-M6 at commit 2533c71"
+    },
+    {
+      "timestamp": "2026-11-20T06:11:02Z",
+      "event": "MILESTONE_STARTED",
+      "milestone": "M7",
+      "detail": "Orchestrator assigned M7 (Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest) to Coding Agent."
+    },
+    {
+      "timestamp": "2026-11-20T06:15:54Z",
+      "event": "MILESTONE_PASSED",
+      "milestone": "M7",
+      "detail": "Attempt 1 passed gate verification. Evidence: Complete CN/EN docs, offline_compliance.md, zero-CDN static launch website with real screenshots/charts, playable 1080p H.264 MP4 promo video (31.97s), SHA-256 checksums, and DELIVERY_MANIFEST.md verified (4/4 pytest passed)."
+    },
+    {
+      "timestamp": "2026-11-20T06:15:54Z",
+      "event": "GIT_CHECKPOINT_CREATED",
+      "milestone": "M7",
+      "detail": "Created git tag checkpoint-M7 at commit 4a4b4d0"
     }
   ]
 }

@@ -3,8 +3,8 @@
 > **Source Specification:** `agent.md` (4.0 — LOCAL-ONLY)  
 > **Workflow Pattern:** `agent.md -> Orchestrator -> Coding Agent -> progress.json + Git Checkpoints`  
 > **Overall Workflow Status:** `IN_PROGRESS`  
-> **Current Active Milestone:** `M7`  
-> **Last Updated (UTC):** `2026-11-20T06:11:02Z`
+> **Current Active Milestone:** `M8`  
+> **Last Updated (UTC):** `2026-11-20T06:15:54Z`
 
 ## 1. Milestone & Gate Summary
 
@@ -16,8 +16,8 @@
 | **M3** | Phase 4 (Gate 4) | Local synthetic dataset generation (train/val/test), validation checks, and pre-training A/C baseline | `PASSED` | 1/3 | `checkpoint-M3` (`42ac98e`) |
 | **M4** | Phase 5 (Gate 5) | On-Mac MLX LoRA fine-tuning, exported .safetensors adapter & fused deployment model, Model Card | `PASSED` | 1/3 | `checkpoint-M4` (`5e9aa8a`) |
 | **M5** | Phase 6 (Gate 6) | Native offline macOS App (.app) and installable disk image (.dmg) integrating fine-tuned Model B | `PASSED` | 2/3 | `checkpoint-M5` (`25d9020`) |
-| **M6** | Phase 7 (Gate 7) | Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts | `PASSED` | 1/3 | `checkpoint-M6` (`2533c71`) |
-| **M7** | Phase 8, Phase 9 & Phase 10 (Local Build) (Gate 8 (Local), Gate 9 (Local), Gate 10) | Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest | `NOT_STARTED` | 0/3 | — |
+| **M6** | Phase 7 (Gate 7) | Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts | `PASSED` | 1/3 | `checkpoint-M6` (`334fef5`) |
+| **M7** | Phase 8, Phase 9 & Phase 10 (Local Build) (Gate 8 (Local), Gate 9 (Local), Gate 10) | Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest | `PASSED` | 1/3 | `checkpoint-M7` (`4a4b4d0`) |
 | **M8** | Phase 8 & Phase 9 (Public Internet Publication) (Gate 8 (Public) & Gate 9 (Public)) | Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication | `NOT_STARTED` | 0/3 | — |
 
 ## 2. Detailed Milestone Evidence, Failure Reasons & Next Steps
@@ -88,15 +88,17 @@
 - **Verification Command:** `.venv/bin/pytest tests/test_m6_benchmarks.py -v`
 - **Attempts:** 1 / 3
 - **Gate Verification Evidence:** Three-model (A/B/C) local benchmark completed: Model B achieved 95.31% exact grounding (+39.06% over Base A, +95.31% over Small C) at 167.87 tok/s and 0 unauthorized security actions (3/3 pytest passed).
-- **Git Checkpoint:** commit `2533c7166bf8d9be2b3c6f5e0dc88574dcda3b4d`, tag `checkpoint-M6` at `2026-11-20T06:11:02Z`
+- **Git Checkpoint:** commit `334fef577bf6cdfd3af460182d96bdd0e27bc2f6`, tag `checkpoint-M6` at `2026-11-20T06:11:02Z`
 - **Next Step:** Proceed to M7: Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest
 
 ### M7: Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest
-- **Status:** `NOT_STARTED`
+- **Status:** `PASSED`
 - **Dependencies:** M5, M6
 - **Verification Command:** `.venv/bin/pytest tests/test_m7_release_and_media.py -v`
-- **Attempts:** 0 / 3
-- **Next Step:** Author CN/EN docs, build static launch website with real screenshots/charts, render real app promo MP4 via FFmpeg, and audit delivery manifest.
+- **Attempts:** 1 / 3
+- **Gate Verification Evidence:** Complete CN/EN docs, offline_compliance.md, zero-CDN static launch website with real screenshots/charts, playable 1080p H.264 MP4 promo video (31.97s), SHA-256 checksums, and DELIVERY_MANIFEST.md verified (4/4 pytest passed).
+- **Git Checkpoint:** commit `4a4b4d0de5c84b6652451474b7bace0915b4da31`, tag `checkpoint-M7` at `2026-11-20T06:15:54Z`
+- **Next Step:** Proceed to M8: Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication
 
 ### M8: Authorized GitHub Repository/Release Upload, Static Website Hosting & Video Publication
 - **Status:** `NOT_STARTED`
@@ -107,9 +109,6 @@
 
 ## 3. Orchestrator Execution Log (Recent Events)
 
-- `2026-11-20T05:57:00Z` **[VERIFICATION_FAILED]** (`M1`): Attempt 1/3 failed: Command `.venv/bin/pytest tests/test_m1_protocol_and_security.py -v` exited 2: .py:88: in import_module |     return _bootstrap._gcd_import(name[level:], package, level) |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ | te
-- `2026-11-20T05:57:44Z` **[MILESTONE_PASSED]** (`M1`): Attempt 2 passed gate verification. Evidence: TaskPlanV1/ToolCallV1 JSON schemas, DAG validation, PolicyValidator path/symlink/approval guards, SQLite StateStore, and 6-tool DeterministicToolRuntime verified (4/4 pytest passed).
-- `2026-11-20T05:57:44Z` **[GIT_CHECKPOINT_CREATED]** (`M1`): Created git tag checkpoint-M1 at commit 5f33cdd
 - `2026-11-20T05:57:53Z` **[MILESTONE_STARTED]** (`M2`): Orchestrator assigned M2 (Entirely local planning-execution loop & network-disabled end-to-end sandbox vertical slice) to Coding Agent.
 - `2026-11-20T05:59:52Z` **[VERIFICATION_FAILED]** (`M2`): Attempt 1/3 failed: Command `.venv/bin/pytest tests/test_m2_offline_loop.py -v` exited 1: " / "KeepMe.pdf").exists() | E       AssertionError: assert False | E        +  where False = exists() | E        +    where exists = ((PosixPath('/private/var/folders/l7
 - `2026-11-20T06:00:18Z` **[MILESTONE_PASSED]** (`M2`): Attempt 2 passed gate verification. Evidence: Network-disabled socket-blocked end-to-end planning-execution loop, local MLX model traces, SHA-256 verification, FILE_NOT_FOUND replan recovery, and cancellation verified (2/2 pytest passed).
@@ -127,3 +126,6 @@
 - `2026-11-20T06:11:02Z` **[MILESTONE_STARTED]** (`M6`): Orchestrator assigned M6 (Three-model (A/B/C) local benchmark: BFCL-style offline suite, CloudPilot Executor Suite, speed/memory, security, charts) to Coding Agent.
 - `2026-11-20T06:11:02Z` **[MILESTONE_PASSED]** (`M6`): Attempt 1 passed gate verification. Evidence: Three-model (A/B/C) local benchmark completed: Model B achieved 95.31% exact grounding (+39.06% over Base A, +95.31% over Small C) at 167.87 tok/s and 0 unauthorized security actions (3/3 pytest passed).
 - `2026-11-20T06:11:02Z` **[GIT_CHECKPOINT_CREATED]** (`M6`): Created git tag checkpoint-M6 at commit 2533c71
+- `2026-11-20T06:11:02Z` **[MILESTONE_STARTED]** (`M7`): Orchestrator assigned M7 (Complete CN/EN docs, local static website, locally captured & rendered promotional MP4 video, checksums & delivery manifest) to Coding Agent.
+- `2026-11-20T06:15:54Z` **[MILESTONE_PASSED]** (`M7`): Attempt 1 passed gate verification. Evidence: Complete CN/EN docs, offline_compliance.md, zero-CDN static launch website with real screenshots/charts, playable 1080p H.264 MP4 promo video (31.97s), SHA-256 checksums, and DELIVERY_MANIFEST.md verified (4/4 pytest passed).
+- `2026-11-20T06:15:54Z` **[GIT_CHECKPOINT_CREATED]** (`M7`): Created git tag checkpoint-M7 at commit 4a4b4d0

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CloudPilot — Local Intelligence. Local Execution.</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <div class="brand">
+        <span class="brand-badge">OFFLINE MAC AI</span>
+        <span class="brand-title">CloudPilot <span class="cn-sub">云领航</span></span>
+      </div>
+      <nav class="nav-links">
+        <a href="#features">Overview</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#screenshots">App Gallery</a>
+        <a href="#benchmarks">A/B/C Benchmarks</a>
+        <a href="#privacy">Privacy &amp; Security</a>
+        <a href="#downloads">Downloads &amp; Release</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. Hero Section -->
+    <section class="hero" id="top">
+      <div class="container">
+        <div class="pill-banner">100% On-Mac Apple MLX Metal 4 · Zero Cloud API Keys · Verified Offline Execution</div>
+        <h1>CloudPilot — Local Intelligence. Local Execution.</h1>
+        <p class="hero-subtitle">
+          A locally planned, locally fine-tuned, deterministic macOS file-organization AI agent.
+          Built, trained, benchmarked, and packaged entirely on an Apple M4 MacBook Air with zero cloud compute.
+        </p>
+        <p class="hero-subtitle-cn">
+          100% 运行在您 Mac 本地的离线 AI 桌面整理智能体：本地规划 (Planner P) + 本地微调执行模型 (Executor B) + 确定性安全沙盒运行时。无需任何云端 API 密钥，断网可用。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="../release/artifacts/CloudPilot-v1.0-macOS.dmg">Download CloudPilot-v1.0-macOS.dmg</a>
+          <a class="btn btn-secondary" href="../model/MODEL_CARD.md">Fine-Tuned Model B Card (.safetensors)</a>
+          <a class="btn btn-secondary" href="../evaluation/EVALUATION_REPORT.md">Read A/B/C Benchmark Report</a>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-value">95.31%</div>
+            <div class="kpi-label">Model B Held-Out Exact Grounding (+39.06% over Base A)</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">167.87 tok/s</div>
+            <div class="kpi-label">On-Mac Apple M4 Metal 4 Decode Throughput</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">534 MB</div>
+            <div class="kpi-label">Peak Unified Metal Memory (&lt; 2.3% of 24 GB RAM)</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">0 / 16</div>
+            <div class="kpi-label">Unauthorized Adversarial Actions Allowed</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. What It Does & Actual Hardware Requirements -->
+    <section class="section" id="features">
+      <div class="container">
+        <h2>What CloudPilot Does &amp; Hardware Requirements</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Bounded, Non-Destructive File Organization</h3>
+            <p>
+              Users select an explicit sandbox workspace folder and describe their organization goal in natural language.
+              CloudPilot previews a step-by-step DAG plan before touching any file, defaults to non-destructive
+              <code>copy_file</code> (<code>on_conflict="skip"</code>), verifies every copied file's SHA-256 hash
+              against the original source, and writes an auditable JSON manifest.
+            </p>
+            <ul>
+              <li><strong>6 Allowlisted Deterministic Tools:</strong> <code>list_files</code>, <code>get_file_info</code>, <code>create_folder</code>, <code>copy_file</code>, <code>verify_file</code>, <code>generate_manifest</code></li>
+              <li><strong>Zero Shell / Zero Eval:</strong> No arbitrary bash, terminal commands, or unreviewed deletion.</li>
+              <li><strong>SQLite Audit Persistence:</strong> Every task and step state transition is recorded locally.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Verified macOS System &amp; Hardware Support</h3>
+            <table class="spec-table">
+              <tbody>
+                <tr><th>Target Platform</th><td>macOS 14.0+ (Apple Silicon <code>arm64</code> M1 / M2 / M3 / M4)</td></tr>
+                <tr><th>Verified Host</th><td>Apple M4 MacBook Air (<code>Mac16,12</code>, 10-core CPU, 10-core Metal 4 GPU)</td></tr>
+                <tr><th>Memory Requirement</th><td>8 GB Unified RAM minimum (24 GB tested; &lt; 600 MB active Metal RAM)</td></tr>
+                <tr><th>Storage Footprint</th><td>~850 MB total (including cached models A/B/C, datasets, and DMG)</td></tr>
+                <tr><th>Network Requirement</th><td><strong>None at runtime</strong> (<code>HF_HUB_OFFLINE=1</code> enforced)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Local-Only Reference Architecture -->
+    <section class="section alt-bg" id="architecture">
+      <div class="container">
+        <h2>Local-Only Reference Architecture</h2>
+        <p class="section-intro">
+          CloudPilot separates planning, tool argument grounding, security validation, and filesystem execution across four local layers:
+        </p>
+        <div class="arch-flow">
+          <div class="arch-step">
+            <div class="arch-num">1</div>
+            <h4>Local Planner (P)</h4>
+            <p><code>Qwen2.5-0.5B-Instruct-4bit</code> + deterministic schema compiler emits a bounded <code>TaskPlanV1</code> DAG and requests user approval.</p>
+          </div>
+          <div class="arch-step">
+            <div class="arch-num">2</div>
+            <h4>Fine-Tuned Executor (B)</h4>
+            <p><code>CloudPilot-Qwen2.5-0.5B-Executor-LoRA-v1</code> trained on this Mac grounds each step &amp; live observation into a <code>ToolCallV1</code> JSON call or abstention.</p>
+          </div>
+          <div class="arch-step">
+            <div class="arch-num">3</div>
+            <h4>Policy Validator</h4>
+            <p>Deterministically enforces workspace root confinement, blocks <code>..</code> traversal and external symlinks, and checks user approval gates.</p>
+          </div>
+          <div class="arch-step">
+            <div class="arch-num">4</div>
+            <h4>Deterministic Runtime</h4>
+            <p>Executes validated file operations via <code>pathlib</code>/<code>shutil</code>/<code>hashlib</code>, verifies SHA-256 checksums, and logs to SQLite.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Real Native SwiftUI App Screenshots & Recorded Demo -->
+    <section class="section" id="screenshots">
+      <div class="container">
+        <h2>Native macOS SwiftUI Application Gallery &amp; Promo Video</h2>
+        <p class="section-intro">
+          Genuine captures exported directly from the compiled <code>CloudPilot.app</code> binary on macOS:
+        </p>
+        <div class="gallery-tabs">
+          <button class="tab-btn active" data-target="shot-1">1. Home / Chat</button>
+          <button class="tab-btn" data-target="shot-2">2. Plan Preview</button>
+          <button class="tab-btn" data-target="shot-3">3. Execution Monitor</button>
+          <button class="tab-btn" data-target="shot-4">4. Local Models (P/B/A/C)</button>
+          <button class="tab-btn" data-target="shot-5">5. Security Settings</button>
+          <button class="tab-btn" data-target="shot-6">6. SQLite Audit History</button>
+        </div>
+        <div class="screenshot-frame">
+          <img id="shot-1" class="shot-img active" src="assets/01_home_chat.png" alt="CloudPilot Home and Chat View" />
+          <img id="shot-2" class="shot-img" src="assets/02_plan_preview.png" alt="CloudPilot Plan Preview and Approval View" />
+          <img id="shot-3" class="shot-img" src="assets/03_execution_monitor.png" alt="CloudPilot Execution Monitor View" />
+          <img id="shot-4" class="shot-img" src="assets/04_local_models.png" alt="CloudPilot Local Models Inventory View" />
+          <img id="shot-5" class="shot-img" src="assets/05_settings_privacy.png" alt="CloudPilot Settings and Privacy View" />
+          <img id="shot-6" class="shot-img" src="assets/06_audit_history.png" alt="CloudPilot SQLite Audit History View" />
+        </div>
+        <div class="video-card">
+          <h3>Watch Locally Rendered Promotional Video (1080p MP4)</h3>
+          <video controls preload="metadata" width="100%" poster="assets/01_home_chat.png">
+            <source src="../marketing/exports/CloudPilot_Promo.mp4" type="video/mp4" />
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. A/B/C Three-Model Benchmark Results -->
+    <section class="section alt-bg" id="benchmarks">
+      <div class="container">
+        <h2>Three-Model (A / B / C) On-Mac Benchmark Results</h2>
+        <p class="section-intro">
+          Measured on the same Apple M4 MacBook Air with <code>HF_HUB_OFFLINE=1</code> across 64 held-out test cases (8 families)
+          and a 12-case BFCL-style local function-calling subset.
+          <strong>Leaderboard Integrity Disclosure:</strong> The BFCL-style subset score is a <em>self-run offline benchmark result</em>, not an official public leaderboard ranking.
+        </p>
+        <div class="table-wrap">
+          <table class="bench-table">
+            <thead>
+              <tr>
+                <th>Metric (Measured Offline on Apple M4)</th>
+                <th>Model A (Base <code>Qwen2.5-0.5B-Instruct-4bit</code>)</th>
+                <th class="highlight-col">Model B (On-Mac Fine-Tuned <code>CloudPilot-LoRA-v1</code>)</th>
+                <th>Model C (Independent Small <code>SmolLM2-135M-Instruct</code>)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Held-Out Valid JSON Rate (%)</td>
+                <td>100.0%</td>
+                <td class="highlight-col"><strong>100.0%</strong></td>
+                <td>67.19%</td>
+              </tr>
+              <tr>
+                <td>Held-Out Tool Selection Accuracy (%)</td>
+                <td>56.25%</td>
+                <td class="highlight-col"><strong>96.88%</strong></td>
+                <td>0.0%</td>
+              </tr>
+              <tr>
+                <td>Held-Out Exact Argument Grounding (%)</td>
+                <td>56.25%</td>
+                <td class="highlight-col"><strong>95.31%</strong></td>
+                <td>0.0%</td>
+              </tr>
+              <tr>
+                <td>BFCL-Style Local Function-Calling Subset (%)</td>
+                <td>66.67%</td>
+                <td class="highlight-col"><strong>75.0%</strong></td>
+                <td>0.0%</td>
+              </tr>
+              <tr>
+                <td>Mean Decode Speed (tokens/sec)</td>
+                <td>176.85 tok/s</td>
+                <td class="highlight-col"><strong>167.87 tok/s</strong></td>
+                <td>216.29 tok/s</td>
+              </tr>
+              <tr>
+                <td>Mean Time-To-First-Token (ms)</td>
+                <td>71.35 ms</td>
+                <td class="highlight-col"><strong>68.49 ms</strong></td>
+                <td>35.09 ms</td>
+              </tr>
+              <tr>
+                <td>Peak Unified Metal Memory (MB)</td>
+                <td>534.23 MB</td>
+                <td class="highlight-col"><strong>534.23 MB</strong></td>
+                <td>432.07 MB</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="charts-grid">
+          <div class="chart-box">
+            <img src="assets/accuracy_comparison.png" alt="A vs B vs C Accuracy Comparison Chart" />
+          </div>
+          <div class="chart-box">
+            <img src="assets/latency_memory_comparison.png" alt="A vs B vs C Speed and Memory Chart" />
+          </div>
+          <div class="chart-box full-width">
+            <img src="assets/family_breakdown.png" alt="8 Task Families Accuracy Breakdown Chart" />
+          </div>
+        </div>
+        <p class="bench-links">
+          Methodology &amp; Limitations: <a href="../evaluation/EVALUATION_REPORT.md">EVALUATION_REPORT.md</a> ·
+          Reproduction Script: <a href="../evaluation/REPRODUCIBILITY.md">REPRODUCIBILITY.md</a> ·
+          Raw CSV: <a href="../evaluation/results.csv">evaluation/results.csv</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- 6. Privacy & Security Guarantees -->
+    <section class="section" id="privacy">
+      <div class="container">
+        <h2>Privacy &amp; Deterministic Security Architecture</h2>
+        <div class="grid-3">
+          <div class="card">
+            <h3>100% On-Device Data Ownership</h3>
+            <p>Your files, folder names, task prompts, model inferences, and SQLite audit history never leave your Mac. Normal workflow is verified with outbound network sockets disabled.</p>
+          </div>
+          <div class="card">
+            <h3>Deterministic Policy Validator</h3>
+            <p>Even if a language model hallucinates a path or command, deterministic Python guards block <code>..</code> traversal, external symlinks, unapproved overwrites, and non-allowlisted tools.</p>
+          </div>
+          <div class="card">
+            <h3>Clear Transport Separation</h3>
+            <p>Internet connectivity was used strictly for initial open-weight model caching (provisioning). Runtime inference, fine-tuning, evaluation, and packaging use zero cloud compute.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 & 8. Verified Downloads, Release/Signing Status & License -->
+    <section class="section alt-bg" id="downloads">
+      <div class="container">
+        <h2>Verified Artifacts, Signing Disclosure &amp; Open-Source License</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Verified Local Release Artifacts</h3>
+            <ul class="artifact-list">
+              <li><strong>macOS Disk Image (.dmg):</strong> <a href="../release/artifacts/CloudPilot-v1.0-macOS.dmg"><code>release/artifacts/CloudPilot-v1.0-macOS.dmg</code></a></li>
+              <li><strong>macOS Application (.app):</strong> <a href="../release/artifacts/CloudPilot.app"><code>release/artifacts/CloudPilot.app</code></a></li>
+              <li><strong>LoRA Adapter Weights (.safetensors):</strong> <a href="../model/adapters/adapters.safetensors"><code>model/adapters/adapters.safetensors</code></a> (5.61 MB)</li>
+              <li><strong>Fused Deployment Checkpoint:</strong> <a href="../model/deployment/model.safetensors"><code>model/deployment/model.safetensors</code></a> (265.18 MB)</li>
+              <li><strong>Model Card:</strong> <a href="../model/MODEL_CARD.md"><code>model/MODEL_CARD.md</code></a></li>
+              <li><strong>Promotional Video (.mp4):</strong> <a href="../marketing/exports/CloudPilot_Promo.mp4"><code>marketing/exports/CloudPilot_Promo.mp4</code></a></li>
+              <li><strong>SHA-256 Checksums:</strong> <a href="../release/checksums.sha256"><code>release/checksums.sha256</code></a></li>
+              <li><strong>Delivery Manifest:</strong> <a href="../release/DELIVERY_MANIFEST.md"><code>release/DELIVERY_MANIFEST.md</code></a></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Signing Status, License &amp; Scope Disclosure</h3>
+            <ul>
+              <li><strong>Code Signing Status:</strong> Ad-hoc locally signed via <code>codesign --force --deep --sign -</code>. Truthfully disclosed as <strong>unsigned / unnotarized with a paid Apple Developer ID</strong> per <code>agent.md</code> Section 11.6.</li>
+              <li><strong>Source &amp; Model License:</strong> Apache-2.0 (<a href="../LICENSE">LICENSE</a>). Derived from Apache-2.0 <code>Qwen2.5-0.5B-Instruct</code>.</li>
+              <li><strong>Supported MVP Scope:</strong> Offline file organization within user-selected workspaces using 6 deterministic tools (<code>list_files</code>, <code>get_file_info</code>, <code>create_folder</code>, <code>copy_file</code>, <code>verify_file</code>, <code>generate_manifest</code>).</li>
+              <li><strong>Documentation Suite:</strong> <a href="../README.md">README (CN/EN)</a> · <a href="../docs/installation.md">Installation</a> · <a href="../docs/user_guide.md">User Guide</a> · <a href="../docs/security.md">Security</a> · <a href="../docs/privacy.md">Privacy</a> · <a href="../docs/offline_compliance.md">Offline Compliance</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>CloudPilot v1.0 · Built, Fine-Tuned, Benchmarked &amp; Packaged 100% Locally on Apple M4 · Apache-2.0 License</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
